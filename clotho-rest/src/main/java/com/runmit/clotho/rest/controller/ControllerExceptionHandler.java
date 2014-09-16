@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.runmit.uc.rest.controller;
+package com.runmit.clotho.rest.controller;
 
-import com.runmit.uc.rest.common.CommonError;
+import com.runmit.clotho.rest.common.CommonError;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.runmit.uc.rest.common;
+package com.runmit.clotho.rest.common;
 
 /**
  * Created by gg on 2014/8/21.

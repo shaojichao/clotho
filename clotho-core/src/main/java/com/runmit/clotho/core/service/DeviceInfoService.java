@@ -1,8 +1,8 @@
-package com.runmit.uc.core.service;
+package com.runmit.clotho.core.service;
 
 
-import com.runmit.uc.core.domain.DeviceInfo;
-import com.runmit.uc.core.mapper.DeviceInfoMapper;
+import com.runmit.clotho.core.domain.DeviceInfo;
+import com.runmit.clotho.core.mapper.DeviceInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

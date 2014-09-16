@@ -1,4 +1,4 @@
-package com.runmit.uc.core.domain;
+package com.runmit.clotho.core.domain;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author TianLiang
+ * @author Scott.Xie
  */
 @Data
 public class DeviceInfo implements Serializable {

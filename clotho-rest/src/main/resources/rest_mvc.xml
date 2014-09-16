@@ -15,8 +15,8 @@
     <!-- 保证在DispatchServlet context中的spring IOC容器中，带有@Component、@Repository、@Service、@Controller
     的类被自动注册，并且自动使用源级的annotation进行bean元数据配置（如@Autowired）
     -->
-    <context:property-placeholder location="file:///${catalina.home}/app/config/uc/application.properties" />
-    <context:component-scan base-package="com.runmit.uc.rest.controller" />
+    <context:property-placeholder location="file:///${catalina.home}/app/config/clotho/application.properties" />
+    <context:component-scan base-package="com.runmit.clotho.rest.controller" />
     <!-- 启用mvc支持的源级annotation（如RequestMapping等）对bean元数据进行配置，必须与
     component-scan同时出现在这一context的spring配置中 -->
     <mvc:annotation-driven>

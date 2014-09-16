@@ -1,4 +1,4 @@
-package com.runmit.uc.rest.common;
+package com.runmit.clotho.rest.common;
 
 import lombok.Data;
 

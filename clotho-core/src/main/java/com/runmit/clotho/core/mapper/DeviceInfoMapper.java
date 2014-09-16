@@ -1,6 +1,6 @@
-package com.runmit.uc.core.mapper;
+package com.runmit.clotho.core.mapper;
 
-import com.runmit.uc.core.domain.DeviceInfo;
+import com.runmit.clotho.core.domain.DeviceInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

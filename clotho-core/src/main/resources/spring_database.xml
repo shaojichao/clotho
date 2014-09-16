@@ -51,7 +51,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.runmit.uc.core.mapper" />
+        <property name="basePackage" value="com.runmit.clotho.core.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 </beans>

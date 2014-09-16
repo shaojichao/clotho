@@ -1,4 +1,4 @@
-package com.runmit.uc.rest.controller;
+package com.runmit.clotho.rest.controller;
 
 import com.knappsack.swagger4springweb.controller.ApiDocumentationController;
 import com.wordnik.swagger.model.ApiInfo;

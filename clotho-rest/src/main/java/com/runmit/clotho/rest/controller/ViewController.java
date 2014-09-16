@@ -1,4 +1,4 @@
-package com.runmit.uc.rest.controller;
+package com.runmit.clotho.rest.controller;
 
 /**
  * Created by gg on 2014/8/26.

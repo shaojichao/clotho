@@ -13,24 +13,6 @@
 
     <!--配置属性来自于spring_memcached.properties,不是memcached.properties -->
     <cache:annotation-driven />
-    <bean name="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
-        <property name="servers" value="${memcached.ips}" />
-        <!--<property name="protocol" value="BINARY" />-->
-        <!--<property name="transcoder">-->
-            <!--<bean class="net.spy.memcached.transcoders.SerializingTranscoder">-->
-                <!--<property name="compressionThreshold" value="1024" />-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="opTimeout" value="2000" />-->
-        <!--<property name="timeoutExceptionThreshold" value="1998" />-->
-        <!--<property name="locatorType" value="CONSISTENT" />-->
-        <!--<property name="hashAlg">-->
-            <!--<value type="net.spy.memcached.DefaultHashAlgorithm">KETAMA_HASH</value>-->
-        <!--</property>-->
-        <!--<property name="failureMode" value="Redistribute" />-->
-        <!--<property name="useNagleAlgorithm" value="false" />-->
-    </bean>
-    
 
     <bean name="cacheManager" class="com.google.code.ssm.spring.ExtendedSSMCacheManager">
         <property name="caches">
