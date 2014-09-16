@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util" 
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/jee 
+       http://www.springframework.org/schema/jee/spring-jee-4.0.xsd">
+
+    <context:property-placeholder location="file:///${catalina.home}/app/config/uc/application.properties,
+file:///${catalina.home}/app/config/uc/jdbc.properties,
+file:///${catalina.home}/app/config/uc/spring_memcached.properties" />
+    <import resource="classpath*:spring_bean.xml" />
+    <import resource="classpath*:spring_database.xml"/>
+    <!--service层memcached缓存配置,具体参考AdminService类中方法getAdmin的缓存设置方法-->
+    <import resource="classpath*:spring_memcached.xml"/>
+    <import resource="classpath*:spring_mail.xml"/>
+
+    <bean name="memcacheManager" class="com.google.code.ssm.CacheFactory">
+        <property name="cacheName" value="defaultCache" />
+        <property name="cacheClientFactory">
+            <bean name="cacheClientFactory"
+                  class="com.google.code.ssm.providers.spymemcached.MemcacheClientFactoryImpl" />
+        </property>
+        <property name="addressProvider">
+            <bean class="com.google.code.ssm.config.DefaultAddressProvider">
+                <property name="address" value="${memcached.ips}" />
+            </bean>
+        </property>
+        <property name="configuration">
+            <bean class="com.google.code.ssm.providers.CacheConfiguration">
+                <property name="consistentHashing" value="true" />
+            </bean>
+        </property>
+    </bean>
+</beans>

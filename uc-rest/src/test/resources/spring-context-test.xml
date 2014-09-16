@@ -1,0 +1,97 @@
+<!--<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemalocation="http://www.springframework.org/schema/beans  -->
+  <!---->
+<!--http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/context  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/context/spring-context-3.0.xsd  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/tx  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/aop  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  -->
+  <!---->
+  <!---->
+<!--http://www.springframework.org/schema/jdbc  -->
+  <!---->
+    <!--http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">-->
+
+    <!--<import resource="transactionAdvices.xml"/>-->
+        <!--<import resource="annotation.xml"/>-->
+            <!--<import resource="marshalling.xml"/>-->
+
+                <!--<context:component-scan base-package="de.schaeftlein.dev.spring.rest"/>-->
+
+                    <!--<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">-->
+                        <!--<property name="messageConverters" ref="marshallingHttpMessageConverter">-->
+                        <!--</property></bean>-->
+
+                    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+                        <!--<property name="driverClass">-->
+                            <!--<value>${jdbc.driverClassName}</value>-->
+                        <!--</property>-->
+                        <!--<property name="jdbcUrl">-->
+                            <!--<value>${jdbc.url}</value>-->
+                        <!--</property>-->
+                        <!--<property name="user">-->
+                            <!--<value>${jdbc.username}</value>-->
+                        <!--</property>-->
+                        <!--<property name="password">-->
+                            <!--<value>${jdbc.password}</value>-->
+                        <!--</property>-->
+                        <!--<property name="autoCommitOnClose">-->
+                            <!--<value>${jdbc.autoCommitOnClose}</value>-->
+                        <!--</property>-->
+                        <!--<property name="initialPoolSize">-->
+                            <!--<value>${jdbc.initialPoolSize}</value>-->
+                        <!--</property>-->
+                        <!--<property name="maxPoolSize">-->
+                            <!--<value>${jdbc.maxPoolSize}</value>-->
+                        <!--</property>-->
+                        <!--<property name="minPoolSize">-->
+                            <!--<value>${jdbc.minPoolSize}</value>-->
+                        <!--</property>-->
+                        <!--<property name="maxStatementsPerConnection">-->
+                            <!--<value>${jdbc.maxStatementsPerConnection}</value>-->
+                        <!--</property>-->
+                        <!--<property name="maxStatements">-->
+                            <!--<value>${jdbc.maxStatements}</value>-->
+                        <!--</property>-->
+                    <!--</bean>-->
+
+                    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:location="classpath:jdbc.properties"/>-->
+
+                        <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" p:datasource-ref="dataSource" p:lobhandler-ref="defaultLobHandler" p:packagestoscan="de.schaeftlein.dev.spring.rest.domain">-->
+                            <!--<property name="hibernateProperties">-->
+                                <!--<props>-->
+                                    <!--<prop key="hibernate.connection.url">${jdbc.url}</prop>-->
+                                    <!--<prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>-->
+                                    <!--<prop key="hibernate.connection.password">${jdbc.username} </prop>-->
+                                    <!--<prop key="hibernate.connection.username">${jdbc.password}</prop>-->
+                                    <!--<prop key="hibernate.connection.autocommit">${jdbc.autoCommit}</prop>-->
+                                    <!--<prop key="hibernate.connection.release_mode">${hibernate.release_mode}</prop>-->
+                                    <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>-->
+                                    <!--<prop key="hibernate.transaction.auto_close_session">${hibernate.auto_close_session}</prop>-->
+                                    <!--<prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop>-->
+                                    <!--<prop key="hibernate.cglib.use_reflection_optimizer">false</prop>-->
+                                    <!--<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>-->
+                                    <!--<prop key="hibernate.bytecode.provider">javassist</prop>-->
+                                    <!--<prop key="hibernate.transaction.flush_before_completion">${hibernate.flush_before_completion}</prop>-->
+                                <!--</props>-->
+                            <!--</property>-->
+                        <!--</bean>-->
+
+                        <!--<bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler">-->
+
+                            <!--<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" p:sessionfactory-ref="sessionFactory">-->
+
+                            <!--</bean></bean></bean></beans>-->

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Management | Help</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div >
+            <h2>src/main/webapp中的内容</h2>
+            <ul>
+                <li>
+                    metronic - metronic原有的目录，未做任何改动，放在这里只是方便开放，在实际打包的时候会将其排除在外
+                </li>
+                <li>
+                    resources - 保存的是图片、脚本和CSS，完全拷贝metronic中的相应目录（metronic/admin/templates/admin/assets）</br>
+                    但是有些链接改成了正确的路径。
+                </li>
+                <li>
+                    index.jsp - 该页面实现自动跳转，由com.runmit.uc.management.controller.IndexController.java决定
+                </li>
+                <li>
+                    WEB-INF/inculde - 封装的页面组件，这些组件会在WEB-INF/views/frame.jsp中引用，包括：
+                    <ol>
+                        <li>cover.jsp - 首页内容，实际项目中另外制作首页，不要使用这个说名</li>
+                        <li>global_head.jsp - 全局head，包括基本的css、javascript、自定义脚本</li>
+                        <li>header.jsp - 页面header</li>
+                        <li>footer.jsp - 页面footer</li>
+                        <li>sidebar.jsp - 页面左面的导航栏</li>
+                        <li>portlet_configuration.jsp - 未使用，是关于页面设置的</li>
+                        <li>quick_sidebar.jsp - 最右上角的图标点击后出现的弹窗</li>
+                        <li>search_box.jsp - 未使用，搜索栏</li>
+                        <li>sidebar_toggler.jsp - 未使用，隐藏页面左面的导航栏</li>
+                        <li>style_customizer.jsp - 页面右面齿轮图标触发的窗口，用来修改主题和显示设置</li>
+                    </ol>
+                </li>
+                <li>
+                    WEB-INF/views - 需要开放的页面，可以参考下面关于[页面的制作]部分
+                </li>
+            </ul>
+
+            <hr/>
+            <h2>页面的制作</h2>
+            <p>
+                所有页面都是基于Metronic的页面，具体路径是metronic/admin/templates/admin/*.html<br/>
+                如果需要新的组件在Metronic中查找到相关页面，然后进行以下操作:<br/>
+                Tips:所有位置都以注释的形式说明，使用IDE的折叠代码功能可以很快定位和操作
+            </p>
+            <ol>
+                <li>从WEB-INF/views/example中拷贝已有的页面</li>
+                <li>将原始HTML中的PAGE LEVEL PLUGIN STYLES中的内容放入本页中对应的位置（文件开始部分），<br/>
+                    注意将路径中的<pre>../../assets</pre>替换为<pre>${ctx}/resources</pre></li>
+                <li>将原始HTML中的PAGE LEVEL STYLES中的内容放入本页中对应的位置（紧跟上面的PLUGIN STYLES），<br/>
+                    注意将路径中的<pre>../../assets</pre>替换为<pre>${ctx}/resources</pre></li>
+                <li>更改本页的PAGE HEADER中的页面名称、页面概要、导航栏</li>
+                <li>将原始HTML中的PAGE CONTENT中的内容放入本页中对应的位置（文件中间部分）</li>
+                <li>将原始HTML中的PAGE LEVEL PLUGINS中的内容放入本页中对应的位置（文件结尾部分），<br/>
+                    注意将路径中的<pre>../../assets</pre>替换为<pre>${ctx}/resources</pre></li>
+                <li>将原始HTML中的PAGE LEVEL SCRIPTS中的内容放入本页中对应的位置（紧跟上面的PLUGINS），<br/>
+                    但是注意不要包含metronic.js、layout.js和quick-sidebar.js，它们已经在global_head.jsp中定义了，<br/>
+                    注意将路径中的<pre>../../assets</pre>替换为<pre>${ctx}/resources</pre>
+                </li>
+                <li>将原始HTML中的jQuery(document).ready函数中的初始化命令放入本页的对应位置中，<br/>
+                    但是注意不要包含Metronic.init();Layout.init();QuickSidebar.init() ，它们也同样在global_head.jsp中定义了
+                </li>
+                <li>在java代码中开发对应的controller，定义页面路径。然后修改WEB-INF/include/sidebar.jsp中的导航项的引用地址
+                </li>
+            </ol>
+        </div>
+    </body>
+</html>

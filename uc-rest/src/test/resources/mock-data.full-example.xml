@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <Album id="1" name="乐视App" englishName="" namePy="" rootId="0" parentId="0" showOrder="0" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="2" name="电影" englishName="Film Category" namePy="" rootId="1" parentId="1" showOrder="0" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="3" name="连续剧" englishName="" namePy="" rootId="1" parentId="1" showOrder="1" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="4" name="动画" englishName="" namePy="" rootId="1" parentId="1" showOrder="2" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="5" name="大陆" englishName="" namePy="" rootId="1" parentId="2" showOrder="0" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="6" name="欧美" englishName="" namePy="" rootId="1" parentId="2" showOrder="1" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="7" name="日韩" englishName="" namePy="" rootId="1" parentId="2" showOrder="2" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />  
+    <Album id="8" name="港台" englishName="" namePy="" rootId="1" parentId="2" showOrder="3" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="9" name="国产" englishName="" namePy="" rootId="1" parentId="3" showOrder="0" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="10" name="美剧" englishName="" namePy="" rootId="1" parentId="3" showOrder="1" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="11" name="热血" englishName="" namePy="" rootId="1" parentId="4" showOrder="0" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="12" name="奇幻" englishName="" namePy="" rootId="1" parentId="4" showOrder="1" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="13" name="搞笑" englishName="" namePy="" rootId="1" parentId="4" showOrder="2" type="0" poster1="" directors="" actors="" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="14" name="生活大爆炸" englishName="" namePy="SHDBZ" rootId="1" parentId="10" showOrder="0" type="0"  poster1="poster1" directors="生活大爆炸导演" actors="谢耳朵,佩妮" ended="false" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="15" name="越狱" englishName="" namePy="YY" rootId="1" parentId="10" showOrder="1" type="102" poster1="poster1" directors="越狱导演" actors="米帅" ended="true" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="16" name="海贼王" englishName="" namePy="HZW" rootId="1" parentId="11" showOrder="0" type="102" poster1="onepiece" directors="WT" actors="路飞,娜美,香吉士,索隆" ended="false" createTime="2013-01-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    
+    <Album id="17" name="可索引专辑" englishName="" namePy="" rootId="1" parentId="1" showOrder="3" type="0" poster1="" directors="张一某" actors="公立,走讯" ended="true" createTime="2012-09-01 00:00:00" releaseYear="1970" category="" area="" score="0" playCount="0"  />
+    <Album id="18" name="空房间" englishName="" namePy="TKF" rootId="1" parentId="17" showOrder="0" type="101" poster1="" directors="陈开哥,江温" actors="走闰发" ended="true" createTime="2010-09-01 00:00:00" releaseYear="2010" category="comedy,thriller,love,action" area="CN" score="90" playCount="90"  />
+    <Album id="19" name="大海啸之鲨口逃生" englishName="" namePy="XDHXZSKTS" rootId="1" parentId="17" showOrder="1" type="101" poster1="" directors="尘可欣" actors="将无,公立" ended="true" createTime="2011-09-02 00:00:00" releaseYear="2011" category="love,action" area="FR" score="91" playCount="91"  />
+    <Album id="20" name="床上关系" englishName="" namePy="XCSGX"  rootId="1" parentId="17" showOrder="2" type="101" poster1="" directors="江温" actors="走闰发,将无" ended="true" createTime="2011-09-03 00:00:00" releaseYear="2011" category="comedy,love,action" area="US" score="92" playCount="92"  />
+    <Album id="21" name="神通乡巴佬" englishName="" namePy="XSTXBL" rootId="1" parentId="17" showOrder="3" type="101" poster1="" directors="江温,尘可欣" actors="割优,公立" ended="true" createTime="2011-09-04 00:00:00" releaseYear="2011" category="love,action" area="CN" score="93" playCount="93"  />
+    <Album id="22" name="爱人" englishName="" namePy="AR" rootId="1" parentId="17" showOrder="4" type="101" poster1="" directors="尘可欣" actors="走闰发,将无,公立" ended="true" createTime="2011-09-05 00:00:00" releaseYear="2011" category="love,action" area="CN" score="94" playCount="94"  />
+    <Album id="23" name="逆战" englishName="" namePy="NZ"  rootId="1" parentId="17" showOrder="5" type="101" poster1="" directors="张一某,尘可欣,江温" actors="公立,走行次" ended="true" createTime="2012-09-06 00:00:00" releaseYear="2012" category="thriller,love,action" area="CN" score="95" playCount="95"  />
+    <Album id="24" name="太极2：英雄崛起" englishName="" namePy="TJ2" rootId="1" parentId="17" showOrder="6" type="101" poster1="" directors="江温" actors="将无,走行次" ended="true" createTime="2012-09-07 00:00:00" releaseYear="2012" category="love,action" area="CN" score="96" playCount="96"  />
+    <Album id="25" name="米高梅电影精选" englishName="" namePy="XMGMDYJX" rootId="1" parentId="17" showOrder="7" type="101" poster1="" directors="陈开哥,张一某" actors="江温,割优" ended="true" createTime="2012-09-08 00:00:00" releaseYear="2012" category="love" area="GB" score="97" playCount="97"  />
+    <Album id="26" name="消失的头颅" englishName="" namePy="XSDTL" rootId="1" parentId="17" showOrder="8" type="101" poster1="" directors="江温" actors="公立,走闰发" ended="true" createTime="2012-09-09 00:00:00" releaseYear="2012" category="thriller,action" area="CN" score="98" playCount="98"  />
+    <Album id="27" name="敢死队2" englishName="" namePy="GSD2" rootId="1" parentId="17" showOrder="9" type="101" poster1="" directors="陈开哥,张一某" actors="走回米,走闰发,江温" ended="true" createTime="2012-09-10 00:00:00" releaseYear="2012" category="love,action" area="CN" score="99" playCount="99"  />
+    <Album id="28" name="二次曝光" englishName="" namePy="ECBG" rootId="1" parentId="17" showOrder="10" type="101" poster1="" directors="江温" actors="公立" ended="true" createTime="2012-09-11 00:00:00" releaseYear="2012" category="comedy,action" area="CN" score="100" playCount="100"  />
+    
+    <Video id="1" name="海贼王第一集" poster1="onepiece-1" ldtv="100" sdtv="101" hdtv="102" fhdtv="103" isChecked="0"/>
+    <Video id="2" name="海贼王第二集" poster1="onepiece-2" ldtv="200" sdtv="201" hdtv="202" fhdtv="203" isChecked="0"/>
+    <Video id="3" name="海贼王第三集" poster1="onepiece-3" ldtv="300" sdtv="301" hdtv="302" fhdtv="303" isChecked="0"/>
+    <Video id="4" name="海贼王第四集" poster1="onepiece-4" ldtv="400" sdtv="401" hdtv="402" fhdtv="403" isChecked="0"/>
+    <Video id="5" name="海贼王第五集" poster1="onepiece-5" ldtv="500" sdtv="501" hdtv="502" fhdtv="503" isChecked="0"/>
+    <Video id="6" name="海贼王第六集" poster1="onepiece-6" ldtv="600" sdtv="601" hdtv="602" fhdtv="603" isChecked="0"/>
+    <Video id="7" name="海贼王第七集" poster1="onepiece-7" ldtv="700" sdtv="701" hdtv="702" fhdtv="703" isChecked="0"/>
+    <Video id="8" name="海贼王第八集" poster1="onepiece-8" ldtv="800" sdtv="801" hdtv="802" fhdtv="803" isChecked="0"/>
+    <Video id="9" name="海贼王第九集" poster1="onepiece-9" ldtv="900" sdtv="901" hdtv="902" fhdtv="903" isChecked="0"/>
+    <Video id="10" name="海贼王第十集" poster1="onepiece-10" ldtv="1000" sdtv="1001" hdtv="1002" fhdtv="1003" isChecked="0"/>
+    
+    <Video id="11" name="越狱第一集" poster1="yy-1" ldtv="1100" sdtv="1101" hdtv="1102" fhdtv="1103" isChecked="0"/>
+    <Video id="12" name="越狱第二集" poster1="yy-2" ldtv="1200" sdtv="1201" hdtv="1202" fhdtv="1203" isChecked="0"/>
+    <Video id="13" name="越狱第三集" poster1="yy-3" ldtv="1300" sdtv="1301" hdtv="1302" fhdtv="1303" isChecked="0"/>
+    <Video id="14" name="越狱第四集" poster1="yy-4" ldtv="1400" sdtv="1401" hdtv="1402" fhdtv="1403" isChecked="0"/>
+    <Video id="15" name="越狱第五集" poster1="yy-5" ldtv="1500" sdtv="1501" hdtv="1502" fhdtv="1503" isChecked="0"/>
+    
+    <Video id="18" name="空房间" poster1="onepiece-1" ldtv="1800" sdtv="1801" hdtv="1802" fhdtv="1803" isChecked="0"/>
+    <Video id="19" name="大海啸之鲨口逃生" poster1="onepiece-2" ldtv="1900" sdtv="1901" hdtv="1902" fhdtv="1903" isChecked="0"/>
+    <Video id="20" name="床上关系" poster1="onepiece-3" ldtv="2000" sdtv="2001" hdtv="2002" fhdtv="2003"  isChecked="0"/>
+    <Video id="21" name="神通乡巴佬" poster1="onepiece-4" ldtv="2100" sdtv="2101" hdtv="2102" fhdtv="2103"  isChecked="0"/>
+    <Video id="22" name="爱人" poster1="onepiece-5" ldtv="2200" sdtv="2201" hdtv="2202" fhdtv="2203"  isChecked="0"/>
+    <Video id="23" name="逆战" poster1="onepiece-6" ldtv="2300" sdtv="2301" hdtv="2302" fhdtv="2303"  isChecked="0"/>
+    <Video id="24" name="太极2：英雄崛起" poster1="onepiece-7" ldtv="2400" sdtv="2401" hdtv="2402" fhdtv="2403"  isChecked="0"/>
+    <Video id="25" name="米高梅电影精选" poster1="onepiece-8" ldtv="2500" sdtv="2501" hdtv="2502" fhdtv="2503"  isChecked="0"/>
+    <Video id="26" name="消失的头颅" poster1="onepiece-9" ldtv="2600" sdtv="2601" hdtv="2602" fhdtv="2603"  isChecked="0"/>
+    <Video id="27" name="敢死队2" poster1="onepiece-10" ldtv="2700" sdtv="2701" hdtv="2702" fhdtv="2703"  isChecked="0"/>
+    <Video id="28" name="二次曝光" poster1="onepiece-10" ldtv="2800" sdtv="2801" hdtv="2802" fhdtv="2803"  isChecked="0"/>
+
+
+    
+    <AlbumAndVideo albumId="16" videoId="1" showOrder="0" />
+    <AlbumAndVideo albumId="16" videoId="2" showOrder="1" />
+    <AlbumAndVideo albumId="16" videoId="3" showOrder="2" />
+    <AlbumAndVideo albumId="16" videoId="4" showOrder="3" />
+    <AlbumAndVideo albumId="16" videoId="5" showOrder="4" />
+    <AlbumAndVideo albumId="16" videoId="6" showOrder="5" />
+    <AlbumAndVideo albumId="16" videoId="7" showOrder="6" />
+    <AlbumAndVideo albumId="16" videoId="8" showOrder="7" />
+    <AlbumAndVideo albumId="16" videoId="9" showOrder="8" />
+    <AlbumAndVideo albumId="16" videoId="10" showOrder="9" />
+    <AlbumAndVideo albumId="18" videoId="18" showOrder="0" />
+    <AlbumAndVideo albumId="19" videoId="19" showOrder="0" />
+    <AlbumAndVideo albumId="20" videoId="20" showOrder="0" />
+    <AlbumAndVideo albumId="21" videoId="21" showOrder="0" />
+    <AlbumAndVideo albumId="22" videoId="22" showOrder="0" />
+    <AlbumAndVideo albumId="23" videoId="23" showOrder="0" />
+    <AlbumAndVideo albumId="24" videoId="24" showOrder="0" />
+    <AlbumAndVideo albumId="25" videoId="25" showOrder="0" />
+    <AlbumAndVideo albumId="26" videoId="26" showOrder="0" />
+    <AlbumAndVideo albumId="27" videoId="27" showOrder="0" />
+    <AlbumAndVideo albumId="28" videoId="28" showOrder="0" />
+    
+    <Menu id="1" menuName="系统管理" parentID="0" url="" leaf="0" />
+    <Menu id="2" menuName="应用管理" parentID="0" url="" leaf="0" />
+    <Menu id="4" menuName="专辑管理" parentID="0" url="" leaf="0" />
+    <Menu id="5" menuName="管理员管理" parentID="1" url="/admin/admin.do" leaf="1" />
+    <Menu id="6" menuName="分组管理" parentID="1" url="/admin/group.do" leaf="1" />
+    <Menu id="7" menuName="专辑管理" parentID="4" url="/album/album.do" leaf="1" />
+    <Menu id="8" menuName="视频管理" parentID="4" url="/album/video.do" leaf="1" />
+    <Menu id="9" menuName="日志查看" parentID="1" url="/admin/adminLogs.do" leaf="1" />
+    <Menu id="10" menuName="模板组件" parentID="0" url="" leaf="0" />
+    <Menu id="11" menuName="组件管理" parentID="10" url="/component/component.do" leaf="1" />
+    <Menu id="12" menuName="模板管理" parentID="10" url="/component/template.do" leaf="1" />
+    <Menu id="14" menuName="桌面应用设定" parentID="2" url="/desk/deskRecmdApp.do" leaf="1" />
+    <Menu id="15" menuName="应用管理" parentID="2" url="/application/application.do" leaf="1" />
+    <Menu id="16" menuName="应用审核" parentID="2" url="/application/appapprove.do" leaf="1" />
+    <Menu id="17" menuName="首页推荐" parentID="2" url="/application/recommendAlbum.do" leaf="1" />
+    <Menu id="18" menuName="开发者" parentID="2" url="/application/developer.do" leaf="1" />
+    <Menu id="19" menuName="分类管理" parentID="4" url="/album/category.do" leaf="1" />
+    
+    
+    <Admin id="1" username="gbk" password="523cc8202b0bc93d019aceaf3dc4393a" realname="宫本凯" email="gongbenkai@letv.com" phone="136888888" qq="123456" type="1" auth="1" status="ACTIVE" loginIp="127.0.0.1" />
+    <Admin id="2" username="kai" password="123456" realname="1" email="2" phone="3" qq="4" type="5" auth="6" status="ACTIVE" loginIp="8" />
+    <Admin id="3" username="del1" password="123456" realname="1" email="2" phone="3" qq="4" type="5" auth="6" status="ACTIVE" loginIp="8" />
+    <Admin id="4" username="del2" password="123456" realname="1" email="2" phone="3" qq="4" type="5" auth="6" status="ACTIVE" loginIp="8" />
+    
+    
+    <GroupInfo id="1" name="编辑管理组" description="乐视网后台编辑管理人员用" />
+    <GroupInfo id="2" name="第三方管理组" description="第三方编辑管理人员用" />
+    <GroupInfo id="3" name="删除组1" description="乐视网后台编辑管理人员用" />
+    <GroupInfo id="4" name="删除组2" description="第三方编辑管理人员用" />
+    
+    <AdminGroup id="1" adminId="1" groupId="1" />
+    <AdminGroup id="2" adminId="1" groupId="2" />
+    <AdminGroup id="3" adminId="2" groupId="1" />
+    <AdminGroup id="4" adminId="2" groupId="2" />
+    
+    <Application id="1" name="影迷俱乐部" pinyin="yingmi" icon="" css="" autoUpdates="0" handleUpdates="1"
+                 updateFlag="1" templateId="1" albumId="1" developerId="1"
+                 status="3" adminId= "1" description="test"/>
+    <Application id="2" name="巧虎来啦" pinyin="qiaohu" icon="" css="" autoUpdates="0" handleUpdates="1"
+                 updateFlag="1" templateId="1" albumId="1" developerId="1"
+                 status="3" adminId= "1" description="test"/>
+
+    <Template id="1" name="web古典" fileUrl="xxx" status="1" />
+    
+    <DeskRecmdApp id="1" appId="1" description="影迷俱乐部，大力推荐" />
+    
+    <ViewLogs id="1" mac="test" videoId="1" albumId="18" viewTime="1200" videoFile="" actionTime="2012-09-08 00:00:00"/>
+    <ViewLogs id="2" mac="test" videoId="1" albumId="19" viewTime="1200" videoFile="" actionTime="2012-09-08 01:00:00" />
+    <ViewLogs id="3" mac="test" videoId="1" albumId="20" viewTime="1200" videoFile="" actionTime="2012-09-08 02:00:00" />
+    <ViewLogs id="4" mac="test" videoId="1" albumId="21" viewTime="1200" videoFile="" actionTime="2012-09-08 03:00:00" />
+    <ViewLogs id="5" mac="test" videoId="1" albumId="22" viewTime="1200" videoFile="" actionTime="2012-09-08 04:00:00" />
+    <ViewLogs id="6" mac="test" videoId="1" albumId="23" viewTime="1200" videoFile="" actionTime="2012-09-08 05:00:00" />
+    <ViewLogs id="7" mac="test" videoId="1" albumId="24" viewTime="1200" videoFile="" actionTime="2012-09-08 06:00:00" />
+    <ViewLogs id="8" mac="test" videoId="1" albumId="25" viewTime="1200" videoFile="" actionTime="2012-09-08 07:00:00" />
+    <ViewLogs id="9" mac="test" videoId="1" albumId="26" viewTime="1200" videoFile="" actionTime="2012-09-08 08:00:00" />
+    <ViewLogs id="10" mac="test" videoId="1" albumId="27" viewTime="1200" videoFile="" actionTime="2012-09-08 09:00:00" />
+</dataset>
