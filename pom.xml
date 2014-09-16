@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.runmit.uc</groupId>
-    <artifactId>uc</artifactId>
+    <groupId>com.runmit.clotho</groupId>
+    <artifactId>clotho</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>uc</name>
+    <name>clotho</name>
     <modules>
-        <module>uc-core</module>
-        <module>uc-rest</module>
-        <module>uc-management</module>
+        <module>clotho-core</module>
+        <module>clotho-rest</module>
+        <module>clotho-management</module>
     </modules>
 
     <build>
