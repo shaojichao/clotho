@@ -18,11 +18,11 @@ public class UpgradeResp extends CommonResp{
     private String new_version;
 
     @ApiModelProperty(value = "弹出类型:0-不弹出提示 1-弹出提示 ", notes = "", required = true, dataType = "String")
-    private String alert_type;
+    private String show_type;
 
     @ApiModelProperty(value = "升级类型:1-可选升级 2-强制升级", notes = "", required = true, dataType = "String")
-    private String update_type;
+    private String upgrade_type;
 
     @ApiModelProperty(value = "客户端类型", notes = "", required = true, dataType = "String")
-    private String update_url;
+    private String upgrade_url;
 }

@@ -9,13 +9,16 @@ import java.io.Serializable;
  * @author Scott.Xie
  */
 @Data
-public class Upgrade implements Serializable {
+public class Version implements Serializable {
 
     private Integer id;
     private String version;
+    private String serialno;
     private String memo;
     private String pkgurl;
-    private Integer status;//当前版本状态:1-有效,2-逻辑删除
+    private Integer clientid;//客户端类型
+    private Integer showtype;//是否弹出提示:1-不弹出提示,2-弹出提示
+    private Integer upgradetype;//依赖升级类型:1-可选升级,2-强制升级
     private String createby;
     private String createtime;
     private String updateby;

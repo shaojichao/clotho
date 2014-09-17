@@ -1,9 +1,9 @@
 package com.runmit.clotho.core.service;
 
 
-import com.runmit.clotho.core.domain.Upgrade;
-import com.runmit.clotho.core.domain.UpgradeDependence;
-import com.runmit.clotho.core.mapper.UpgradeMapper;
+import com.runmit.clotho.core.domain.Version;
+import com.runmit.clotho.core.domain.UpgradePlan;
+import com.runmit.clotho.core.mapper.VersionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UpgradeService {
+public class VersionService {
 
     @Autowired
-    private UpgradeMapper upgradeMapper;
+    private VersionMapper versionMapper;
     
 //    @Transactional(readOnly = false)
 //    public int addDeviceInfo(DeviceInfo DeviceInfoEntity) {
@@ -47,15 +47,33 @@ public class UpgradeService {
 //    }
 
     @Transactional(readOnly = true)
+//    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
+    public Version getLastestbyclientid( int clientid) {
+        return versionMapper.getLastestbyclientid(clientid);
+    }
+
+    @Transactional(readOnly = true)
     //    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
-    public Upgrade getbyid(int id) {
-    return upgradeMapper.getbyid(id);
+    public Version getbyid(int id) {
+    return versionMapper.getbyid(id);
 }
 
     @Transactional(readOnly = true)
 //    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
-    public UpgradeDependence getdependencebyorigin(int originid) {
-        return upgradeMapper.getdependencebyorigin(originid);
+    public Version getbyserialno(String serialno) {
+        return versionMapper.getbyserialno(serialno);
+    }
+
+    @Transactional(readOnly = true)
+//    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
+    public Version getbyversion(String version) {
+        return versionMapper.getbyversion(version);
+    }
+
+    @Transactional(readOnly = true)
+//    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
+    public UpgradePlan getUpgradePlanbyversion(String version) {
+        return versionMapper.getUpgradePlanbyversion(version);
     }
 
 //    @Transactional(readOnly = true)

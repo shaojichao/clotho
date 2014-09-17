@@ -1,0 +1,15 @@
+package com.runmit.clotho.rest.domain;
+
+import com.wordnik.swagger.annotations.ApiModel;
+import lombok.Data;
+
+/**
+ * Created by XP on 2014/8/20.
+ */
+@Data
+@ApiModel(value = "升级请求", description = "", discriminator = "")
+public class Comment {
+//    @NotEmpty(message = RestConst.rtn_DelDevice_userid_empty)
+//    @ApiModelProperty(value = "当前版本", notes = "", required = true, dataType = "String")
+    private String udid;;
+}

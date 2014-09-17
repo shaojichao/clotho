@@ -5,9 +5,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Runmit UC services</title>
+        <title>Runmit clotho services</title>
     </head>
     <body>
-        <h1>This is UC services by XP</h1>
+        <h1>This is clotho services by XP</h1>
     </body>
 </html>

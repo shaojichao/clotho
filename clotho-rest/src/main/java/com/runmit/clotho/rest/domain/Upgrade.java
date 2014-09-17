@@ -5,7 +5,7 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * Created by gg on 2014/8/20.
+ * Created by XP on 2014/8/20.
  */
 @Data
 @ApiModel(value = "升级请求", description = "", discriminator = "")

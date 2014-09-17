@@ -18,19 +18,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = {"/applicationContext_test.xml"})
 @TransactionConfiguration(defaultRollback = false)
 public class ServiceTest {
+
+//    @Autowired
+//    private UpgradeService upgradeService;
 //
 //    @Autowired
-//    private AdminService adminService;
-//    @Autowired
-//    private UserInfoService userInfoService;
-//    @Autowired
 //    private DataSource dataSource;
-//    @Autowired
-//    private DeviceInfoService deviceInfoService;
-//    @Autowired
-//    private UserDeviceRelaService userDeviceRelaService;
-//    @Autowired
-//    private UserDeviceRelaDelService userDeviceRelaDelService;
 //
 //    @Before
 //    public void initDbunit() throws Exception {
@@ -60,7 +53,7 @@ public class ServiceTest {
 //        userInfoService.deleteUser(ui.getId());//清空测试数据
 //        assertNull(userInfoService.getUserInfo(ui.getId()));//确认测试数据在数据库和缓存均不存在
 //    }
-//
+
 //    @Test
 //    public void testUserDevice() {
 //        UserDeviceRela udr=new UserDeviceRela();
