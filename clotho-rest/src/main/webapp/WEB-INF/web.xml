@@ -13,6 +13,11 @@
         <param-value>classpath*:rest_core.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value> app.root </param-value>
+    </context-param>
+
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
