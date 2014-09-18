@@ -10,8 +10,8 @@ import org.apache.ibatis.annotations.Options;
  */
 public interface UserFeedbackMapper {
 
-    @Insert("INSERT INTO UserFeedback (`udid`,`wifimac`,`wirelesssmac`,`wiremac`,`os`,`osver`,`device`,`area`,`language`,`imei`,`idfv`,`appkey`,`appver`,`uid`,`devicebrand`,`devicedevice`,`devicemodel`,`devicehardware`,`deviceid`,`deviceserial`,`ro`,`channel`,`dts`,`contact`,`content`) "
-            + "VALUES (#{udid},#{wifimac},#{wirelesssmac},#{wiremac},#{os},#{osver},#{device},#{area},#{language},#{imei},#{idfv},#{appkey},#{appver},#{uid},#{devicebrand},#{devicedevice},#{devicemodel},#{devicehardware},#{deviceid},#{deviceserial},#{ro},#{channel},#{dts},#{contact},#{content})")
+    @Insert("INSERT INTO UserFeedback (`hwid`,`udid`,`wifimac`,`wirelesssmac`,`wiremac`,`os`,`osver`,`device`,`area`,`language`,`imei`,`idfv`,`appkey`,`appver`,`uid`,`devicebrand`,`devicedevice`,`devicemodel`,`devicehardware`,`deviceid`,`deviceserial`,`ro`,`channel`,`dts`,`contact`,`content`) "
+            + "VALUES (#{hwid},#{udid},#{wifimac},#{wirelesssmac},#{wiremac},#{os},#{osver},#{device},#{area},#{language},#{imei},#{idfv},#{appkey},#{appver},#{uid},#{devicebrand},#{devicedevice},#{devicemodel},#{devicehardware},#{deviceid},#{deviceserial},#{ro},#{channel},#{dts},#{contact},#{content})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addUserFeedback(UserFeedback userFeedback);
 }

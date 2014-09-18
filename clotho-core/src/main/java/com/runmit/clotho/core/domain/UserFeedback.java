@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 public class UserFeedback implements Serializable {
     private Integer id;
+    private String hwid;
     private String udid;
     private String wifimac;
     private String wirelesssmac;

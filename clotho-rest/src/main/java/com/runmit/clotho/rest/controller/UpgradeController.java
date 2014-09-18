@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author XP
  */
 @RestController
-@RequestMapping(value = "/v1/upgrade")
+@RequestMapping(value = "/upgrade")
 public class UpgradeController {
 
     private static final Logger log = LoggerFactory
@@ -70,7 +70,7 @@ public class UpgradeController {
         Version currentversion=versionService.getbyversion(upgrade.getVersion());
         if(currentversion==null){
             log.error("getupgrade request error,current version is not exists:"+upgrade.getVersion());
-            ur.setRtn_code(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
+            ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }
         UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion());
@@ -79,11 +79,11 @@ public class UpgradeController {
             Version lastestversion=versionService.getLastestbyclientid(clientid);
             if(lastestversion==null){
                 log.error("getupgrade request error,clientid get lastestversion is not exists:"+upgrade.getVersion());
-                ur.setRtn_code(RestConst.RTN_GETUPGRADE_CLIENTIDGETVERSION_NOTEXIST);
+                ur.setRtn(RestConst.RTN_GETUPGRADE_CLIENTIDGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
             if(lastestversion.getSerialno().compareToIgnoreCase(currentversion.getSerialno())>0){
-                ur.setRtn_code(RestConst.RTN_OK);
+                ur.setRtn(RestConst.RTN_OK);
                 ur.setIntroduction(lastestversion.getMemo());
                 ur.setNew_version(lastestversion.getVersion());
                 ur.setShow_type(String.valueOf(lastestversion.getShowtype()));
@@ -92,14 +92,14 @@ public class UpgradeController {
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }else{
                 log.debug("getupgrade request error,current version is lastest:" + upgrade.getVersion());
-                ur.setRtn_code(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+                ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
             }
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }else{
             Version lastestversion=versionService.getbyserialno(upgradePlan.getUpgradeid());
             if(lastestversion==null){
                 log.error("getupgrade request error,upgradeplan get version is not exists:"+upgrade.getVersion());
-                ur.setRtn_code(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
+                ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
 //            版本升级变更中信息为空,则到基础版本中找版本描述信息
@@ -108,7 +108,7 @@ public class UpgradeController {
             }else{
                 ur.setIntroduction(upgradePlan.getMemo());
             }
-            ur.setRtn_code(RestConst.RTN_OK);
+            ur.setRtn(RestConst.RTN_OK);
             ur.setShow_type(String.valueOf(upgradePlan.getShowtype()));
             ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));
             ur.setNew_version(lastestversion.getVersion());

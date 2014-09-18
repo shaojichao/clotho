@@ -4,7 +4,7 @@ import com.runmit.clotho.core.domain.UserFeedback;
 import com.runmit.clotho.core.service.UserFeedbackService;
 import com.runmit.clotho.rest.common.RestConst;
 import com.runmit.clotho.rest.domain.Comment;
-import com.runmit.uc.rest.domain.CommonResp;
+import com.runmit.clotho.rest.domain.CommonResp;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
@@ -27,7 +27,7 @@ import javax.validation.Valid;
  * @author XP
  */
 @RestController
-@RequestMapping(value = "/v1/comment")
+@RequestMapping(value = "/comment")
 public class CommentController {
 
     private static final Logger log = LoggerFactory
@@ -53,12 +53,15 @@ public class CommentController {
         }
         UserFeedback userFeedback=getFeedback(comment);
         userFeedbackService.addUserFeedback(userFeedback);
-        cr.setRtn_code(RestConst.RTN_OK);
+        cr.setRtn(RestConst.RTN_OK);
         return new ResponseEntity<>(cr, HttpStatus.OK);
     }
 
     private UserFeedback getFeedback(Comment comment){
         UserFeedback userFeedback=new UserFeedback();
+        if(StringUtils.isNotBlank(comment.getHwid())){
+            userFeedback.setHwid(comment.getHwid());
+        }
         userFeedback.setUdid(comment.getUdid());
         userFeedback.setWifimac(comment.getWifimac());
         userFeedback.setWirelesssmac(comment.getWirelesssmac());

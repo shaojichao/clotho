@@ -1,6 +1,6 @@
 package com.runmit.clotho.rest.domain;
 
-import com.runmit.uc.rest.domain.CommonResp;
+
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 import lombok.Data;

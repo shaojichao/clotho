@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Range;
 public class Comment {
 //    @NotEmpty(message = RestConst.rtn_DelDevice_userid_empty)
 //    @ApiModelProperty(value = "当前版本", notes = "", required = true, dataType = "String")
+    private String hwid;
     @NotEmpty
     private String udid;
     @NotEmpty
