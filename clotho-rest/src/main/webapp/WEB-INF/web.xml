@@ -13,9 +13,10 @@
         <param-value>classpath*:rest_core.xml</param-value>
     </context-param>
 
+    <!-- Define the value of webAppRootKey in every project to avoid the conflict when deploying them in a same tomcat folder '/webapps'-->
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value> app.root </param-value>
+        <param-value> clothoapp.root </param-value>
     </context-param>
 
     <listener>
