@@ -11,16 +11,12 @@ import org.hibernate.validator.constraints.Range;
 @Data
 @ApiModel(value = "APP评论信息", description = "", discriminator = "")
 public class Comment {
-//    @NotEmpty(message = RestConst.rtn_DelDevice_userid_empty)
-//    @ApiModelProperty(value = "当前版本", notes = "", required = true, dataType = "String")
     private String hwid;
     @NotEmpty
     private String udid;
     @NotEmpty
     private String wifimac;
-    @NotEmpty
     private String wirelesssmac;
-    @NotEmpty
     private String wiremac;
     @Range(min=1,max=3)
     private Integer os;
@@ -34,13 +30,11 @@ public class Comment {
     private String language;
     @NotEmpty
     private String imei;
-    @NotEmpty
     private String idfv;
     @NotEmpty
     private String appkey;
     @NotEmpty
     private String appver;
-    @NotEmpty
     private String uid;
     @NotEmpty
     private String devicebrand;
