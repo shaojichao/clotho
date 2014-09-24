@@ -10,7 +10,23 @@ import lombok.Data;
 @Data
 @ApiModel(value = "升级请求", description = "", discriminator = "")
 public class Upgrade {
-//    @NotEmpty(message = RestConst.rtn_DelDevice_userid_empty)
+public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getClientid() {
+		return clientid;
+	}
+
+	public void setClientid(String clientid) {
+		this.clientid = clientid;
+	}
+
+	//    @NotEmpty(message = RestConst.rtn_DelDevice_userid_empty)
     @ApiModelProperty(value = "当前版本", notes = "", required = true, dataType = "String")
     private String version;
 
