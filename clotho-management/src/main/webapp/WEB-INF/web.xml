@@ -38,7 +38,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring-mvc-dispatcher</servlet-name>
-        <url-pattern>/uc_management/*</url-pattern>
+        <url-pattern>/management/*</url-pattern>
     </servlet-mapping>
 
     <filter>
