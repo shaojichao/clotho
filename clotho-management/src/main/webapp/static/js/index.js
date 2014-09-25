@@ -26,7 +26,7 @@ var topPanel = Ext.create('Ext.toolbar.Toolbar', {
 //左侧菜单栏
 var westPanel = Ext.create('Ext.tree.Panel', {
 	region: 'west',
-	title: '升级包管理',
+	title: '运营系统',
 	width: 150,
 	collapsible: true,
 	rootVisible: false,
