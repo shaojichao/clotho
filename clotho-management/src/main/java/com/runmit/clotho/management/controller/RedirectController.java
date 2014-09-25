@@ -23,4 +23,9 @@ public class RedirectController {
 		log.info("login to index.do");
 		return "index";
 	}
+	
+	@RequestMapping(value = "/list-demo.do")
+	public String toDemo() {
+		return "list-demo";
+	}
 }

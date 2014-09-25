@@ -13,22 +13,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runmit.clotho.core.domain.CurrentStatus;
 import com.runmit.clotho.core.domain.Menu;
+import com.runmit.clotho.core.dto.ExtEntity;
 
 /**
+ * 
  * @author zhipeng.tian
  *
- *2014年9月24日
- * 
  */
 @Controller
 @Component
-@RequestMapping(value = "/menu")
-public class MenuController {
+@RequestMapping(value = "/demo")
+public class DemoController {
+	
 	private static final Logger log = LoggerFactory
-            .getLogger(RedirectController.class);
+            .getLogger(DemoController.class);
 	
 	@RequestMapping(value = "/list.do")
-	public @ResponseBody List<Menu> getMenus(@RequestParam("adminID") int adminid) {
+	public @ResponseBody ExtEntity<Menu> getMenus() {
+		
+		ExtEntity<Menu> menus = new ExtEntity<Menu>();
+		
 		List<Menu> list = new ArrayList<Menu>();
 		Menu menu = new Menu();
 		menu.setId(1);
@@ -47,7 +51,11 @@ public class MenuController {
 		menu1.setStatus(CurrentStatus.ACTIVE);
 		menu1.setUrl("http://cn.bing.com");
 		list.add(menu1);
-		log.info("login to index.do");
-		return list;
+		
+		menus.setResult(2);
+		menus.setRows(list);
+		
+		log.info("demo list");
+		return menus;
 	}
 }
