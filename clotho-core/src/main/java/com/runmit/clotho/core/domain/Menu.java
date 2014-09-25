@@ -1,6 +1,7 @@
 package com.runmit.clotho.core.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zhipeng.tian
@@ -19,6 +20,14 @@ public class Menu implements Serializable{
 	private String url;
 	private Boolean leaf;
 	private CurrentStatus status;
+	private List<Menu> children;
+	
+	public List<Menu> getChildren() {
+		return children;
+	}
+	public void setChildren(List<Menu> children) {
+		this.children = children;
+	}
 	public int getId() {
 		return id;
 	}
