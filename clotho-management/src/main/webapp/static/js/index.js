@@ -12,7 +12,7 @@ var topPanel = Ext.create('Ext.toolbar.Toolbar', {
 		        			 		return;
 					
 								Ext.Ajax.request({    
-									url: path + '/login/logout.jsp',
+									url: path + '/login/logout.do',
 									success:function(response,options){
 										top.location.href = path;
 									}

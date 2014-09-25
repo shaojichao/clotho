@@ -40,4 +40,11 @@ public class LoginController {
 		log.info(admin.getName()+" login");
 		return resp;
 	}
+	
+	@RequestMapping(value = "/logout")
+	public String userLogout(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+		return "index";
+	}
 }
