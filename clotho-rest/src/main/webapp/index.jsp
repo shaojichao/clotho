@@ -8,6 +8,6 @@
         <title>Runmit clotho services</title>
     </head>
     <body>
-        <h1>This is clotho services by XP</h1>
+        <h1>This is clotho services</h1>
     </body>
 </html>
