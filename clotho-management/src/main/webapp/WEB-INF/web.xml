@@ -5,7 +5,7 @@
     <!-- Location of the Log4J config file, for initialization and refresh checks. Applied by Log4jConfigListener. -->
     <context-param>
         <param-name>log4jConfigLocation</param-name>
-        <param-value>file:///${catalina.home}/app/config/uc/log4j_management.properties</param-value>
+        <param-value>file:///${catalina.home}/app/config/clotho-management/log4j_management.properties</param-value>
     </context-param>
     <!-- Location of the XML file that defines the root application context. Applied by ContextLoaderServlet. -->
     <context-param>
@@ -38,7 +38,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>spring-mvc-dispatcher</servlet-name>
-        <url-pattern>/management/*</url-pattern>
+        <url-pattern>/login/*</url-pattern>
+        <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
     <filter>
@@ -66,4 +67,7 @@
     <session-config>
         <session-timeout>1</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
