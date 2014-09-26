@@ -52,7 +52,7 @@
         <release.version>0.0.1-SNAPSHOT</release.version>
         <spring.version>4.0.6.RELEASE</spring.version>
         <spring.asm.version>3.1.4.RELEASE</spring.asm.version>
-        <!-- <spring.security.version>3.1.0.RELEASE</spring.security.version> -->
+        <spring.security.version>3.1.0.RELEASE</spring.security.version>
         <spring.xml.version>1.5.9</spring.xml.version>
         <cglib.version>2.2.2</cglib.version>
         <mysql.version>5.1.31</mysql.version>
@@ -152,6 +152,21 @@
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+			  <groupId>org.springframework.security</groupId>
+			  <artifactId>org.springframework.security.core</artifactId>
+			  <version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.springframework.security</groupId>
+			  <artifactId>org.springframework.security.web</artifactId>
+			  <version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.springframework.security</groupId>
+			  <artifactId>org.springframework.security.config</artifactId>
+			  <version>${spring.security.version}</version>
+			</dependency>
             <!-- need xpath support of spring-ws -->
             <dependency>
                 <groupId>org.springframework.ws</groupId>

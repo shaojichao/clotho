@@ -209,7 +209,6 @@ public class Comment {
     private String channel;
     @Range
     private Long dts;
-    @NotEmpty
     private String contact;
     @NotEmpty
     private String content;
