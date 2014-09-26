@@ -1,4 +1,4 @@
-package com.runmit.clotho.core.domain;
+package com.runmit.clotho.core.domain.admin;
 
 import java.io.Serializable;
 import java.util.Date;

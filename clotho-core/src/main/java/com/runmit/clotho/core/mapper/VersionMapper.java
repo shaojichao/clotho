@@ -1,7 +1,8 @@
 package com.runmit.clotho.core.mapper;
 
-import com.runmit.clotho.core.domain.Version;
-import com.runmit.clotho.core.domain.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.Version;
+
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

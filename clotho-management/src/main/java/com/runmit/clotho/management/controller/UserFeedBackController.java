@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.runmit.clotho.core.domain.UserFeedback;
+import com.runmit.clotho.core.domain.userfeedback.UserFeedback;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.service.UserFeedbackService;
 

@@ -3,7 +3,7 @@ package com.runmit.clotho.core.service;
 
 import java.util.List;
 
-import com.runmit.clotho.core.domain.UserFeedback;
+import com.runmit.clotho.core.domain.userfeedback.UserFeedback;
 import com.runmit.clotho.core.mapper.UserFeedbackMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;

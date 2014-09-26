@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.runmit.clotho.core.domain.Menu;
+import com.runmit.clotho.core.domain.admin.Menu;
 
 /**
  *

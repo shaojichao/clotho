@@ -1,4 +1,4 @@
-package com.runmit.clotho.core.domain;
+package com.runmit.clotho.core.domain.userfeedback;
 
 import lombok.Data;
 

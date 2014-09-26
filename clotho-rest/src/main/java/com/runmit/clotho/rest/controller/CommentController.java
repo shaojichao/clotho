@@ -1,6 +1,6 @@
 package com.runmit.clotho.rest.controller;
 
-import com.runmit.clotho.core.domain.UserFeedback;
+import com.runmit.clotho.core.domain.userfeedback.UserFeedback;
 import com.runmit.clotho.core.service.UserFeedbackService;
 import com.runmit.clotho.rest.common.RestConst;
 import com.runmit.clotho.rest.domain.Comment;
@@ -8,6 +8,7 @@ import com.runmit.clotho.rest.domain.CommonResp;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.runmit.clotho.rest.controller;
 
-import com.runmit.clotho.core.domain.UpgradePlan;
-import com.runmit.clotho.core.domain.Version;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.service.VersionService;
 import com.runmit.clotho.rest.common.RestConst;
 import com.runmit.clotho.rest.domain.Upgrade;
@@ -9,6 +9,7 @@ import com.runmit.clotho.rest.domain.UpgradeResp;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

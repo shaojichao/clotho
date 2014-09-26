@@ -1,9 +1,10 @@
 package com.runmit.clotho.core.service;
 
 
-import com.runmit.clotho.core.domain.Version;
-import com.runmit.clotho.core.domain.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
