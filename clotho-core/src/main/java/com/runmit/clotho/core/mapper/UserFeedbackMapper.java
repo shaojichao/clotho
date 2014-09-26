@@ -20,7 +20,7 @@ public interface UserFeedbackMapper {
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addUserFeedback(UserFeedback userFeedback);
     
-    @Select("SELECT * FROM UserFeedback LIMIT #{start},#{limit}")
+    @Select("SELECT * FROM UserFeedback ORDER BY id DESC LIMIT #{start},#{limit}")
     List<UserFeedback> getList(@Param("start")int start,@Param("limit")int limit);
     
     @Select("SELECT count(*) FROM UserFeedback")
