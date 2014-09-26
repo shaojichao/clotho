@@ -1,6 +1,6 @@
 var centerPanel = Ext.create('Ext.grid.Panel', {
 	region: 'center',
-	title: '列表',
+	title: '列表 <span style="color:red">(双击查看"反馈内容")</span>',
     columns: [
 		        {header: 'ID',  dataIndex: 'id', width: 60,sortable:true },
 		        {header: 'SuperD硬件设备ID', dataIndex: 'hwid', width: 150},
@@ -64,7 +64,16 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         emptyMsg: "没有数据",
         beforePageText: '第',
         afterPageText: '页，共 {0} 页'
-    })
+    }),
+    listeners: {
+    	dblclick: {
+            element: 'body', //bind to the underlying body property on the panel
+            fn: function(){ 
+            	var models = centerPanel.getSelectionModel().getSelection();
+        		Ext.Msg.alert('反馈内容', models[0].get('content'));
+            }
+        } 
+    }
 });
 
 //domReady
