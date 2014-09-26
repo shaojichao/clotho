@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page import="com.runmit.clotho.management.domain.account.Admin" %>
+<%@ page import="com.runmit.clotho.core.domain.admin.Admin" %>
 <%@ page import="com.runmit.clotho.management.security.SecurityConstant" %>
 <%
 	String host = request.getServerName();

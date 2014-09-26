@@ -17,7 +17,7 @@ public class Admin implements Serializable{
 	private int id;
 	private String name;
 	private String mail;
-	private String ename;
+	private String uid;
 	public int getId() {
 		return id;
 	}
@@ -36,10 +36,10 @@ public class Admin implements Serializable{
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public String getEname() {
-		return ename;
+	public String getUid() {
+		return uid;
 	}
-	public void setEname(String ename) {
-		this.ename = ename;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 }

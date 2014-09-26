@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.runmit.clotho.management.domain.account.Admin;
+import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.management.security.SecurityConstant;
 
 /**

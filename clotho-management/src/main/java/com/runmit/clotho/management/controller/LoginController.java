@@ -5,14 +5,17 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
-import com.runmit.clotho.management.domain.account.Admin;
+import com.runmit.clotho.management.security.LDAPValidation;
 import com.runmit.clotho.management.security.SecurityConstant;
 
 /**
@@ -27,17 +30,25 @@ public class LoginController {
 	private static final Logger log = LoggerFactory
             .getLogger(LoginController.class);
 	
+	@Autowired
+	private LDAPValidation ldap;
+	
 	@RequestMapping(value = "/loginValid")
-	public @ResponseBody ExtStatusEntity userLogin(HttpServletRequest request, Model model) {
+	public @ResponseBody ExtStatusEntity userLogin(HttpServletRequest request, Model model,
+			@RequestParam("name")String uid,@RequestParam("password")String password) {
 		ExtStatusEntity resp = new ExtStatusEntity();
-		Admin admin = new Admin();
-		admin.setId(1);
-		admin.setName("I am a tester");
-		HttpSession session = request.getSession();
-		session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
-		resp.setMsg("success");;
-		resp.setSuccess(true);
-		log.info(admin.getName()+" login");
+		
+		Admin admin = ldap.validAdmin(uid, password);
+		if(null==admin){
+			resp.setMsg("success");;
+			resp.setSuccess(false);
+		}else{
+			HttpSession session = request.getSession();
+			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
+			resp.setMsg("success");
+			resp.setSuccess(true);
+			log.info(admin.getName()+" login");
+		}
 		return resp;
 	}
 	

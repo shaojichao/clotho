@@ -4,18 +4,20 @@ Ext.onReady(function() {
 	
 	var userName = new Ext.form.TextField({
 		name : "name",
+		id : "name",
 		fieldLabel : "用户名",
 		blankText : "请输入用户名",
 		allowBlank: false,
 		selectOnFocus : true,
 		cls: 'login_user',
 		anchor: '95%',
-		value:'test'
+		value:'liang.tian'
 	});
 	
 	var password = new Ext.form.TextField({
 		cls : "key",
 		name : "password",
+		id : "password",
 		fieldLabel : "密&nbsp;&nbsp;&nbsp;码",
 		blankText : "请输入密码",
 		allowBlank: false,
@@ -23,7 +25,7 @@ Ext.onReady(function() {
 		inputType : "password",
 		cls: 'login_password',
 		anchor: '95%',
-		value:"test"
+		value:"runmit!@#"
 	});
 	
 	/*var randCode = new Ext.form.TextField({
