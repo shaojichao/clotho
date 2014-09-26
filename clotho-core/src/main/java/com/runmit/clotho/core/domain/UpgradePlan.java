@@ -10,7 +10,11 @@ import java.io.Serializable;
  */
 @Data
 public class UpgradePlan implements Serializable {
-    private Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7811102660151073545L;
+	private Integer id;
     private String originid;
     private String upgradeid;
     private Integer clientid;

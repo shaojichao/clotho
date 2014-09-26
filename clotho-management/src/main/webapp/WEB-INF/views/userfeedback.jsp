@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CLOTHO</title>
         <%@ include file="../../header.jsp"%>
-        <script type="text/javascript" src="<%=path %>/static/js/list-demo.js"></script>
+        <script type="text/javascript" src="<%=path %>/static/js/userfeedback.js"></script>
     </head>
     <body>
         

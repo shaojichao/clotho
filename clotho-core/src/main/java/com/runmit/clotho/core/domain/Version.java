@@ -11,7 +11,11 @@ import java.io.Serializable;
 @Data
 public class Version implements Serializable {
 
-    private Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8311217979995977208L;
+	private Integer id;
     private String version;
     private String serialno;
     private String memo;

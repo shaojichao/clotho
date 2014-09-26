@@ -1,18 +1,18 @@
 package com.runmit.clotho.management.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.runmit.clotho.core.domain.CurrentStatus;
 import com.runmit.clotho.core.domain.Menu;
+import com.runmit.clotho.core.service.MenuService;
 
 /**
  * @author zhipeng.tian
@@ -27,40 +27,23 @@ public class MenuController {
 	private static final Logger log = LoggerFactory
             .getLogger(RedirectController.class);
 	
+	@Autowired
+    private MenuService menuService;
+	
 	@RequestMapping(value = "/list.do")
-	public @ResponseBody List<Menu> getMenus(@RequestParam("adminID") int adminid) {
+	public @ResponseBody List<Menu> getMenus(@RequestParam(value="adminID",defaultValue="0") int adminid) {
 		
-		Menu menu0 = new Menu();
-		menu0.setId(3);
-		menu0.setLeaf(true);
-		menu0.setText("测试1");
-		menu0.setParentID(0);
-		menu0.setStatus(CurrentStatus.ACTIVE);
-		menu0.setUrl("list-demo.do");
+		List<Menu> list = this.menuService.getMenuList(0);
 		
-		List<Menu> list0 = new ArrayList<Menu>();
-		list0.add(menu0);
+		//二级联动
+		for(Menu menu:list){
+			if(!menu.getLeaf()&&menu.getParentID()>0){
+				menu.setChildren(this.menuService.getMenuList(menu.getParentID()));
+			}
+		}
 		
-		List<Menu> list = new ArrayList<Menu>();
-		Menu menu = new Menu();
-		menu.setId(1);
-		menu.setLeaf(false);
-		menu.setText("测试3");
-		menu.setParentID(0);
-		menu.setStatus(CurrentStatus.ACTIVE);
-		menu.setChildren(list0);
-		list.add(menu);
-		
-		Menu menu1 = new Menu();
-		menu1.setId(2);
-		menu1.setLeaf(true);
-		menu1.setText("测试2");
-		menu1.setParentID(0);
-		menu1.setStatus(CurrentStatus.ACTIVE);
-		menu1.setUrl("http://cn.bing.com");
-		list.add(menu1);
-		
-		log.info("login to index.do");
+		log.info("getMenus");
 		return list;
 	}
+	
 }

@@ -1,6 +1,7 @@
 package com.runmit.clotho.core.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,20 @@ public class Menu implements Serializable{
 	private String url;
 	private Boolean leaf;
 	private CurrentStatus status;
+	private Date createTime;
+	private String createdBy;
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 	private List<Menu> children;
 	
 	public List<Menu> getChildren() {

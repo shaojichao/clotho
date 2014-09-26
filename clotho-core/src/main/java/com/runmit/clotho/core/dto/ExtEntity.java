@@ -9,12 +9,12 @@ import java.util.List;
  */
 
 public class ExtEntity<T> {
-	private int result = 0;
+	private long result = 0;
 	private List<T> rows;
-	public int getResult() {
+	public long getResult() {
 		return result;
 	}
-	public void setResult(int result) {
+	public void setResult(long result) {
 		this.result = result;
 	}
 	public List<T> getRows() {

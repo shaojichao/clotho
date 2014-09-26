@@ -36,8 +36,8 @@ public class RedirectController {
 		}
 	}
 	
-	@RequestMapping(value = "/list-demo.do")
-	public String toDemo() {
-		return "list-demo";
+	@RequestMapping(value = "/userfeedback.do")
+	public String toUserfeedback() {
+		return "userfeedback";
 	}
 }

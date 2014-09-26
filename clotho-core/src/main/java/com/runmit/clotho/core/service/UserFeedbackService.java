@@ -1,8 +1,11 @@
 package com.runmit.clotho.core.service;
 
 
+import java.util.List;
+
 import com.runmit.clotho.core.domain.UserFeedback;
 import com.runmit.clotho.core.mapper.UserFeedbackMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +25,15 @@ public class UserFeedbackService {
     public int addUserFeedback(UserFeedback userFeedback) {
         userFeedbackMapper.addUserFeedback(userFeedback);
         return userFeedback.getId();
+    }
+    
+    @Transactional(readOnly = true)
+    public List<UserFeedback> getList(int start,int limit){
+    	return userFeedbackMapper.getList(start, limit);
+    }
+    
+    @Transactional(readOnly = true)
+    public long getCount(){
+    	return userFeedbackMapper.getCount();
     }
 }
