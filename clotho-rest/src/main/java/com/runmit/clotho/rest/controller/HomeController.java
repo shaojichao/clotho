@@ -17,8 +17,6 @@ public class HomeController extends ApiDocumentationController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String documentation() {
-        
-        System.out.println("===========");
         return "home";
     }
 }
