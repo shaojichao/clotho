@@ -11,7 +11,7 @@ Ext.onReady(function() {
 		selectOnFocus : true,
 		cls: 'login_user',
 		anchor: '95%',
-		value:'liang.tian'
+		value:'guest'
 	});
 	
 	var password = new Ext.form.TextField({
@@ -25,7 +25,7 @@ Ext.onReady(function() {
 		inputType : "password",
 		cls: 'login_password',
 		anchor: '95%',
-		value:"runmit!@#"
+		value:"guest"
 	});
 	
 	/*var randCode = new Ext.form.TextField({

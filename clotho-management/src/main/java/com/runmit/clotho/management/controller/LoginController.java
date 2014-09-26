@@ -40,8 +40,16 @@ public class LoginController {
 		
 		Admin admin = ldap.validAdmin(uid, password);
 		if(null==admin){
-			resp.setMsg("success");;
-			resp.setSuccess(false);
+//			resp.setMsg("success");
+//			resp.setSuccess(false);
+			//接入正式系统前使用
+			admin = new Admin();
+			admin.setId(1);
+			admin.setName("我是访客");
+			resp.setMsg("success");
+			resp.setSuccess(true);
+			HttpSession session = request.getSession();
+			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
 		}else{
 			HttpSession session = request.getSession();
 			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
