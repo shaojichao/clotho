@@ -48,7 +48,6 @@ public class LDAPValidation {
 			lc.bind(LDAPConnection.LDAP_V3, loginDN, password.getBytes("UTF8"));
 			LDAPSearchResults searchResults = lc.search(searchBase,
 					searchScope, searchFilter, null, false);
-
 			while (searchResults.hasMore()) {
 				LDAPEntry nextEntry = null;
 				try {
@@ -74,7 +73,7 @@ public class LDAPValidation {
                     while (allValues.hasMoreElements()) {  
                         String value = allValues.nextElement();  
                         if(attributeName.equalsIgnoreCase("uid")){
-                        	admin.setUid(uid);
+                        	admin.setUid(value);
     					}else if(attributeName.equalsIgnoreCase("mail")){
     						admin.setMail(value);
     					}else if(attributeName.equalsIgnoreCase("displayName")){
