@@ -49,7 +49,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	             'channel','dts','contact','content'],
 	    proxy: {
 	        type: 'ajax',
-	        url: path + '/userfeedback/list.do',
+	        url: path + '/clotho/userfeedback/list.do',
 	        reader: {
 	            type: 'json',
 	            totalProperty: "result",

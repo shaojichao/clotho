@@ -35,9 +35,4 @@ public class RedirectController {
 			return "index";
 		}
 	}
-	
-	@RequestMapping(value = "/userfeedback.do")
-	public String toUserfeedback() {
-		return "userfeedback";
-	}
 }

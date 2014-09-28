@@ -1,6 +1,5 @@
-package com.runmit.clotho.management.controller;
+package com.runmit.clotho.management.controller.clotho;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ import com.runmit.clotho.core.service.UserFeedbackService;
  */
 @Controller
 @Component
-@RequestMapping(value = "/userfeedback")
+@RequestMapping(value = "/clotho/userfeedback")
 public class UserFeedBackController {
 	private static final Logger log = LoggerFactory
             .getLogger(UserFeedBackController.class);

@@ -7,9 +7,9 @@
 	String path = request.getContextPath();
 	Admin admin = (Admin)request.getSession().getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 %>
-<link rel="stylesheet" type="text/css" href="static/ext/packages/ext-theme-neptune/build/resources/ext-theme-neptune-all.css">
-<script type="text/javascript" src="static/ext/bootstrap.js"></script>
-<script type="text/javascript" src="static/ext/packages/ext-theme-neptune/build/ext-theme-neptune.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=path%>/static/ext/packages/ext-theme-neptune/build/resources/ext-theme-neptune-all.css">
+<script type="text/javascript" src="<%=path%>/static/ext/bootstrap.js"></script>
+<script type="text/javascript" src="<%=path%>/static/ext/packages/ext-theme-neptune/build/ext-theme-neptune.js"></script>
 <script>
 	var host = '<%=host%>',
 		port = '<%=port%>',
