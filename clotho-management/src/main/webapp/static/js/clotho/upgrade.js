@@ -234,7 +234,11 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        {header: '修改人',  dataIndex: 'updateby', width: 80,sortable:true },
 		        {header: '修改时间',  dataIndex: 'updatetime', width: 160,sortable:true,renderer:function(value){
 		        	if(value != null){
-		        		return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
+		        		var time = Ext.util.Format.date(new Date(value),'Y-m-d H:i:s')
+		        		if(value=='1970-01-01 00:00:00'){
+		        			time = '';
+		        		}
+		        		return time;
 		        	}else{
 		        		return '';
 		        	}
@@ -323,6 +327,21 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         } 
     }
 });
+
+function deleteUpgrades(records){
+	Ext.Ajax.request({
+		url: path + '/clotho/upgrade/delVersion.do?id='+records[0].get('id'),
+		scope: this,
+		async: true,
+		success: function(response, options){
+			Ext.Msg.alert("系统提示", "删除成功");
+			centerPanel.getStore().reload();
+		},
+		failure: function(form, action){
+			Ext.Msg.alert('系统提示', action.result.msg);
+		}
+	});
+}
 
 //domReady
 Ext.onReady(function(){

@@ -2,6 +2,7 @@ package com.runmit.clotho.core.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -55,4 +56,8 @@ public interface VersionMapper {
     		+ " where `id`=#{id}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateVersion(Version version);
+    
+    @Delete("DELETE FROM Version WHERE id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void delVersion(@Param("id") int id);
 }

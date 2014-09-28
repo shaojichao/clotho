@@ -1,11 +1,13 @@
 package com.runmit.clotho.core.service;
 
 
+import java.util.Date;
 import java.util.List;
 
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
+import com.runmit.clotho.core.util.DateUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,10 +63,16 @@ public class VersionService {
     @Transactional(readOnly = false)
     public void saveVersion(Version version){
     	if(version.getId()==null||version.getId()==0){
+    		version.setSerialno(DateUtils.getDateString(new Date(), "yyyyMMddHHmmss"));
     		this.versionMapper.addVersion(version);
     	}else{
     		this.versionMapper.updateVersion(version);
     	}
+    }
+    
+    @Transactional(readOnly = false)
+    public void delVersion(int id){
+    	this.versionMapper.delVersion(id);
     }
 
 }

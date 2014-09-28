@@ -78,4 +78,23 @@ public class UpgradeController {
 		log.info("saveVersion");
 		return entity;
 	}
+	
+	@RequestMapping(value = "/delVersion.do")
+	public @ResponseBody ExtStatusEntity saveVersion(@RequestParam("id")int id,HttpServletRequest request) {
+		ExtStatusEntity entity = new ExtStatusEntity();
+		try{
+			this.versionService.delVersion(id);
+			
+			entity.setMsg("succeed");
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			log.error("delVersion error",ex);
+			entity.setMsg("删除失败");
+			entity.setSuccess(false);
+		}
+		
+		log.info("delVersion");
+		return entity;
+		
+	}
 }
