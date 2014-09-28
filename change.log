@@ -5,6 +5,7 @@ your content.
 eg:
 #2014-09-28 #zhipeng.tian #clotho-management/application.properties
 1.增加ldap.host=192.168.20.112;
+2.增加common.file.upload.path=file:///${CATALINA_HOME}/webapps/upload
 
 
  

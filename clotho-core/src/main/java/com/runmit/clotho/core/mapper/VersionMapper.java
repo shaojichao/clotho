@@ -2,12 +2,13 @@ package com.runmit.clotho.core.mapper;
 
 import java.util.List;
 
-import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
-import com.runmit.clotho.core.domain.upgrade.Version;
-
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.Version;
 
 /**
  *
@@ -44,4 +45,14 @@ public interface VersionMapper {
     @Options(useCache = true, flushCache = false)
     Version getLastestbyclientid(@Param("clientid") int clientid);
 
+    @Insert("INSERT INTO Version (`version`,`serialno`,`memo`,`pkgurl`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+            + "VALUES (#{version},#{serialno},#{memo},#{pkgurl},#{clientid},#{showtype},#{upgradetype},#{createby})")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void addVersion(Version version);
+    
+    @Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`memo`=#{memo},`pkgurl`=#{pkgurl},"
+    		+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
+    		+ " where `id`=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updateVersion(Version version);
 }

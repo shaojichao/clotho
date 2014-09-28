@@ -134,7 +134,7 @@ public class ExceptionHandlerAdvice {
             error.setMessage(message);
             mv.addObject(error);
         } else {
-            mv.setView(new InternalResourceView("/api/error/errorHandler" + extension + "?path=" + path + "&status=" + status + "&httpStatusCode=" + httpStatusCode.value() + "&message=" + message + "&exception=" + ex));
+            mv.setView(new InternalResourceView("/error/errorHandler" + extension + "?path=" + path + "&status=" + status + "&httpStatusCode=" + httpStatusCode.value() + "&message=" + message + "&exception=" + ex));
         }
 
         return mv;

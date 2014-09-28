@@ -3,6 +3,7 @@ package com.runmit.clotho.core.domain.upgrade;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -73,22 +74,22 @@ public class Version implements Serializable {
 	public void setCreateby(String createby) {
 		this.createby = createby;
 	}
-	public String getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(String createtime) {
-		this.createtime = createtime;
-	}
 	public String getUpdateby() {
 		return updateby;
 	}
 	public void setUpdateby(String updateby) {
 		this.updateby = updateby;
 	}
-	public String getUpdatetime() {
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+	public Date getUpdatetime() {
 		return updatetime;
 	}
-	public void setUpdatetime(String updatetime) {
+	public void setUpdatetime(Date updatetime) {
 		this.updatetime = updatetime;
 	}
 	private String pkgurl;
@@ -96,8 +97,8 @@ public class Version implements Serializable {
     private Integer showtype;//是否弹出提示:1-不弹出提示,2-弹出提示
     private Integer upgradetype;//依赖升级类型:1-可选升级,2-强制升级
     private String createby;
-    private String createtime;
+    private Date createtime;
     private String updateby;
-    private String updatetime;
+    private Date updatetime;
 
 }

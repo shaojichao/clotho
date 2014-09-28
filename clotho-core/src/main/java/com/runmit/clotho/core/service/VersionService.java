@@ -57,5 +57,14 @@ public class VersionService {
     public long getCount() {
         return versionMapper.getCount();
     }
+    
+    @Transactional(readOnly = false)
+    public void saveVersion(Version version){
+    	if(version.getId()==null||version.getId()==0){
+    		this.versionMapper.addVersion(version);
+    	}else{
+    		this.versionMapper.updateVersion(version);
+    	}
+    }
 
 }
