@@ -37,8 +37,8 @@ public class MenuController {
 		
 		//二级联动
 		for(Menu menu:list){
-			if(!menu.getLeaf()&&menu.getParentID()>0){
-				menu.setChildren(this.menuService.getMenuList(menu.getParentID()));
+			if(!menu.getLeaf()){
+				menu.setChildren(this.menuService.getMenuList(menu.getId()));
 			}
 		}
 		
