@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +31,9 @@ public class UploadController {
 	private static final Logger log = LoggerFactory
             .getLogger(UploadController.class);
 	
-	/*@Value("${file.upload.path}")
-	private String uploadPath;*/
-	
 	@RequestMapping(value = "/upload.do",method=RequestMethod.POST)
     public void upload(@RequestParam(value = "pkg") MultipartFile file, 
     		HttpServletRequest request,HttpServletResponse response) throws Exception {
-       
         String result = null;
         Writer writer = response.getWriter();
         if (file.getSize() <= 0) {
@@ -50,7 +45,7 @@ public class UploadController {
 
         try {
         	log.info("/upload/upload.do Upload  file {} ...", file.getName());
-            // put at temp place to do the verify
+            // save file in /webapps/upload/tmp/
         	String p = request.getSession().getServletContext().getRealPath("/");
         	p = p.substring(0, p.indexOf("webapps")+7);
             String tmpDir = p + File.separator + "upload" + File.separator + "tmp" + File.separator;

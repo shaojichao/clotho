@@ -11,7 +11,7 @@ import java.io.File;
 public class FileUtils {
 	public static void ensureDirExist(String path){
 		File file = new File(path);
-		if(file.isDirectory()&&!file.exists()){
+		if(!file.exists()){
 			file.mkdirs();
 		}
 	}

@@ -141,7 +141,6 @@ var upgradePop = Ext.create('Ext.window.Window', {
             	        			success: function(form, action){
             	        				Ext.getCmp('pkgUploadBtn').setDisabled(true);
             	        				Ext.getCmp('pkgurl').setValue(action.result.msg);
-            	        				Ext.getCmp('pkgText').setValue(action.result.msg);
             	        				Ext.Msg.alert('系统提示', '升级包上传成功！');
             	        			}
             	        		});
@@ -322,7 +321,19 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             element: 'body', //bind to the underlying body property on the panel
             fn: function(){ 
             	var models = centerPanel.getSelectionModel().getSelection();
-        		Ext.Msg.alert('反馈内容', models[0].get('content'));
+       			if(models.length <= 0){
+       				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
+       				return;
+       			}
+       			
+       			upgradePop.setTitle('编辑');
+       			upgradePop.show();
+       			
+       			console.log(models[0].data);
+       			Ext.getCmp('upgradeForm').loadRecord(models[0]);
+       			if(models[0].data.pkgurl){
+       				Ext.getCmp('pkgurl').setValue(models[0].data.pkgurl);
+       			}
             }
         } 
     }
