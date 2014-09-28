@@ -23,4 +23,16 @@ public class RedirectClothoController {
 		log.info("toUserfeedback");
 		return "clotho/userfeedback";
 	}
+	
+	@RequestMapping(value = "/clotho/upgrade.do")
+	public String toUpgrade() {
+		log.info("toUpgrade");
+		return "clotho/upgrade";
+	}
+	
+	@RequestMapping(value = "/clotho/upgradeplan.do")
+	public String toUpgradePlan() {
+		log.info("toUpgradePlan");
+		return "clotho/upgradeplan";
+	}
 }

@@ -1,0 +1,10 @@
+请将项目中设计配置文件的变动以及sql写在该文件下,以便项目部署时及时更新配置信息.
+格式:
+#date #user #file:
+your content.
+eg:
+#2014-09-28 #zhipeng.tian #clotho-management/application.properties
+1.增加ldap.host=192.168.20.112;
+
+
+ 
