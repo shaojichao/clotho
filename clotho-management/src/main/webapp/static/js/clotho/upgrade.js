@@ -234,7 +234,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        {header: '修改时间',  dataIndex: 'updatetime', width: 160,sortable:true,renderer:function(value){
 		        	if(value != null){
 		        		var time = Ext.util.Format.date(new Date(value),'Y-m-d H:i:s')
-		        		if(value=='1970-01-01 00:00:00'){
+		        		if(time=='1970-01-01 00:00:00'){
 		        			time = '';
 		        		}
 		        		return time;
