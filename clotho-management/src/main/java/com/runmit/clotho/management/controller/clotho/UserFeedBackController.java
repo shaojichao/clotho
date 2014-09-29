@@ -30,6 +30,12 @@ public class UserFeedBackController {
 	@Autowired
     private UserFeedbackService userFeedbackService;
 	
+	/**
+	 * user feed back list
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody ExtEntity<UserFeedback> getUserFeedBacks(
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,

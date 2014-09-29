@@ -37,6 +37,13 @@ public class UpgradeController {
 	@Autowired
     private VersionService versionService;
 	
+	/**
+	 * version list
+	 * @param start
+	 * @param limit
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody ExtEntity<Version> getVersions(
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
@@ -53,6 +60,12 @@ public class UpgradeController {
 		return listdata;
 	}
 	
+	/**
+	 * save version
+	 * @param version
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/saveVersion.do",method=RequestMethod.POST)
 	public @ResponseBody ExtStatusEntity saveVersion(Version version,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
@@ -79,6 +92,12 @@ public class UpgradeController {
 		return entity;
 	}
 	
+	/**
+	 * delete version
+	 * @param id
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/delVersion.do")
 	public @ResponseBody ExtStatusEntity saveVersion(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();

@@ -30,6 +30,11 @@ public class MenuController {
 	@Autowired
     private MenuService menuService;
 	
+	/**
+	 * menu list
+	 * @param adminid
+	 * @return
+	 */
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody List<Menu> getMenus(@RequestParam(value="adminID",defaultValue="0") int adminid) {
 		

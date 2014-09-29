@@ -33,6 +33,14 @@ public class LoginController {
 	@Autowired
 	private LDAPValidation ldap;
 	
+	/**
+	 * user info checked
+	 * @param request
+	 * @param model
+	 * @param uid
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value = "/loginValid")
 	public @ResponseBody ExtStatusEntity userLogin(HttpServletRequest request, Model model,
 			@RequestParam("name")String uid,@RequestParam("password")String password) {
@@ -60,6 +68,12 @@ public class LoginController {
 		return resp;
 	}
 	
+	/**
+	 * logout
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/logout")
 	public String userLogout(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
