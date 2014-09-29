@@ -163,6 +163,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
         			waitMsg: '保存中......',
         			success: function(form, action){
         				Ext.getCmp('upgradeWin').hide();
+        				Ext.getCmp('pkgUploadForm').getForm().reset();
         				centerPanel.getStore().reload();
         				Ext.Msg.alert('系统提示', '保存成功！');
         			},
