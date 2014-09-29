@@ -16,11 +16,22 @@ import com.runmit.clotho.core.domain.admin.Menu;
 public interface MenuMapper {
 
     @Insert("INSERT INTO Menu (`text`,`parentId`,`url`,`leaf`,`status`,`createdBy`) "
-            + "VALUES (#{text},#{parentId},#{url},#{leaf},#{status},#{createdBy})")
+            + "VALUES (#{text},#{parentID},#{url},#{leaf},#{status},#{createdBy})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addMenu(Menu menu);
     
-    @Select("SELECT Menu.* FROM Menu where parentID=#{parentID}")
+    @Insert("UPDATE Menu set `text`=#{text},`parentId`=#{parentID},`url`=#{url},`leaf`=#{leaf},`status`=#{status} where id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updateMenu(Menu menu);
+    
+    @Insert("UPDATE Menu set `status`='INACTIVE' where id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void delMenu(@Param("id")int id);
+    
+    @Select("SELECT Menu.* FROM Menu where parentid=#{parentID} and status='ACTIVE'")
     List<Menu> getList(@Param("parentID")int parentID);
+    
+    @Select("SELECT a.*,b.text as parentName FROM Menu a left join Menu b on a.parentid=b.id")
+    List<Menu> getAllMenu();
     
 }

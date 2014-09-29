@@ -22,12 +22,27 @@ public class MenuService {
     private MenuMapper menuMapper;
     
     @Transactional(readOnly = false)
-    public void addMenu(Menu menu) {
-    	menuMapper.addMenu(menu);
+    public void saveMenu(Menu menu) {
+    	if(menu.getId()==null||menu.getId()==0){
+    		menuMapper.addMenu(menu);
+    	}else{
+    		menuMapper.updateMenu(menu);
+    	}
+    	
     }
     
     @Transactional(readOnly = true)
     public List<Menu> getMenuList(int parentID){
     	return menuMapper.getList(parentID);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Menu> getAllMenu(){
+    	return menuMapper.getAllMenu();
+    }
+    
+    @Transactional(readOnly = false)
+    public void delMenu(int id){
+    	this.menuMapper.delMenu(id);
     }
 }
