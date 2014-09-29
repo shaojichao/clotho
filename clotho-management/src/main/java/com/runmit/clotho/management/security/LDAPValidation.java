@@ -31,6 +31,12 @@ public class LDAPValidation {
 	@Value("${ldap.host}")
 	private String ldapHost;
 	
+	@Value("${file.upload.path}")
+	private String uploadPath;
+	
+	@Value("${file.download.url}")
+	private String downloadUrl;
+	
 	@SuppressWarnings("unchecked")
 	public Admin validAdmin(String uid,String password) {
 		Admin admin = new Admin();
