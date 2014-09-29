@@ -3,6 +3,7 @@ package com.runmit.clotho.core.domain.upgrade;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -14,6 +15,13 @@ public class UpgradePlan implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7811102660151073545L;
+	private String version;
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	private Integer id;
     private String originid;
     private String upgradeid;
@@ -22,8 +30,9 @@ public class UpgradePlan implements Serializable {
     private Integer showtype;
     private Integer upgradetype;
     private String createby;
-    private String createtime;
     private String updateby;
+    private Date createtime;
+    private Date updatetime;
     public Integer getId() {
 		return id;
 	}
@@ -63,6 +72,18 @@ public class UpgradePlan implements Serializable {
 	public Integer getUpgradetype() {
 		return upgradetype;
 	}
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
 	public void setUpgradetype(Integer upgradetype) {
 		this.upgradetype = upgradetype;
 	}
@@ -72,23 +93,10 @@ public class UpgradePlan implements Serializable {
 	public void setCreateby(String createby) {
 		this.createby = createby;
 	}
-	public String getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(String createtime) {
-		this.createtime = createtime;
-	}
 	public String getUpdateby() {
 		return updateby;
 	}
 	public void setUpdateby(String updateby) {
 		this.updateby = updateby;
 	}
-	public String getUpdatetime() {
-		return updatetime;
-	}
-	public void setUpdatetime(String updatetime) {
-		this.updatetime = updatetime;
-	}
-	private String updatetime;
 }

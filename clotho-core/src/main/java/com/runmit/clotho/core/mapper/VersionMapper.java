@@ -21,6 +21,16 @@ public interface VersionMapper {
     @Select("SELECT * FROM UpgradePlan where originid=(select serialno from Version where version=#{version}) order by upgradeid desc limit 1 ")
     @Options(useCache = true, flushCache = false)
     UpgradePlan getUpgradePlanbyversion(@Param("version") String version);
+    
+    @Select("SELECT * FROM UpgradePlan where originid=#{originid} and upgradeid=#{upgradeid} order by upgradeid desc limit 1 ")
+    @Options(useCache = true, flushCache = false)
+    UpgradePlan getUpgradePlan(@Param("originid") String originid,@Param("upgradeid") String upgradeid);
+    
+    @Select("SELECT UpgradePlan.*,version FROM UpgradePlan left join Version on originid = serialno "
+    		+ "where upgradeid=(select serialno from Version where version=#{version}) "
+    		+ "order by upgradeid desc")
+    @Options(useCache = true, flushCache = false)
+    List<UpgradePlan> getUpgradePlans(@Param("version") String version);
 
     @Select("SELECT * FROM Version WHERE id=#{id}")
     @Options(useCache = true, flushCache = false)
@@ -60,4 +70,19 @@ public interface VersionMapper {
     @Delete("DELETE FROM Version WHERE id=#{id}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void delVersion(@Param("id") int id);
+    
+    @Delete("DELETE FROM UpgradePlan WHERE id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void delPlan(@Param("id") int id);
+    
+    @Insert("INSERT INTO UpgradePlan (`originid`,`upgradeid`,`memo`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+            + "VALUES (#{originid},#{upgradeid},#{memo},#{clientid},#{showtype},#{upgradetype},#{createby})")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void addPlan(UpgradePlan plan);
+    
+    @Insert("UPDATE UpgradePlan SET `originid`=#{originid},`memo`=#{memo},"
+    		+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
+    		+ " where `id`=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updatePlan(UpgradePlan plan);
 }

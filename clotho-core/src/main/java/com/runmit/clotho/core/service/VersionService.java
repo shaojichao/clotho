@@ -51,6 +51,11 @@ public class VersionService {
     }
     
     @Transactional(readOnly = true)
+	public List<UpgradePlan> getUpgradePlans(String version) {
+    	return versionMapper.getUpgradePlans(version);
+	}
+    
+    @Transactional(readOnly = true)
     public List<Version> getList(int start,int limit) {
         return versionMapper.getList(start, limit);
     }
@@ -74,5 +79,28 @@ public class VersionService {
     public void delVersion(int id){
     	this.versionMapper.delVersion(id);
     }
+    
+    @Transactional(readOnly = false)
+    public void delPlan(int id){
+    	this.versionMapper.delPlan(id);
+    }
 
+    @Transactional(readOnly = false)
+    public int savePlan(UpgradePlan plan){
+    	Version version = this.versionMapper.getbyversion(plan.getVersion());
+    	if(null==version){
+    		return -1;
+    	}
+    	plan.setOriginid(version.getSerialno());
+    	if(plan.getId()==null||plan.getId()==0){
+    		UpgradePlan p = this.versionMapper.getUpgradePlan(plan.getOriginid(),plan.getUpgradeid());
+    		if(p!=null){
+    			return -2;
+    		}
+    		this.versionMapper.addPlan(plan);
+    	}else{
+    		this.versionMapper.updatePlan(plan);
+    	}
+    	return 0;
+    }
 }

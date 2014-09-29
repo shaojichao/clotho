@@ -1,3 +1,4 @@
+var _upgradeid;
 var upgradePop = Ext.create('Ext.window.Window', {
 	id: 'upgradeWin',
     title: '增加',
@@ -181,6 +182,142 @@ var upgradePop = Ext.create('Ext.window.Window', {
     ]
 });
 
+var planPop = Ext.create('Ext.window.Window', {
+	id: 'planWin',
+    title: '增加',
+    height: 370,
+    width: 480,
+    bodyPadding: 5,
+    maximizable: true,
+    modal: true,
+    closeAction: 'hide',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    items: [
+            Ext.create('Ext.form.Panel', {
+            	id: 'planForm',
+            	width: 460,
+            	height: 250,
+                url: path + '/clotho/upgrade/savePlan.do',
+                layout: 'anchor',
+                defaults: {
+                    anchor: '80%',
+                    labelAlign: 'right',
+                    labelWidth: 80,
+                    blankText: '必填项'
+                },
+                // The fields
+                defaultType: 'textfield',
+                items: [{//隐藏域
+                			name: 'id',
+                			hidden: true
+                		},{
+                			name: 'originid',
+                			id: 'originid',
+                			hidden: true
+                		},{
+                			name: 'upgradeid',
+                			id: 'upgradeid',
+                			hidden: true
+                		},{
+                			name: 'createby',
+                			hidden: true
+                		},{
+                			name: 'updateby',
+                			hidden: true
+                		},{
+            		        fieldLabel: 'From版本号',
+            		        name: 'version',
+            		        allowBlank: false
+                		},{
+                			xtype: 'combo',
+							name: 'clientid',
+							fieldLabel: '客户端类型',
+							store: Ext.create('Ext.data.ArrayStore', {
+				       			fields: ['value', 'text'],
+				       			data: [[1,'Android'],[2,'IOS'],[3,'AndroidPad']]
+					   		}),
+					   		displayField: 'text',
+					   	    valueField: 'value',
+                		},{
+                			fieldLabel: '是否提示',
+                	        xtype: 'fieldcontainer',
+                	        defaultType: 'radiofield',
+            	            layout: 'hbox',
+            	            items: [
+            	                {
+            	                    boxLabel: '不提示',
+            	                    name: 'showtype',
+            	                    inputValue: '1',
+            	                    checked: true
+            	                }, {
+            	                    boxLabel: '提示',
+            	                    name: 'showtype',
+            	                    inputValue: '2'            	                    
+            	                }
+            	            ]
+                		},{
+                			fieldLabel: '升级类型',
+                	        xtype: 'fieldcontainer',
+                	        defaultType: 'radiofield',
+            	            layout: 'hbox',
+            	            items: [
+            	                {
+            	                    boxLabel: '可选升级',
+            	                    name: 'upgradetype',
+            	                    inputValue: '1',
+            	                    checked: true
+            	                }, {
+            	                    boxLabel: '强制升级',
+            	                    name: 'upgradetype',
+            	                    inputValue: '2'            	                    
+            	                }
+            	            ]
+                		},{
+            	    	   fieldLabel: '版本描述',
+            	    	   name: 'memo',
+            	    	   xtype: 'textarea',
+            	    	   height: 100,
+            	    	   allowBlank: false
+            	       }]
+            })            
+    ],
+    buttons: [
+        {
+        	text: '保存',
+        	handler: function(){
+        		Ext.getCmp('upgradeid').setValue(_upgradeid);
+        		var planForm = Ext.getCmp('planForm').getForm();
+        		if(!planForm.isValid()){
+        			return;
+        		}
+        		
+       			planForm.submit({
+        			waitTitle: '系统提示',
+        			waitMsg: '保存中......',
+        			success: function(form, action){
+        				if(!action.result.success){
+        					Ext.Msg.alert('系统提示', action.result.msg);
+        				}else{
+	        				Ext.getCmp('planWin').hide();
+	        				eastPanel.getStore().reload();
+	        				Ext.Msg.alert('系统提示', '保存成功！');
+        				}
+        			},
+        			failure: function(form, action){
+        				Ext.Msg.alert('系统提示', action.result.msg);
+        			}
+        		});
+        	}
+        },{
+        	text: '取消',
+        	handler: function(){
+        		planPop.hide();
+        	}
+        }
+    ]
+});
+
 var centerPanel = Ext.create('Ext.grid.Panel', {
 	region: 'center',
 	title: '升级包列表',
@@ -244,6 +381,14 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        	}
 	        	}}
 		     ],
+	selModel: {
+	listeners: {
+			select: function(rowModel, record, index, eOpts){
+				eastPanel.getStore().load({params: {version: record.data.version}});
+			}
+		},	
+		mode: 'MULTI'
+	},
 	store: Ext.create('Ext.data.JsonStore', {
 		autoLoad: true,
 		storeId: 'centerStore',
@@ -265,12 +410,10 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       		xtype: 'button',
 	       		text: '增加',
 	       		handler: function(){
-	       			
-	       		Ext.getCmp('upgradeForm').getForm().reset();
-   				Ext.getCmp('pkgUploadForm').getForm().reset();
-   				
-   				upgradePop.setTitle('增加');
-	       			upgradePop.show();
+		       		Ext.getCmp('upgradeForm').getForm().reset();
+	   				Ext.getCmp('pkgUploadForm').getForm().reset();
+	   				upgradePop.setTitle('增加');
+		       		upgradePop.show();
 	       		}
 	       	},'-',{
 	       		xtype: 'button',
@@ -355,10 +498,170 @@ function deleteUpgrades(records){
 	});
 }
 
+function deletePlans(records){
+	Ext.Ajax.request({
+		url: path + '/clotho/upgrade/delPlan.do?id='+records[0].get('id'),
+		scope: this,
+		async: true,
+		success: function(response, options){
+			Ext.Msg.alert("系统提示", "删除成功");
+			eastPanel.getStore().reload();
+		},
+		failure: function(form, action){
+			Ext.Msg.alert('系统提示', action.result.msg);
+		}
+	});
+}
+
+var eastPanel = Ext.create('Ext.grid.Panel', {
+	region: 'east',
+	title: '计划列表',
+	width: 120,
+	split: true,
+	collapsible: true,
+	columns: [
+	          	{header: 'ID', align: 'center', width: 50, dataIndex: 'id'},
+	          	{header: 'originid', align: 'center', width: 100, dataIndex: 'originid',hidden:true},
+	          	{header: 'FROM版本号', dataIndex: 'version', width: 100,renderer:function(value){
+			        	if(value!=''){
+			        		return value;
+			        	}else{
+			        		return "全版本";
+			        	}
+		        	},
+		        },
+		        {header: '版本描述',  dataIndex: 'memo', width: 300,sortable:true },
+		        {header: '客户端类型',  dataIndex: 'clientid', width: 85,sortable:true,renderer:function(value){
+			        	if(value=='1'){
+			        		return "Android";
+			        	}else if(value=='2'){
+			        		return "IOS";
+			        	}else if(value=='3'){
+			        		return 'AndroidPad';
+			        	}else{
+			        		return value;
+			        	}
+		        	},
+		        },
+		        {header: '是否提示',  dataIndex: 'showtype', width: 80,sortable:true,renderer:function(value){
+			        	if(value=='1'){
+			        		return "不提示";
+			        	}else if(value=='2'){
+			        		return "提示";
+			        	}else{
+			        		return value;
+			        	}
+		        	},
+		        },
+		        {header: '升级类型',  dataIndex: 'upgradetype', width: 80,sortable:true,renderer:function(value){
+			        	if(value=='1'){
+			        		return "可选升级";
+			        	}else if(value=='2'){
+			        		return "强制升级";
+			        	}else{
+			        		return value;
+			        	}
+		        	},
+		        },
+		        {header: '创建人',  dataIndex: 'createby', width: 80,sortable:true },
+		        {header: '创建时间',  dataIndex: 'createtime', width: 160,sortable:true,renderer:function(value){
+		        	if(value != null){
+		        		return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
+		        	}else{
+		        		return '';
+		        	}
+	        	}
+	        },
+		        {header: '修改人',  dataIndex: 'updateby', width: 80,sortable:true },
+		        {header: '修改时间',  dataIndex: 'updatetime', width: 160,sortable:true,renderer:function(value){
+		        	if(value != null){
+		        		var time = Ext.util.Format.date(new Date(value),'Y-m-d H:i:s')
+		        		if(time=='1970-01-01 00:00:00'){
+		        			time = '';
+		        		}
+		        		return time;
+		        	}else{
+		        		return '';
+		        	}
+	        	}}
+		     ],
+	store: Ext.create('Ext.data.JsonStore', {
+	    storeId:'eastStore',
+	    fields :['id','originid','version','upgradeid','memo','clientid','showtype','upgradetype',
+		             'createby','createtime','updateby','updatetime'],
+	    proxy: {
+	        type: 'ajax',
+	        url: path + '/clotho/upgrade/planlist.do',
+	        reader: {
+	        	totalProperty: 'results',
+	            root: 'rows'
+	        }
+	    },
+	    listeners: {
+	    	load: function(store, records, isSucc, eOpts){
+	    		if(store.getCount() > 0){
+	    			eastPanel.setWidth(500);
+	    		}else{
+	    			eastPanel.setWidth(120);
+	    		}
+	    	}
+	    }
+	}),
+	tbar: [
+			{	//计划列表表头添加按钮
+	       		xtype: 'button',
+	       		text: '增加',
+	       		handler: function(){
+	       			var upgrades = centerPanel.getSelectionModel().getSelection();
+	       			if(upgrades.length == 0){
+	       				Ext.Msg.alert('系统提示', '请选择升级包');
+	       				return;
+	       			}
+	       			_upgradeid=upgrades[0].data.serialno;
+	       			Ext.getCmp('planForm').getForm().reset();
+	       			Ext.getCmp('planWin').setTitle('添加');
+	       			Ext.getCmp('planWin').show();
+	       		}
+	       	},'-',{//计划列表表头编辑按钮
+	       		xtype: 'button',
+	       		text: '编辑',
+	       		handler: function(){
+	       			var plans = eastPanel.getSelectionModel().getSelection();
+       				if(plans.length == 0){
+       					Ext.Msg.alert('系统提示', '请选择要编辑的计划。'); return;
+       				}
+       				Ext.getCmp('planForm').getForm().reset();
+       				Ext.getCmp('planWin').setTitle('编辑');
+       				Ext.getCmp('planWin').show();
+       				
+       				//初始化值
+       				var fields = Ext.getCmp('planForm').getForm().getFields(),
+       					plan = plans[0];
+       				Ext.getCmp('planForm').getForm().loadRecord(plan);
+       				
+	       		}
+	       	},'-',{
+	       		xtype: 'button',
+	       		text: '删除',
+	       		handler: function(){
+	       			var plans = eastPanel.getSelectionModel().getSelection();
+       				if(plans.length == 0){
+       					Ext.Msg.alert('系统提示', '请选择要删除的计划。'); return;
+       				}
+	       			Ext.Msg.confirm('系统提示', '您确认要删除吗?', function(option){
+	       				if('yes' === option){
+	       					deletePlans(plans);
+	       				}
+	       			});
+	       		}
+	       	}
+	]
+});
+
 //domReady
 Ext.onReady(function(){
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
-		items:[centerPanel]
+		items:[centerPanel,eastPanel]
 	});
 });
