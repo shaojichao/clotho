@@ -11,7 +11,10 @@
                 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
     <!-- 保证在DispatchServlet context中的spring IOC容器中，带有@Component、@Repository、@Service、@Controller的类被自动注册，并且自动使用源级的annotation进行bean元数据配置（如@Autowired） -->
-
+	<mvc:interceptors>
+	    <bean class="com.runmit.clotho.management.security.SpringLoginInterceptor" />
+	</mvc:interceptors>
+	
     <context:component-scan base-package="com.runmit.clotho.management.controller"></context:component-scan>
 
     <!-- 启用mvc支持的源级annotation（如RequestMapping等）对bean元数据进行配置，必须与 component-scan同时出现在这一context的spring配置中 -->
