@@ -29,4 +29,14 @@ public class RedirectController {
 	public String toMenu(HttpServletRequest request) {
 		return "menu";		
 	}
+	
+	@RequestMapping(value = "/admin/account.do")
+	public String toAdmin(HttpServletRequest request) {
+		return "admin";		
+	}
+	
+	@RequestMapping(value = "/admin/role.do")
+	public String toRole(HttpServletRequest request) {
+		return "role";		
+	}
 }

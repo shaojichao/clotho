@@ -52,7 +52,7 @@ public class LoginController {
 //			resp.setSuccess(false);
 			//接入正式系统前使用
 			admin = new Admin();
-			admin.setId(1);
+			admin.setId(0);
 			admin.setName("我是访客");
 			resp.setMsg("success");
 			resp.setSuccess(true);
