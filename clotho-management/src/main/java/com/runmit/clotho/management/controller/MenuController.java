@@ -62,6 +62,10 @@ public class MenuController {
 	@RequestMapping(value = "/rootlist.do")
 	public @ResponseBody ExtEntity<Menu> getMenus() {
 		List<Menu> list = this.menuService.getMenuList(0);
+		Menu e = new Menu();
+		e.setId(0);
+		e.setText("无");
+		list.add(e);
 		ExtEntity<Menu> entity = new ExtEntity<Menu>();
 		entity.setResult(list.size());
 		entity.setRows(list);
