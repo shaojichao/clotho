@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.AdminRole;
@@ -21,6 +22,9 @@ import com.runmit.clotho.core.domain.admin.AdminRoleMember;
 public interface AdminMapper {
 	@Select("SELECT * FROM AdminRole")
     List<AdminRole> getRoleList();
+	
+	@Select("SELECT * FROM AdminRole where status='ACTIVE'")
+    List<AdminRole> getActiveRoleList();
 	
 	@Select("SELECT * FROM Admin")
     List<Admin> getAdminList();
@@ -39,4 +43,14 @@ public interface AdminMapper {
 	@Insert("insert into AdminRoleMember (adminid,roleid) values (#{adminid},#{roleid})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addAdminRoleMember(AdminRoleMember member);
+	
+	@Insert("insert into AdminRole (name,description,status) values (#{name},#{description},#{status})")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void addAdminRole(AdminRole role);
+	
+	@Update("update AdminRole set name=#{name},description=#{description},status=#{status}")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updateAdminRole(AdminRole role);
+	
+	
 }

@@ -7,14 +7,14 @@ package com.runmit.clotho.core.domain.admin;
  */
 
 public class AdminRole {
-	private int id;
+	private Integer id;
 	private String name; // 角色名
     private String description; // 角色描述
     private CurrentStatus status;
-    public int getId() {
+    public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {

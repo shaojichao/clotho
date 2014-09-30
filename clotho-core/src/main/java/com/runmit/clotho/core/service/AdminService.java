@@ -26,6 +26,10 @@ public class AdminService {
 		return this.adminMapper.getRoleList();
 	}
 	
+	public List<AdminRole> getActiveRoleList(){
+		return this.adminMapper.getActiveRoleList();
+	}
+	
 	public List<Admin> getAdminList(){
     	return this.adminMapper.getAdminList();
     }
@@ -47,5 +51,14 @@ public class AdminService {
 	@Transactional(readOnly=false)
 	public void saveAdminRoleMember(AdminRoleMember adminRoleMember){
 		this.adminMapper.addAdminRoleMember(adminRoleMember);
+	}
+	
+	@Transactional(readOnly=false)
+	public void saveAdminRole(AdminRole role){
+		if(null==role.getId()||role.getId()==0){
+			this.adminMapper.addAdminRole(role);
+		}else{
+			this.adminMapper.updateAdminRole(role);
+		}
 	}
 }

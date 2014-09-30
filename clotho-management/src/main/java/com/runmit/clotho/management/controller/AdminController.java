@@ -58,9 +58,20 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(value = "/roles.do")
+	public @ResponseBody ExtEntity<AdminRole> getRoles(){
+		List<AdminRole> list = this.adminService.getRoleList();
+		ExtEntity<AdminRole> entity = new ExtEntity<AdminRole>();
+		entity.setResult(list.size());
+		entity.setRows(list);
+		log.info("getRoles");
+		return entity;
+		
+	}
+	
 	@RequestMapping(value = "/rolelist.do")
 	public @ResponseBody List<AdminRole> getRoleList(){
-		List<AdminRole> list = this.adminService.getRoleList();
+		List<AdminRole> list = this.adminService.getActiveRoleList();
 		log.info("getRoleList");
 		return list;
 		
