@@ -65,7 +65,7 @@ public class MenuController {
 		Menu e = new Menu();
 		e.setId(0);
 		e.setText("无");
-		list.add(e);
+		list.add(0, e);
 		ExtEntity<Menu> entity = new ExtEntity<Menu>();
 		entity.setResult(list.size());
 		entity.setRows(list);

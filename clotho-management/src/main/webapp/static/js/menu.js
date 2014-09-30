@@ -35,10 +35,7 @@ var menuPop = Ext.create('Ext.window.Window', {
             		        maxLengthText: '不能超过20个字符'
                 		},{
             		        fieldLabel: 'URL',
-            		        name: 'url',
-            		        allowBlank: false,
-            		        maxLength: 100,
-            		        maxLengthText: '不能超过100个字符'
+            		        name: 'url'
                 		},{
                 			xtype: 'combo',
 							name: 'parentID',
