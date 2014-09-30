@@ -48,7 +48,7 @@ public interface AdminMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addAdminRole(AdminRole role);
 	
-	@Update("update AdminRole set name=#{name},description=#{description},status=#{status}")
+	@Update("update AdminRole set name=#{name},description=#{description},status=#{status} where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateAdminRole(AdminRole role);
 	

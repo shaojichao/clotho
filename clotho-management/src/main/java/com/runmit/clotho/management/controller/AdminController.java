@@ -130,4 +130,21 @@ public class AdminController {
 		log.info("delAdminRole");
 		return entity;
 	}
+	
+	@RequestMapping(value = "/saveRole.do",method=RequestMethod.POST)
+	public @ResponseBody ExtStatusEntity saveRole(AdminRole role){
+		ExtStatusEntity result = new ExtStatusEntity();
+		try{
+			this.adminService.saveAdminRole(role);
+			result.setMsg("succeed");
+			result.setSuccess(true);
+		}catch(Exception ex){
+			log.error("saveRole error",ex);
+			result.setMsg("保存失败");
+			result.setSuccess(false);
+		}
+		log.info("saveRole");
+		return result;
+		
+	}
 }
