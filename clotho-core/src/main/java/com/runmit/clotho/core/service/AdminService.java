@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.AdminRole;
 import com.runmit.clotho.core.domain.admin.AdminRoleMember;
+import com.runmit.clotho.core.domain.admin.RoleMenuMember;
 import com.runmit.clotho.core.mapper.AdminMapper;
 
 /**
@@ -34,6 +35,10 @@ public class AdminService {
     	return this.adminMapper.getAdminList();
     }
 	
+	public Admin getAdminByUid(String uid){
+    	return this.adminMapper.getAdminByUid(uid);
+    }
+	
 	public List<AdminRole> getAdminRoleList(int adminid){
     	return this.adminMapper.getAdminRoleList(adminid);
     }
@@ -51,6 +56,16 @@ public class AdminService {
 	@Transactional(readOnly=false)
 	public void saveAdminRoleMember(AdminRoleMember adminRoleMember){
 		this.adminMapper.addAdminRoleMember(adminRoleMember);
+	}
+	
+	@Transactional(readOnly=false)
+	public void saveRoleMenuMember(RoleMenuMember member){
+		this.adminMapper.addRoleMenuMember(member);
+	}
+	
+	@Transactional(readOnly=false)
+	public void delRoleMenuMember(int id){
+		this.adminMapper.delRoleMenuMember(id);
 	}
 	
 	@Transactional(readOnly=false)

@@ -24,6 +24,7 @@ public class Menu implements Serializable{
 	private CurrentStatus status;
 	private Date createTime;
 	private String createdBy;
+	private Integer roleid;
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -86,5 +87,10 @@ public class Menu implements Serializable{
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
-	
+	public Integer getRoleid() {
+		return roleid;
+	}
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
 }

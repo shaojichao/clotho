@@ -34,4 +34,10 @@ public interface MenuMapper {
     @Select("SELECT a.*,b.text as parentName FROM Menu a left join Menu b on a.parentid=b.id")
     List<Menu> getAllMenu();
     
+    @Select("SELECT a.*,b.roleid FROM (SELECT * FROM Menu WHERE parentID = #{parentID} AND STATUS = 'ACTIVE') a left join (SELECT * FROM RoleMenuMember WHERE roleid = #{roleid}) b on a.id=b.menuid ORDER BY a.id")
+    List<Menu> getListByRole(@Param("parentID")int parentID,@Param("roleid")int roleid);
+    
+    @Select("SELECT a.* FROM Menu a,RoleMenuMember b,AdminRoleMember c where a.parentid=#{parentID} and a.status='ACTIVE'"
+    		+ " and a.id=b.menuid and c.roleid=b.roleid and c.adminid=#{adminid}")
+    List<Menu> getListByAdminid(@Param("adminid")int adminid,@Param("parentID")int parentID);
 }

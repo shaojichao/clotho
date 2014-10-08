@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.AdminRole;
 import com.runmit.clotho.core.domain.admin.AdminRoleMember;
+import com.runmit.clotho.core.domain.admin.RoleMenuMember;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.AdminService;
@@ -144,6 +145,31 @@ public class AdminController {
 			result.setSuccess(false);
 		}
 		log.info("saveRole");
+		return result;
+		
+	}
+	
+	@RequestMapping(value = "/saveRoleMenuMember.do",method=RequestMethod.POST)
+	public @ResponseBody ExtStatusEntity saveAdminRoleMember(@RequestParam("roleID")int roleid,@RequestParam("menuIDArr")String menuIDArr){
+		ExtStatusEntity result = new ExtStatusEntity();
+		try{
+			
+			String[] menus = menuIDArr.split(",");
+			this.adminService.delRoleMenuMember(roleid);
+			for(String menu:menus){
+				RoleMenuMember member = new RoleMenuMember();
+				member.setRoleid(roleid);
+				member.setMenuid(Integer.valueOf(menu));
+				this.adminService.saveRoleMenuMember(member);
+			}
+			result.setMsg("succeed");
+			result.setSuccess(true);
+		}catch(Exception ex){
+			log.error("saveAdminRoleMember error",ex);
+			result.setMsg("保存失败");
+			result.setSuccess(false);
+		}
+		log.info("saveAdminRoleMember");
 		return result;
 		
 	}

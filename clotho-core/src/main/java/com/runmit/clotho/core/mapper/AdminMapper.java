@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.AdminRole;
 import com.runmit.clotho.core.domain.admin.AdminRoleMember;
+import com.runmit.clotho.core.domain.admin.RoleMenuMember;
 
 /**
  * @author zhipeng.tian
@@ -28,6 +29,9 @@ public interface AdminMapper {
 	
 	@Select("SELECT * FROM Admin")
     List<Admin> getAdminList();
+	
+	@Select("SELECT * FROM Admin where uid=#{uid}")
+    Admin getAdminByUid(@Param("uid")String uid);
 	
 	@Select("SELECT distinct a.* FROM AdminRole a, AdminRoleMember c where a.id = c.roleid and c.adminid=#{adminid}")
     List<AdminRole> getAdminRoleList(@Param("adminid")int adminid);
@@ -51,6 +55,14 @@ public interface AdminMapper {
 	@Update("update AdminRole set name=#{name},description=#{description},status=#{status} where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateAdminRole(AdminRole role);
+	
+	@Delete("delete from RoleMenuMember where roleid=#{roleid}")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid")
+	void delRoleMenuMember(@Param("roleid")int roleid);
+	
+	@Insert("insert into RoleMenuMember (roleid,menuid) values (#{roleid},#{menuid})")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid,menuid")
+    void addRoleMenuMember(RoleMenuMember member);
 	
 	
 }

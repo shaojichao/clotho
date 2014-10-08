@@ -1,5 +1,6 @@
 package com.runmit.clotho.management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.MenuService;
+import com.runmit.clotho.management.domain.MenuDTO;
 import com.runmit.clotho.management.security.SecurityConstant;
 
 /**
@@ -46,17 +48,57 @@ public class MenuController {
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody List<Menu> getMenus(@RequestParam(value="adminID",defaultValue="0") int adminid) {
 		
-		List<Menu> list = this.menuService.getMenuList(0);
+		List<Menu> list = this.menuService.getMenuListByAdminid(adminid,0);
 		
 		//二级联动
 		for(Menu menu:list){
 			if(!menu.getLeaf()){
-				menu.setChildren(this.menuService.getMenuList(menu.getId()));
+				menu.setChildren(this.menuService.getMenuListByAdminid(adminid,menu.getId()));
 			}
 		}
 		
 		log.info("getMenus");
 		return list;
+	}
+	
+	@RequestMapping(value = "/getMenuByRole.do")	
+	public @ResponseBody List<MenuDTO> getMenuByRole(@RequestParam(value="roleid",defaultValue="0") int roleid) {
+		if(roleid==0){
+			return null;
+		}
+		List<Menu> list = this.menuService.getMenuListByRole(0,roleid);
+		List<MenuDTO> dtos = new ArrayList<MenuDTO>();
+		//二级联动
+		for(Menu menu:list){
+			MenuDTO dto = new MenuDTO();
+			if(menu.getRoleid()!=null){
+				dto.setChecked(true);
+			}
+			dto.setExpanded(true);
+			dto.setId(menu.getId());
+			dto.setText(menu.getText());
+			dto.setLeaf(menu.getLeaf());
+			if(!menu.getLeaf()){
+				List<Menu> children = this.menuService.getMenuListByRole(menu.getId(),roleid);
+				List<MenuDTO> dtosc = new ArrayList<MenuDTO>();
+				for(Menu child:children){
+					MenuDTO chdto = new MenuDTO();
+					if(child.getRoleid()!=null){
+						chdto.setChecked(true);
+					}
+					chdto.setExpanded(false);
+					chdto.setId(child.getId());
+					chdto.setText(child.getText());
+					chdto.setLeaf(child.getLeaf());
+					dtosc.add(chdto);
+				}
+				dto.setChildren(dtosc);
+			}
+			dtos.add(dto);
+		}
+		
+		log.info("getMenuDTOs");
+		return dtos;
 	}
 	
 	@RequestMapping(value = "/rootlist.do")
