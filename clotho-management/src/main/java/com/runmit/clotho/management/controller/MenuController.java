@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.Menu;
-import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.MenuService;
