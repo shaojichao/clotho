@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/upgrade")
 public class UpgradeController {
 
-    private static final Logger log = LoggerFactory
+    private static final Logger LOGGER = LoggerFactory
             .getLogger(UpgradeController.class);
 
     @Autowired
@@ -54,23 +54,23 @@ public class UpgradeController {
         upgrade.setVersion(version);
         UpgradeResp ur=new UpgradeResp();
 //        if (bindingResult.hasErrors()) {
-//            log.error("getupgrade request error,request error code:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
+//            LOGGER.error("getupgrade request error,request error code:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
 //            return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
 //        }
         int clientid;
         try {
             clientid = Integer.parseInt(upgrade.getClientid());
             if(clientid<=0){
-                log.error("getupgrade request error,clientid value error:"+clientid);
+                LOGGER.error("getupgrade request error,clientid value error:"+clientid);
                 return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
             }
         }catch (NumberFormatException e){
-            log.error("getupgrade request error,clientid is not int"+e);
+            LOGGER.error("getupgrade request error,clientid is not int"+e);
             return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
         }
         Version currentversion=versionService.getbyversion(upgrade.getVersion());
         if(currentversion==null){
-            log.error("getupgrade request error,current version is not exists:"+upgrade.getVersion());
+            LOGGER.error("getupgrade request error,current version is not exists:"+upgrade.getVersion());
             ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }
@@ -79,7 +79,7 @@ public class UpgradeController {
 //            无对应关联升级版本,查找clientid对应的最新版本
             Version lastestversion=versionService.getLastestbyclientid(clientid);
             if(lastestversion==null){
-                log.error("getupgrade request error,clientid get lastestversion is not exists:"+upgrade.getVersion());
+                LOGGER.error("getupgrade request error,clientid get lastestversion is not exists:"+upgrade.getVersion());
                 ur.setRtn(RestConst.RTN_GETUPGRADE_CLIENTIDGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
@@ -92,14 +92,14 @@ public class UpgradeController {
                 ur.setUpgrade_url(lastestversion.getPkgurl());
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }else{
-                log.debug("getupgrade request error,current version is lastest:" + upgrade.getVersion());
+                LOGGER.debug("getupgrade request error,current version is lastest:" + upgrade.getVersion());
                 ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
             }
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }else{
             Version lastestversion=versionService.getbyserialno(upgradePlan.getUpgradeid());
             if(lastestversion==null){
-                log.error("getupgrade request error,upgradeplan get version is not exists:"+upgrade.getVersion());
+                LOGGER.error("getupgrade request error,upgradeplan get version is not exists:"+upgrade.getVersion());
                 ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }

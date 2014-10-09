@@ -32,7 +32,7 @@ import com.runmit.clotho.management.security.SecurityConstant;
 @Component
 @RequestMapping(value = "/clotho/upgrade")
 public class UpgradeController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(UpgradeController.class);
 	
 	@Autowired
@@ -57,7 +57,7 @@ public class UpgradeController {
 		listdata.setRows(list);
 		listdata.setResult(versionService.getCount());
 		
-		log.info("getVersions");
+		LOGGER.info("getVersions");
 		return listdata;
 	}
 	
@@ -84,12 +84,12 @@ public class UpgradeController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveVersion error",ex);
+			LOGGER.error("saveVersion error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("saveVersion");
+		LOGGER.info("saveVersion");
 		return entity;
 	}
 	
@@ -108,12 +108,12 @@ public class UpgradeController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("delVersion error",ex);
+			LOGGER.error("delVersion error",ex);
 			entity.setMsg("删除失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("delVersion");
+		LOGGER.info("delVersion");
 		return entity;
 		
 	}
@@ -127,7 +127,7 @@ public class UpgradeController {
 		listdata.setRows(list);
 		listdata.setResult(list.size());
 		
-		log.info("getPlans");
+		LOGGER.info("getPlans");
 		return listdata;
 	}
 	
@@ -140,12 +140,12 @@ public class UpgradeController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("delPlan error",ex);
+			LOGGER.error("delPlan error",ex);
 			entity.setMsg("删除失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("delPlan");
+		LOGGER.info("delPlan");
 		return entity;
 	}
 	
@@ -173,12 +173,12 @@ public class UpgradeController {
 				entity.setSuccess(true);
 			}
 		}catch(Exception ex){
-			log.error("saveVersion error",ex);
+			LOGGER.error("saveVersion error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("saveVersion");
+		LOGGER.info("saveVersion");
 		return entity;
 	}
 }

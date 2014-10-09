@@ -22,7 +22,7 @@ import com.runmit.clotho.core.util.FileUtils;
  */
 @Service
 public class UploadService {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(UploadService.class);
 	
 	@Value("${file.upload.path}")
@@ -43,7 +43,7 @@ public class UploadService {
 	        }
 	
 	        try {
-	        	log.info("/upload/upload.do Upload  file {} ...", file.getName());
+	        	LOGGER.info("/upload/upload.do Upload  file {} ...", file.getName());
 	            FileUtils.ensureDirExist(uploadPath);
 	            
 	            // 将文件名进行改变，以防止覆盖
@@ -54,7 +54,7 @@ public class UploadService {
 	            result = downloadUrl + fileName;
 	
 	        } catch (Exception ex) {
-	            log.error("Upload files in folder {} failure", file.getOriginalFilename(), ex);
+	            LOGGER.error("Upload files in folder {} failure", file.getOriginalFilename(), ex);
 	            writer.write("{'success': false,'msg': 'uploadfailed'}");
 	            writer.close();
 	            writer.flush();
@@ -66,7 +66,7 @@ public class UploadService {
 	    	writer.close();
 	    	writer.flush();
 		}catch(Exception ex){
-			log.error("upload error",ex);
+			LOGGER.error("upload error",ex);
 		}
 	}
 }

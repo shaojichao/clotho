@@ -25,17 +25,11 @@ import com.runmit.clotho.core.domain.admin.Admin;
 @Service
 public class LDAPValidation {
 	
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(LDAPValidation.class);
 	
 	@Value("${ldap.host}")
 	private String ldapHost;
-	
-	@Value("${file.upload.path}")
-	private String uploadPath;
-	
-	@Value("${file.download.url}")
-	private String downloadUrl;
 	
 	@SuppressWarnings("unchecked")
 	public Admin validAdmin(String uid,String password) {
@@ -59,7 +53,7 @@ public class LDAPValidation {
 				try {
 					nextEntry = searchResults.next();
 				} catch (LDAPException e) {
-					log.error("LDAPValidation LDAPException 1 ",e);
+					LOGGER.error("LDAPValidation LDAPException 1 ",e);
 					if (e.getResultCode() == LDAPException.LDAP_TIMEOUT
 							|| e.getResultCode() == LDAPException.CONNECT_ERROR) {
 						break;
@@ -93,10 +87,10 @@ public class LDAPValidation {
 			}
 			return null;
 		} catch (LDAPException e) {
-			log.error("LDAPValidation LDAPException 2 ",e);
+			LOGGER.error("LDAPValidation LDAPException 2 ",e);
 			return null;
 		} catch (UnsupportedEncodingException e) {
-			log.error("LDAPValidation UnsupportedEncodingException 3 ",e);
+			LOGGER.error("LDAPValidation UnsupportedEncodingException 3 ",e);
 			return null;
 		} finally {
 			try {
@@ -104,7 +98,7 @@ public class LDAPValidation {
 					lc.disconnect();
 				}
 			} catch (Exception e) {
-				log.error("LDAPValidation lc.disconnect exception 4 ",e);
+				LOGGER.error("LDAPValidation lc.disconnect exception 4 ",e);
 			}
 		}
 	}

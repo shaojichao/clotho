@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
+import com.runmit.clotho.core.service.AdminService;
 import com.runmit.clotho.management.security.LDAPValidation;
 import com.runmit.clotho.management.security.SecurityConstant;
 
@@ -27,11 +28,13 @@ import com.runmit.clotho.management.security.SecurityConstant;
 @Controller
 @Component
 public class LoginController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(LoginController.class);
 	
 	@Autowired
 	private LDAPValidation ldap;
+	@Autowired
+	private AdminService adminService;
 	
 	/**
 	 * user info checked
@@ -46,24 +49,26 @@ public class LoginController {
 			@RequestParam("name")String uid,@RequestParam("password")String password) {
 		ExtStatusEntity resp = new ExtStatusEntity();
 		
-		Admin admin = ldap.validAdmin(uid, password);
-		if(null==admin){
+		Admin admin = null;//ldap.validAdmin(uid, password);
+		Admin a = this.adminService.getAdminByUid(uid);
+		if(null==admin||a==null){
 //			resp.setMsg("success");
 //			resp.setSuccess(false);
 			//接入正式系统前使用
 			admin = new Admin();
-			admin.setId(1);
+			admin.setId(4);
 			admin.setName("我是访客");
 			resp.setMsg("success");
 			resp.setSuccess(true);
 			HttpSession session = request.getSession();
 			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
 		}else{
+			admin.setId(a.getId());
 			HttpSession session = request.getSession();
 			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
 			resp.setMsg("success");
 			resp.setSuccess(true);
-			log.info(admin.getName()+" login");
+			LOGGER.info(admin.getName()+" login");
 		}
 		return resp;
 	}

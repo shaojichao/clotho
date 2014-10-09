@@ -429,7 +429,6 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       			upgradePop.setTitle('编辑');
 	       			upgradePop.show();
 	       			
-	       			console.log(models[0].data);
 	       			Ext.getCmp('upgradeForm').loadRecord(models[0]);
 	       			if(models[0].data.pkgurl){
 	       				Ext.getCmp('pkgurl').setValue(models[0].data.pkgurl);
@@ -473,7 +472,6 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
        			upgradePop.setTitle('编辑');
        			upgradePop.show();
        			
-       			console.log(models[0].data);
        			Ext.getCmp('upgradeForm').loadRecord(models[0]);
        			if(models[0].data.pkgurl){
        				Ext.getCmp('pkgurl').setValue(models[0].data.pkgurl);

@@ -1,6 +1,10 @@
 package com.runmit.clotho.management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.Menu;
+import com.runmit.clotho.core.dto.ExtEntity;
+import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.MenuService;
+import com.runmit.clotho.management.domain.MenuDTO;
+import com.runmit.clotho.management.security.SecurityConstant;
 
 /**
  * @author zhipeng.tian
@@ -24,7 +33,7 @@ import com.runmit.clotho.core.service.MenuService;
 @Component
 @RequestMapping(value = "/menu")
 public class MenuController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(RedirectController.class);
 	
 	@Autowired
@@ -38,17 +47,121 @@ public class MenuController {
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody List<Menu> getMenus(@RequestParam(value="adminID",defaultValue="0") int adminid) {
 		
-		List<Menu> list = this.menuService.getMenuList(0);
+		List<Menu> list = this.menuService.getMenuListByAdminid(adminid,0);
 		
 		//二级联动
 		for(Menu menu:list){
 			if(!menu.getLeaf()){
-				menu.setChildren(this.menuService.getMenuList(menu.getId()));
+				menu.setChildren(this.menuService.getMenuListByAdminid(adminid,menu.getId()));
 			}
 		}
 		
-		log.info("getMenus");
+		LOGGER.info("getMenus");
 		return list;
 	}
 	
+	@RequestMapping(value = "/getMenuByRole.do")	
+	public @ResponseBody List<MenuDTO> getMenuByRole(@RequestParam(value="roleid",defaultValue="0") int roleid) {
+		if(roleid==0){
+			return null;
+		}
+		List<Menu> list = this.menuService.getMenuListByRole(0,roleid);
+		List<MenuDTO> dtos = new ArrayList<MenuDTO>();
+		//二级联动
+		for(Menu menu:list){
+			MenuDTO dto = new MenuDTO();
+			if(menu.getRoleid()!=null){
+				dto.setChecked(true);
+			}
+			dto.setExpanded(true);
+			dto.setId(menu.getId());
+			dto.setText(menu.getText());
+			dto.setLeaf(menu.getLeaf());
+			if(!menu.getLeaf()){
+				List<Menu> children = this.menuService.getMenuListByRole(menu.getId(),roleid);
+				List<MenuDTO> dtosc = new ArrayList<MenuDTO>();
+				for(Menu child:children){
+					MenuDTO chdto = new MenuDTO();
+					if(child.getRoleid()!=null){
+						chdto.setChecked(true);
+					}
+					chdto.setExpanded(false);
+					chdto.setId(child.getId());
+					chdto.setText(child.getText());
+					chdto.setLeaf(child.getLeaf());
+					dtosc.add(chdto);
+				}
+				dto.setChildren(dtosc);
+			}
+			dtos.add(dto);
+		}
+		
+		LOGGER.info("getMenuDTOs");
+		return dtos;
+	}
+	
+	@RequestMapping(value = "/rootlist.do")
+	public @ResponseBody ExtEntity<Menu> getMenus() {
+		List<Menu> list = this.menuService.getMenuList(0);
+		Menu e = new Menu();
+		e.setId(0);
+		e.setText("无");
+		list.add(0, e);
+		ExtEntity<Menu> entity = new ExtEntity<Menu>();
+		entity.setResult(list.size());
+		entity.setRows(list);
+		return entity;
+	}
+	
+	@RequestMapping(value = "/allList.do")
+	public @ResponseBody ExtEntity<Menu> getallMenus() {
+		
+		List<Menu> list = this.menuService.getAllMenu();
+		ExtEntity<Menu> entity = new ExtEntity<Menu>();
+		entity.setResult(list.size());
+		entity.setRows(list);
+		return entity;
+	}
+	
+	@RequestMapping(value = "/saveMenu.do")
+	public @ResponseBody ExtStatusEntity saveMenu(Menu menu,HttpServletRequest request) {
+		ExtStatusEntity entity = new ExtStatusEntity();
+		
+		HttpSession session = request.getSession();
+		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+		if(menu.getId()==null||menu.getId()==0){
+			menu.setCreatedBy(admin.getName());
+		}
+		try{
+			this.menuService.saveMenu(menu);
+			
+			entity.setMsg("succeed");
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			LOGGER.error("saveVersion error",ex);
+			entity.setMsg("保存失败");
+			entity.setSuccess(false);
+		}
+		
+		LOGGER.info("saveMenu");
+		return entity;
+	}
+	
+	@RequestMapping(value = "/delMenu.do")
+	public @ResponseBody ExtStatusEntity delMenu(@RequestParam("id")int id){
+		ExtStatusEntity entity = new ExtStatusEntity();
+		try{
+			this.menuService.delMenu(id);
+			entity.setMsg("succeed");
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			LOGGER.error("saveVersion error",ex);
+			entity.setMsg("保存失败");
+			entity.setSuccess(false);
+		}
+		
+		LOGGER.info("delMenu");
+		return entity;
+		
+	}
 }

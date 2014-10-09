@@ -15,14 +15,16 @@ public class Menu implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -8437820376336922873L;
-	private int id;
+	private Integer id;
 	private String text;
 	private int parentID;
+	private String parentName;
 	private String url;
 	private Boolean leaf;
 	private CurrentStatus status;
 	private Date createTime;
 	private String createdBy;
+	private Integer roleid;
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -43,10 +45,10 @@ public class Menu implements Serializable{
 	public void setChildren(List<Menu> children) {
 		this.children = children;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getText() {
@@ -79,5 +81,16 @@ public class Menu implements Serializable{
 	public void setStatus(CurrentStatus status) {
 		this.status = status;
 	}
-	
+	public String getParentName() {
+		return parentName;
+	}
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+	public Integer getRoleid() {
+		return roleid;
+	}
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
 }

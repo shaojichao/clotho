@@ -31,7 +31,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/comment")
 public class CommentController {
 
-    private static final Logger log = LoggerFactory
+    private static final Logger LOGGER = LoggerFactory
             .getLogger(CommentController.class);
 
     @Autowired
@@ -49,7 +49,7 @@ public class CommentController {
     public ResponseEntity<CommonResp> comment(@RequestBody @Valid Comment comment,BindingResult bindingResult) {
         CommonResp cr=new CommonResp();
         if (bindingResult.hasErrors()) {
-            log.error("comment request error,request error code:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
+            LOGGER.error("comment request error,request error code:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
             return new ResponseEntity<>(cr, HttpStatus.BAD_REQUEST);
         }
         UserFeedback userFeedback=getFeedback(comment);

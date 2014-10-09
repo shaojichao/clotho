@@ -16,11 +16,28 @@ import com.runmit.clotho.core.domain.admin.Menu;
 public interface MenuMapper {
 
     @Insert("INSERT INTO Menu (`text`,`parentId`,`url`,`leaf`,`status`,`createdBy`) "
-            + "VALUES (#{text},#{parentId},#{url},#{leaf},#{status},#{createdBy})")
+            + "VALUES (#{text},#{parentID},#{url},#{leaf},#{status},#{createdBy})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addMenu(Menu menu);
     
-    @Select("SELECT Menu.* FROM Menu where parentID=#{parentID}")
+    @Insert("UPDATE Menu set `text`=#{text},`parentId`=#{parentID},`url`=#{url},`leaf`=#{leaf},`status`=#{status} where id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updateMenu(Menu menu);
+    
+    @Insert("UPDATE Menu set `status`='INACTIVE' where id=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void delMenu(@Param("id")int id);
+    
+    @Select("SELECT Menu.* FROM Menu where parentid=#{parentID} and status='ACTIVE'")
     List<Menu> getList(@Param("parentID")int parentID);
     
+    @Select("SELECT a.*,b.text as parentName FROM Menu a left join Menu b on a.parentid=b.id")
+    List<Menu> getAllMenu();
+    
+    @Select("SELECT a.*,b.roleid FROM (SELECT * FROM Menu WHERE parentID = #{parentID} AND STATUS = 'ACTIVE') a left join (SELECT * FROM RoleMenuMember WHERE roleid = #{roleid}) b on a.id=b.menuid ORDER BY a.id")
+    List<Menu> getListByRole(@Param("parentID")int parentID,@Param("roleid")int roleid);
+    
+    @Select("SELECT a.* FROM Menu a,RoleMenuMember b,AdminRoleMember c where a.parentid=#{parentID} and a.status='ACTIVE'"
+    		+ " and a.id=b.menuid and c.roleid=b.roleid and c.adminid=#{adminid}")
+    List<Menu> getListByAdminid(@Param("adminid")int adminid,@Param("parentID")int parentID);
 }
