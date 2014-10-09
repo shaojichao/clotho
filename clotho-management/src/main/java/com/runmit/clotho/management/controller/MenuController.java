@@ -33,7 +33,7 @@ import com.runmit.clotho.management.security.SecurityConstant;
 @Component
 @RequestMapping(value = "/menu")
 public class MenuController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(RedirectController.class);
 	
 	@Autowired
@@ -56,7 +56,7 @@ public class MenuController {
 			}
 		}
 		
-		log.info("getMenus");
+		LOGGER.info("getMenus");
 		return list;
 	}
 	
@@ -96,7 +96,7 @@ public class MenuController {
 			dtos.add(dto);
 		}
 		
-		log.info("getMenuDTOs");
+		LOGGER.info("getMenuDTOs");
 		return dtos;
 	}
 	
@@ -138,12 +138,12 @@ public class MenuController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveVersion error",ex);
+			LOGGER.error("saveVersion error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("saveMenu");
+		LOGGER.info("saveMenu");
 		return entity;
 	}
 	
@@ -155,12 +155,12 @@ public class MenuController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveVersion error",ex);
+			LOGGER.error("saveVersion error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("delMenu");
+		LOGGER.info("delMenu");
 		return entity;
 		
 	}

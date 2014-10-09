@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Component
 public class RedirectClothoController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(RedirectClothoController.class);
 	
 	@RequestMapping(value = "/clotho/userfeedback.do")
 	public String toUserfeedback() {
-		log.info("toUserfeedback");
+		LOGGER.info("toUserfeedback");
 		return "clotho/userfeedback";
 	}
 	
 	@RequestMapping(value = "/clotho/upgrade.do")
 	public String toUpgrade() {
-		log.info("toUpgrade");
+		LOGGER.info("toUpgrade");
 		return "clotho/upgrade";
 	}
 	
 	@RequestMapping(value = "/clotho/upgradeplan.do")
 	public String toUpgradePlan() {
-		log.info("toUpgradePlan");
+		LOGGER.info("toUpgradePlan");
 		return "clotho/upgradeplan";
 	}
 }

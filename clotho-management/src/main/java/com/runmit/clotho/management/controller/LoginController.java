@@ -28,7 +28,7 @@ import com.runmit.clotho.management.security.SecurityConstant;
 @Controller
 @Component
 public class LoginController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(LoginController.class);
 	
 	@Autowired
@@ -68,7 +68,7 @@ public class LoginController {
 			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
 			resp.setMsg("success");
 			resp.setSuccess(true);
-			log.info(admin.getName()+" login");
+			LOGGER.info(admin.getName()+" login");
 		}
 		return resp;
 	}

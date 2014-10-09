@@ -21,7 +21,7 @@ public class SpringLoginInterceptor extends HandlerInterceptorAdapter{
 	private String mappingURL =".*/.*\\.do" ;
 	private String[] ignoreUrls = {""};
 	
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(SpringLoginInterceptor.class);
 	
 	@SuppressWarnings("unused")
@@ -49,9 +49,9 @@ public class SpringLoginInterceptor extends HandlerInterceptorAdapter{
 			    }
 		    }
 	    } catch (ServletException e) {
-	    	log.error("ServletException",e);
+	    	LOGGER.error("ServletException",e);
 		} catch (IOException e) {
-			log.error("IOException",e);
+			LOGGER.error("IOException",e);
 		}  
 	    return true;
 	}

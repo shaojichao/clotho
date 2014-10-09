@@ -31,7 +31,7 @@ import com.runmit.clotho.core.service.AdminService;
 @Component
 @RequestMapping(value = "/admin")
 public class AdminController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(AdminController.class);
 	
 	@Autowired
@@ -43,7 +43,7 @@ public class AdminController {
 		ExtEntity<Admin> entity = new ExtEntity<Admin>();
 		entity.setResult(list.size());
 		entity.setRows(list);
-		log.info("getAdminList");
+		LOGGER.info("getAdminList");
 		return entity;
 		
 	}
@@ -54,7 +54,7 @@ public class AdminController {
 		ExtEntity<AdminRole> entity = new ExtEntity<AdminRole>();
 		entity.setResult(list.size());
 		entity.setRows(list);
-		log.info("getAdminRoleListByAdminid");
+		LOGGER.info("getAdminRoleListByAdminid");
 		return entity;
 		
 	}
@@ -65,7 +65,7 @@ public class AdminController {
 		ExtEntity<AdminRole> entity = new ExtEntity<AdminRole>();
 		entity.setResult(list.size());
 		entity.setRows(list);
-		log.info("getRoles");
+		LOGGER.info("getRoles");
 		return entity;
 		
 	}
@@ -73,7 +73,7 @@ public class AdminController {
 	@RequestMapping(value = "/rolelist.do")
 	public @ResponseBody List<AdminRole> getRoleList(){
 		List<AdminRole> list = this.adminService.getActiveRoleList();
-		log.info("getRoleList");
+		LOGGER.info("getRoleList");
 		return list;
 		
 	}
@@ -88,11 +88,11 @@ public class AdminController {
 			result.setMsg("succeed");
 			result.setSuccess(true);
 		}catch(Exception ex){
-			log.error("save admin error",ex);
+			LOGGER.error("save admin error",ex);
 			result.setMsg("保存失败");
 			result.setSuccess(false);
 		}
-		log.info("saveAdmin");
+		LOGGER.info("saveAdmin");
 		return result;
 		
 	}
@@ -105,11 +105,11 @@ public class AdminController {
 			result.setMsg("succeed");
 			result.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveAdminRoleMember error",ex);
+			LOGGER.error("saveAdminRoleMember error",ex);
 			result.setMsg("保存失败");
 			result.setSuccess(false);
 		}
-		log.info("saveAdminRoleMember");
+		LOGGER.info("saveAdminRoleMember");
 		return result;
 		
 	}
@@ -123,12 +123,12 @@ public class AdminController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			log.error("delAdminRole error",ex);
+			LOGGER.error("delAdminRole error",ex);
 			entity.setMsg("删除失败");
 			entity.setSuccess(false);
 		}
 		
-		log.info("delAdminRole");
+		LOGGER.info("delAdminRole");
 		return entity;
 	}
 	
@@ -140,11 +140,11 @@ public class AdminController {
 			result.setMsg("succeed");
 			result.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveRole error",ex);
+			LOGGER.error("saveRole error",ex);
 			result.setMsg("保存失败");
 			result.setSuccess(false);
 		}
-		log.info("saveRole");
+		LOGGER.info("saveRole");
 		return result;
 		
 	}
@@ -165,11 +165,11 @@ public class AdminController {
 			result.setMsg("succeed");
 			result.setSuccess(true);
 		}catch(Exception ex){
-			log.error("saveAdminRoleMember error",ex);
+			LOGGER.error("saveAdminRoleMember error",ex);
 			result.setMsg("保存失败");
 			result.setSuccess(false);
 		}
-		log.info("saveAdminRoleMember");
+		LOGGER.info("saveAdminRoleMember");
 		return result;
 		
 	}

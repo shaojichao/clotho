@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ErrorController {
 
-    private static final Logger log = LoggerFactory.getLogger(ErrorController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
 
     /**
      * We cannot specify the 'headers = "Accept=application/json"' as this
@@ -55,13 +55,13 @@ public class ErrorController {
                 commonError.setMessage(message);
 
                 // only show exceptoin message in debug mode
-                if (log.isDebugEnabled()) {
+                if (LOGGER.isDebugEnabled()) {
                     commonError.setException(exception);
                 } else {
                     commonError.setException("");
                 }
 
-                log.info("Rest response erro: {}", commonError);
+                LOGGER.info("Rest response erro: {}", commonError);
                 return commonError;
             }
 
@@ -75,7 +75,7 @@ public class ErrorController {
             @RequestMapping(value = "/error/errorHandler", method = RequestMethod.POST/*, headers = "Accept=application/json"*/)
             public //@ResponseBody
                     CommonError responseWithError(@RequestBody CommonError error) {
-                log.info("Rest response erro: {}", error);
+                LOGGER.info("Rest response erro: {}", error);
                 return error;
             }
 }

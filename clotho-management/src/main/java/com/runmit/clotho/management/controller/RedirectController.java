@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Component
 public class RedirectController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(RedirectController.class);
 	
 	@RequestMapping(value = "/index.do")
 	public String toIndex(HttpServletRequest request) {
-		log.info("login to index.do");
+		LOGGER.info("login to index.do");
 		return "index";
 	}
 	@RequestMapping(value = "/admin/menu.do")

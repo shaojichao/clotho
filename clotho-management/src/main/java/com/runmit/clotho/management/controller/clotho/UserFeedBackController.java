@@ -24,7 +24,7 @@ import com.runmit.clotho.core.service.UserFeedbackService;
 @Component
 @RequestMapping(value = "/clotho/userfeedback")
 public class UserFeedBackController {
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(UserFeedBackController.class);
 	
 	@Autowired
@@ -50,7 +50,7 @@ public class UserFeedBackController {
 		listdata.setRows(list);
 		listdata.setResult(userFeedbackService.getCount());
 		
-		log.info("getUserFeedBacks");
+		LOGGER.info("getUserFeedBacks");
 		return listdata;
 	}
 }

@@ -23,7 +23,7 @@ import com.runmit.clotho.management.service.UploadService;
 @RequestMapping(value = "/upload")
 public class UploadController {
 	
-	private static final Logger log = LoggerFactory
+	private static final Logger LOGGER = LoggerFactory
             .getLogger(UploadController.class);
 	
 	@Autowired
@@ -33,5 +33,6 @@ public class UploadController {
     public void upload(@RequestParam(value = "pkg") MultipartFile file, 
     		HttpServletRequest request,HttpServletResponse response) throws Exception {
 		this.uploadService.uploadFile(file, response);
+		LOGGER.info("upload file");
     }
 }

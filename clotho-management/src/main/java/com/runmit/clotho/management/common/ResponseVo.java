@@ -22,7 +22,6 @@ public class ResponseVo<T> implements Serializable {
      *
      */
     private static final long serialVersionUID = 2705441863715668339L;
-    private final Logger logger = LoggerFactory.getLogger(ResponseVo.class);
 
     /**
      * table data
