@@ -49,7 +49,7 @@ public class LoginController {
 			@RequestParam("name")String uid,@RequestParam("password")String password) {
 		ExtStatusEntity resp = new ExtStatusEntity();
 		
-		Admin admin = ldap.validAdmin(uid, password);
+		Admin admin = null;//ldap.validAdmin(uid, password);
 		Admin a = this.adminService.getAdminByUid(uid);
 		if(null==admin||a==null){
 //			resp.setMsg("success");
