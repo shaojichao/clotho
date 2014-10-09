@@ -17,6 +17,8 @@
 	
     <context:component-scan base-package="com.runmit.clotho.management.controller"></context:component-scan>
 
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
     <!-- 启用mvc支持的源级annotation（如RequestMapping等）对bean元数据进行配置，必须与 component-scan同时出现在这一context的spring配置中 -->
     <mvc:annotation-driven />
 
