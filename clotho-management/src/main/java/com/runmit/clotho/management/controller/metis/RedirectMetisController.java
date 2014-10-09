@@ -34,7 +34,7 @@ public class RedirectMetisController {
             .getLogger(RedirectMetisController.class);
 	
 
-    @RequestMapping(value = "/schema.do",method= RequestMethod.POST)
+    @RequestMapping(value = "/upload.do",method= RequestMethod.POST)
 	public String uploadSchema(@RequestBody String path) {
 		log.info(path);
         HttpHeaders headers =new HttpHeaders();
