@@ -465,6 +465,6 @@
             <url>http://192.168.20.82/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    <description>This is the umbrella project for all module of LeTV IPTV  platform.</description>
+    <description>This is the umbrella project for 3dstore operation platform.</description>
     
 </project>
