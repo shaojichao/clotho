@@ -36,7 +36,15 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        {header: 'deviceserial',  dataIndex: 'deviceserial', width: 60,sortable:true },
 		        {header: '设备分辨率',  dataIndex: 'ro', width: 60,sortable:true },
 		        {header: '分发渠道',  dataIndex: 'channel', width: 60,sortable:true },
-		        {header: '设备本地时间（毫秒）',  dataIndex: 'dts', width: 60,sortable:true }
+		        {header: '设备本地时间（毫秒）',  dataIndex: 'dts', width: 60,sortable:true },
+		        {header: '创建时间',  dataIndex: 'createTime', width: 160,sortable:true,renderer:function(value){
+		        	if(value != null){
+		        		return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
+		        	}else{
+		        		return '';
+		        	}
+	        	}
+	        }
 		        
 		     ],
 	store: Ext.create('Ext.data.JsonStore', {
@@ -46,7 +54,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	    fields :['id', 'hwid','udid','wifimac','wirelesssmac','wiremac','os','osver',
 	             'device','area','language','imei','idfv','appkey','appver','uid','devicebrand',
 	             'devicedevice','devicemodel','devicehardware','deviceid','deviceserial','ro',
-	             'channel','dts','contact','content'],
+	             'channel','dts','contact','content','createTime'],
 	    proxy: {
 	        type: 'ajax',
 	        url: path + '/clotho/userfeedback/list.do',
