@@ -225,7 +225,12 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
        				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
        				return;
        			}
-       			
+       			if(!models[0].data.leaf){
+       				Ext.getCmp('leaf_no').setValue(true);
+       			}
+       			if(models[0].data.status!='ACTIVE'){
+       				Ext.getCmp('status_inactive').setValue(true);
+       			}
        			menuPop.setTitle('编辑');
        			menuPop.show();
        			
