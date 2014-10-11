@@ -68,11 +68,11 @@ var upgradePop = Ext.create('Ext.window.Window', {
                     handler: function(){
                         Ext.getCmp('pkgUploadForm').getForm().submit({
                             waitTitle: '系统提示',
-                            waitMsg: '升级包上传中，请稍候......',
+                            waitMsg: 'schema文件上传中，请稍候......',
                             success: function(form, action){
                                 Ext.getCmp('pkgUploadBtn').setDisabled(true);
                                 Ext.getCmp('path').setValue(action.result.msg);
-                                Ext.Msg.alert('系统提示', '升级包上传成功！');
+                                Ext.Msg.alert('系统提示', 'schema文件上传成功！');
                             }
                         });
                     }
