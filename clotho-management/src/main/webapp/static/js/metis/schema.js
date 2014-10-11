@@ -13,8 +13,8 @@ var upgradePop = Ext.create('Ext.window.Window', {
         Ext.create('Ext.form.Panel', {
             id: 'upgradeForm',
             width: 460,
-            height: 250,
-            url: path + '/metis/schema.do',
+            height: 100,
+            url: path + '/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -25,7 +25,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             // The fields
             defaultType: 'textfield',
             items: [{
-                fieldLabel: 'schema文件地址',
+                fieldLabel: '文件地址',
                 name: 'path',
                 id: 'path',
                 allowBlank: false
@@ -40,7 +40,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'pkgUploadForm',
             items: [
                 {
-                    fieldLabel: '选择schema文件',
+                    fieldLabel: '选择文件',
                     labelWidth: 80,
                     labelAlign: 'right',
                     xtype: 'textfield',
@@ -93,6 +93,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
                     waitTitle: '系统提示',
                     waitMsg: '保存中......',
                     success: function(form, action){
+
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
                         centerPanel.getStore().reload();
@@ -119,14 +120,14 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
     title: 'schema列表',
     columns: [
-        {header: '主键',  dataIndex: 'fingerprint', width: 60,sortable:true },
-        {header: 'namespace', dataIndex: 'namespace', width: 80},
-        {header: 'name', dataIndex: 'name', width: 80},
+        {header: '主键',  dataIndex: 'fingerprint', width: 230,sortable:true },
+        {header: 'namespace', dataIndex: 'namespace', width: 180},
+        {header: 'name', dataIndex: 'name', width: 100},
         {header: 'schema', dataIndex: 'schema', width: 80},
         {header: '是否可用', dataIndex: 'inuse', width: 80},
-        {header: '更新时间', dataIndex: 'updatetime', width: 80},
+        {header: '更新时间', dataIndex: 'updatetime', width: 180},
         {header: '更新者', dataIndex: 'updateby', width: 80},
-        {header: '创建时间', dataIndex: 'createtime', width: 80}
+        {header: '创建时间', dataIndex: 'createtime', width: 180}
     ],
 
     store: Ext.create('Ext.data.JsonStore', {
@@ -140,8 +141,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             reader: {
                 type: 'json',
                 totalProperty: "result",
-                root: 'rows'
-            }
+                root: 'rows'            }
+
         }
     }),
     tbar: [
@@ -153,21 +154,6 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 Ext.getCmp('pkgUploadForm').getForm().reset();
                 upgradePop.setTitle('增加');
                 upgradePop.show();
-            }
-        },'-',{
-            xtype: 'button',
-            text: '删除',
-            handler: function(){
-                var models = centerPanel.getSelectionModel().getSelection();
-                if(models.length <= 0){
-                    Ext.Msg.alert('系统提示', '请选择要删除的数据');
-                    return;
-                }
-                Ext.Msg.confirm('系统提示', '您确认要删除吗?', function(option){
-                    if('yes' === option){
-                        deleteUpgrades(models);
-                    }
-                });
             }
         }
     ],
