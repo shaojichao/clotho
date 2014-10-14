@@ -1,21 +1,21 @@
 var centerPanel = Ext.create('Ext.grid.Panel', {
 	region: 'center',
-	title: '服务器文件列表',
+	title: '文件信息列表',
     columns: [
-		        {header: 'ID',  dataIndex: 'id', width: 60,sortable:true },
-		        {header: '服务器IP（外网）', dataIndex: 'ipWan', width: 150},
-                {header: '服务器IP（内网）', dataIndex: 'ipLan', width: 150},
-		        {header: '文件', dataIndex: 'fileName', width: 700},
-		        {header: '激活状态',  dataIndex: 'active', width: 100,sortable:true }
+		        {header: '文件',  dataIndex: 'fileName', width: 660,sortable:true },
+		        {header: 'url', dataIndex: 'url', width: 500},
+                {header: 'MediaType', dataIndex: 'mediaType', width: 100},
+		        {header: 'VideoType', dataIndex: 'videoType', width: 100},
+		        {header: 'Size',  dataIndex: 'size', width: 150,sortable:true }
 		     ],
 	store: Ext.create('Ext.data.JsonStore', {
 		autoLoad: true,
 		storeId: 'centerStore',
 		pageSize: 20,
-	    fields :['id', 'ipWan','ipLan','fileName','active'],
+	    fields :['fileName', 'url','mediaType','videoType','size'],
 	    proxy: {
 	        type: 'ajax',
-	        url: '/abc/cdn_management/serverFile/list',
+	        url: '/abc/cdn_management/file/list',
 	        reader: {
 	            type: 'json',
 	            totalProperty: "result",
