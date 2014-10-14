@@ -3,6 +3,7 @@ package com.runmit.clotho.core.domain.userfeedback;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -26,6 +27,7 @@ public class UserFeedback implements Serializable {
     private String area;
     private String language;
     private String imei;
+    private Date createTime;
     public Integer getId() {
 		return id;
 	}
@@ -203,4 +205,10 @@ public class UserFeedback implements Serializable {
     private Long dts;
     private String contact;
     private String content;
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 }

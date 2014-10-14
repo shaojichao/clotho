@@ -76,7 +76,7 @@ Ext.onReady(function() {
 		layout: 'border',
 		resizable : false,
 		plain : true,
-		autoScroll : true,
+//		autoScroll : true,
 		closable : false,
 		border: false,
 		buttons : [{
