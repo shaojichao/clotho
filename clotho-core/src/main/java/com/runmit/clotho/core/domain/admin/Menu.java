@@ -25,6 +25,7 @@ public class Menu implements Serializable{
 	private Date createTime;
 	private String createdBy;
 	private Integer roleid;
+	private Integer orderNum;
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -92,5 +93,11 @@ public class Menu implements Serializable{
 	}
 	public void setRoleid(Integer roleid) {
 		this.roleid = roleid;
+	}
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
 }

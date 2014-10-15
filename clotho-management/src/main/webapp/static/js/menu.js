@@ -56,6 +56,11 @@ var menuPop = Ext.create('Ext.window.Window', {
             	       		displayField: 'text',
 					   	    valueField: 'id',
                 		},{
+                			xtype: 'numberfield',
+            		        fieldLabel: '排序',
+            		        name: 'orderNum',
+            		        allowBlank: false
+                		},{
                 			fieldLabel: '状态',
                 	        xtype: 'fieldcontainer',
                 	        defaultType: 'radiofield',
@@ -133,6 +138,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        {header: 'ID',  dataIndex: 'id', width: 60,sortable:true },
 		        {header: '名称', dataIndex: 'text', width: 150},
 		        {header: '父菜单Id', dataIndex: 'parentID', width: 80},
+		        {header: '排序', dataIndex: 'orderNum', width: 80},
 		        {header: '父菜单名称', dataIndex: 'parentName', width: 150},
 		        {header: '跳转',  dataIndex: 'url', width: 300,sortable:true },
 		        {header: '叶节点',  dataIndex: 'leaf', width: 80,sortable:true,renderer:function(value){
@@ -165,7 +171,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		autoLoad: true,
 		storeId: 'centerStore',
 		pageSize: 20,
-	    fields :['id', 'text','parentID','parentName','url','leaf','status','createTime','createdBy'],
+	    fields :['id', 'text','parentID','parentName','orderNum','url','leaf','status','createTime','createdBy'],
 	    proxy: {
 	        type: 'ajax',
 	        url: path + '/menu/allList.do',
