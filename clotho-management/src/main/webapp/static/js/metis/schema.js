@@ -14,7 +14,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'upgradeForm',
             width: 460,
             height: 100,
-            url: path + '/abc/metis/upload.do',
+            url: path + '/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -104,7 +104,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
                     failure: function(form, action){
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
-                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        centerPanel.getStore().load({url:'/metis/schema.do'});
 
                         detailStatus.show();
                         statusPanel.getStore().loadData(action.result.rows);
@@ -295,7 +295,7 @@ var names_store = Ext.create('Ext.data.Store', {
     fields: ['name'],
     proxy: {
         type: 'ajax',
-        url: '/abc/metis/names.do',
+        url: '/metis/names.do',
         reader: {
             totalProperty: 'result',
             root: 'rows'
@@ -333,7 +333,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields :['fingerprint', 'namespace','name','schema','inuse','updatetime','updateby','createtime'],
         proxy: {
             type: 'ajax',
-            url:'/abc/metis/schema.do',
+            url:'/metis/schema.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -356,7 +356,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                 proxy: {
                     type: 'ajax',
-                    url:'/abc/metis/namespaces.do',
+                    url:'/metis/namespaces.do',
                     reader: {
                         totalProperty: 'result',
                         root: 'rows'
@@ -390,7 +390,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
 
-        centerPanel.getStore().load({url:'/abc/metis//samplename.do',params:{name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/metis//samplename.do',params:{name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
