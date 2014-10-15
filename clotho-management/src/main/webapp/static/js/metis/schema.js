@@ -104,7 +104,8 @@ var upgradePop = Ext.create('Ext.window.Window', {
                     failure: function(form, action){
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
-                        centerPanel.getStore().reload();
+                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+
                         detailStatus.show();
                         statusPanel.getStore().loadData(action.result.rows);
 
@@ -287,22 +288,23 @@ var name_Fields=[
     {name:"name"}
 
 ];
-var names_store = new Ext.data.JsonStore
-({
-    storeId: 'name',
-    baseParams:{namespace:"com.example"},
-    fields: ['name'],
 
+
+var names_store = Ext.create('Ext.data.Store', {
+    model: 'State',
+    fields: ['name'],
     proxy: {
         type: 'ajax',
-        url:'/abc/metis/names.do',
+        url: '/abc/metis/names.do',
         reader: {
-
             totalProperty: 'result',
             root: 'rows'
         }
-    }
+    },
+    autoLoad: false,
+    remoteSort:true
 });
+
 var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
     title: 'schema列表',
@@ -365,12 +367,10 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             {
                 select : function(namespaceCombox, record,index)
                 {
-                    //names_store.proxy= new Ext.data.HttpProxy({url: '/abc/metis/namespaces.do'});//'/abc/metis/names.do?namespace=' + namespaceCombox.value});
-                    //names_store.load();
-                    Ext.apply(names_store.baseParams,{namespace:namespaceCombox.value});
-                    names_store.load();
-                    //Ext.getCmp('name').clearValue();
 
+                    var namecom = Ext.getCmp("name");
+                    namecom.store.load({params:{namespace:this.value}});
+                    namecom.clearValue();
                 }
             },
             displayField: 'namespace',
@@ -383,6 +383,17 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             fieldLabel: 'name',
             emptyText:'请选择...',
             store: names_store,
+            listeners:
+           {
+    select : function(nameCombox, record,index)
+    {
+
+        var namespacecom = Ext.getCmp("namespace");
+
+        centerPanel.getStore().load({url:'/abc/metis//samplename.do',params:{name:this.value,namespace:namespacecom.value}});
+        centerPanel.clearValue();
+    }
+     },
             displayField: 'name',
             valueField: 'name'
         },
