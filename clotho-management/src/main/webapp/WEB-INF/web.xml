@@ -3,6 +3,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
    
     <!-- Location of the Log4J config file, for initialization and refresh checks. Applied by Log4jConfigListener. -->
+
     <context-param>
         <param-name>log4jConfigLocation</param-name>
         <param-value>file:///${catalina.home}/app/config/clotho-management/log4j_management.properties</param-value>
