@@ -152,7 +152,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	title: '账号列表',
     columns: [
 		        {header: 'ID',  dataIndex: 'id', width: 80,sortable:true },
-		        {header: 'uid', dataIndex: 'uid'}
+		        {header: 'uid', dataIndex: 'uid',width: 200}
  		     ],
 	selModel: {
 	listeners: {
