@@ -19,6 +19,12 @@ var topPanel = Ext.create('Ext.toolbar.Toolbar', {
 								});  
 		        		 })
 		        	 }
+		         },'-',
+		         {
+		        	 text: '修改密码'	,
+		        	 handler: function(){
+		        		 window.open("http://116.254.240.149:8888/");
+		        	 }
 		         }
 		    ]
 });
