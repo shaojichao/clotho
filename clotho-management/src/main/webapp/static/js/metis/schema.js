@@ -399,6 +399,15 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         },
         {
             xtype: 'button',
+            text: '全部',
+            handler: function () {
+                centerPanel.getStore().load({url:'/metis/schema.do'});
+                centerPanel.clearValue();
+
+            }
+        },
+        {
+            xtype: 'button',
             text: '上传',
             handler: function () {
                 Ext.getCmp('upgradeForm').getForm().reset();
