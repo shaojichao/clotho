@@ -71,7 +71,7 @@ public class LDAPValidation {
                         continue;  
                     }
                     while (allValues.hasMoreElements()) {  
-                        String value = allValues.nextElement();  
+                        String value = allValues.nextElement(); 
                         if(attributeName.equalsIgnoreCase("uid")){
                         	admin.setUid(value);
     					}else if(attributeName.equalsIgnoreCase("mail")){
