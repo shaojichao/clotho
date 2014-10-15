@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 public class avro_schema  implements Serializable {
-    private byte[] fingerprint;
+    private String fingerprint;
     private String namespace;
     private String name;
     private String schema;
