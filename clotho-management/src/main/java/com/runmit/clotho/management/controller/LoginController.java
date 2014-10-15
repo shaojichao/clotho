@@ -52,16 +52,8 @@ public class LoginController {
 		Admin admin = ldap.validAdmin(uid, password);
 		Admin a = this.adminService.getAdminByUid(uid);
 		if(null==admin||a==null){
-//			resp.setMsg("success");
-//			resp.setSuccess(false);
-			//接入正式系统前使用
-			admin = new Admin();
-			admin.setId(4);
-			admin.setName("我是访客");
-			resp.setMsg("success");
-			resp.setSuccess(true);
-			HttpSession session = request.getSession();
-			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
+			resp.setMsg("账号不存在");
+			resp.setSuccess(false);
 		}else{
 			admin.setId(a.getId());
 			HttpSession session = request.getSession();
