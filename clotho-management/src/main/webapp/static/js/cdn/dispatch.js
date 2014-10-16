@@ -31,7 +31,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                 },
                 {
                     xtype: "combo",
-                    name: 'country',
+                    name: 'countryId',
                     id: 'country',
                     fieldLabel: '国家',
                     displayField: 'name',
@@ -259,16 +259,16 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     title: '节点列表',
     columns: [
         {header: 'ID', dataIndex: 'id', width: 80},
-        {header: '国家', dataIndex: 'country', width: 80},
+        {header: '国家', dataIndex: 'countryName', width: 80},
         {header: '省份', dataIndex: 'provinceName', width: 80},
         {header: '地区', dataIndex: 'districtName', width: 80},
-        {header: '运营商', dataIndex: 'ispName', width: 80},
-        {header: '节点', dataIndex: 'nodeName', width: 300, sortable: true },
+        {header: '运营商', dataIndex: 'ispName', width: 150},
+        {header: '节点', dataIndex: 'nodeName', width: 80, sortable: true },
         {header: '等级', dataIndex: 'grade', width: 85, sortable: true, renderer: function (value) {
             if (value == '1') {
-                return "一级";
+                return "<span style ='color:red'>一级</span>";
             } else if (value == '2') {
-                return "二级";
+                return "<span style ='color:green'>二级</span>";
             } else {
                 return "其他";
             }
@@ -287,7 +287,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         autoLoad: true,
         storeId: 'centerStore',
         pageSize: 20,
-        fields: ['id', 'country', 'provinceId', 'provinceName', 'districtId', 'districtName', 'ispId', 'ispName', 'node_id', 'nodeName', 'grade'],
+        fields: ['id', 'countryId', 'countryName', 'provinceId', 'provinceName', 'districtId', 'districtName', 'ispId', 'ispName', 'node_id', 'nodeName', 'grade'],
         proxy: {
             type: 'ajax',
             url: '/abc/goeBasedDispatch/list',
