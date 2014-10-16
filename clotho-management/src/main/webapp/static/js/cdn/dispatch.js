@@ -1,5 +1,5 @@
 var geoPop = Ext.create('Ext.window.Window', {
-    id: 'nodeWin',
+    id: 'geoWin',
     title: '增加',
     height: 370,
     width: 480,
@@ -11,10 +11,10 @@ var geoPop = Ext.create('Ext.window.Window', {
     overflowY: 'auto',
     items: [
         Ext.create('Ext.form.Panel', {
-            id: 'nodeForm',
+            id: 'geoForm',
             width: 460,
             height: 250,
-            url: path + '/abc/goeBasedDispatch/save',
+            url: '/abc/goeBasedDispatch/save',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -30,56 +30,59 @@ var geoPop = Ext.create('Ext.window.Window', {
                     hidden: true
                 },
                 {
-                    xtype:"combo",
-                    name:'country',
-                    id : 'country',
-                    fieldLabel:'国家',
-                    displayField:'name',
-                    valueField:'id',
-                    triggerAction:'all',
+                    xtype: "combo",
+                    name: 'country',
+                    id: 'country',
+                    fieldLabel: '国家',
+                    displayField: 'name',
+                    valueField: 'id',
+                    triggerAction: 'all',
                     queryMode: 'local',
-                    selectOnFocus:true,
+                    selectOnFocus: true,
                     forceSelection: true,
-                    allowBlank:false,
+                    allowBlank: false,
                     editable: true,
-                    emptyText:'请选择国家',
-                    blankText : '请选择国家',
+                    emptyText: '请选择国家',
+                    blankText: '请选择国家',
                     store: Ext.create('Ext.data.JsonStore', {
                         storeId: 'countryStore',
                         autoLoad: true,
                         fields: ['id', 'name'],
-                        data: [['0','未知'],['CN','中国']]
+                        data: [
+                            ['0', '未知'],
+                            ['CN', '中国']
+                        ]
                     }),
-                    listeners:{
-                        select:function(combo, record,index){
-                            try{
-                                var province_model=Ext.getCmp('province');
+                    listeners: {
+                        select: function (combo, record, index) {
+                            try {
+                                var province_model = Ext.getCmp('province');
                                 var district_model = Ext.getCmp("district");
-                                province_model.clearValue();
-                                district_model.clearValue();
-                                province_model.store.load({url:'/abc/province/jsonList?countryId='+this.value});
+                                province_model.reset();
+                                district_model.reset();
+                                province_model.store.load({url: '/abc/province/jsonList?countryId=' + this.value});
                             }
-                            catch(ex){
-                                Ext.MessageBox.alert("错误","数据加载失败。");
+                            catch (ex) {
+                                Ext.MessageBox.alert("错误", "数据加载失败。");
                             }
                         }
                     }
                 },
                 {
-                    xtype:"combo",
-                    name:'province',
-                    id : 'province',
-                    fieldLabel:'省份',
-                    displayField:'name',
-                    valueField:'id',
-                    triggerAction:'all',
+                    xtype: "combo",
+                    name: 'provinceId',
+                    id: 'province',
+                    fieldLabel: '省份',
+                    displayField: 'name',
+                    valueField: 'id',
+                    triggerAction: 'all',
                     queryMode: 'local',
-                    selectOnFocus:true,
+                    selectOnFocus: true,
                     forceSelection: true,
-                    allowBlank:false,
+                    allowBlank: false,
                     editable: true,
-                    emptyText:'请选择省份',
-                    blankText : '请选择省份',
+                    emptyText: '请选择省份',
+                    blankText: '请选择省份',
                     store: Ext.create('Ext.data.JsonStore', {
                         storeId: 'provinceStore',
                         autoLoad: true,
@@ -93,35 +96,35 @@ var geoPop = Ext.create('Ext.window.Window', {
                             }
                         }
                     }),
-                    listeners:{
-                        select:function(combo, record,index){
-                            try{
+                    listeners: {
+                        select: function (combo, record, index) {
+                            try {
                                 var district_model = Ext.getCmp("district");
                                 district_model.clearValue();
-                                district_model.store.load({url:'/abc/district/jsonList?provinceId='+this.value});
+                                district_model.store.load({url: '/abc/district/jsonList?provinceId=' + this.value});
                             }
-                            catch(ex){
-                                Ext.MessageBox.alert("错误","数据加载失败。");
+                            catch (ex) {
+                                Ext.MessageBox.alert("错误", "数据加载失败。");
                             }
                         }
                     }
 
                 },
                 {
-                    xtype:"combo",
-                    name:'district',
-                    id : 'district',
-                    fieldLabel:'地区',
-                    displayField:'districtname',
-                    valueField:'id',
-                    triggerAction:'all',
+                    xtype: "combo",
+                    name: 'districtId',
+                    id: 'district',
+                    fieldLabel: '地区',
+                    displayField: 'districtname',
+                    valueField: 'id',
+                    triggerAction: 'all',
                     queryMode: 'local',
-                    selectOnFocus:true,
+                    selectOnFocus: true,
                     forceSelection: true,
-                    allowBlank:false,
+                    allowBlank: false,
                     editable: true,
-                    emptyText:'请选择地区',
-                    blankText : '请选择地区',
+                    emptyText: '请选择地区',
+                    blankText: '请选择地区',
                     store: Ext.create('Ext.data.JsonStore', {
                         storeId: 'districtStore',
                         autoLoad: true,
@@ -137,20 +140,20 @@ var geoPop = Ext.create('Ext.window.Window', {
                     })
                 },
                 {
-                    xtype:"combo",
-                    name:'isp',
-                    id : 'isp',
-                    fieldLabel:'运营商',
-                    displayField:'name',
-                    valueField:'id',
-                    triggerAction:'all',
+                    xtype: "combo",
+                    name: 'ispId',
+                    id: 'isp',
+                    fieldLabel: '运营商',
+                    displayField: 'name',
+                    valueField: 'id',
+                    triggerAction: 'all',
                     queryMode: 'local',
-                    selectOnFocus:true,
+                    selectOnFocus: true,
                     forceSelection: true,
-                    allowBlank:false,
+                    allowBlank: false,
                     editable: true,
-                    emptyText:'请选择运营商',
-                    blankText : '请选择运营商',
+                    emptyText: '请选择运营商',
+                    blankText: '请选择运营商',
                     store: Ext.create('Ext.data.JsonStore', {
                         storeId: 'ispStore',
                         autoLoad: true,
@@ -166,20 +169,20 @@ var geoPop = Ext.create('Ext.window.Window', {
                     })
                 },
                 {
-                    xtype:"combo",
-                    name:'node',
-                    id : 'node',
-                    fieldLabel:'节点',
-                    displayField:'name',
-                    valueField:'id',
-                    triggerAction:'all',
+                    xtype: "combo",
+                    name: 'node_id',
+                    id: 'node',
+                    fieldLabel: '节点',
+                    displayField: 'name',
+                    valueField: 'id',
+                    triggerAction: 'all',
                     queryMode: 'local',
-                    selectOnFocus:true,
+                    selectOnFocus: true,
                     forceSelection: true,
-                    allowBlank:false,
+                    allowBlank: false,
                     editable: true,
-                    emptyText:'请选择节点',
-                    blankText : '请选择节点',
+                    emptyText: '请选择节点',
+                    blankText: '请选择节点',
                     store: Ext.create('Ext.data.JsonStore', {
                         storeId: 'nodeStore',
                         autoLoad: true,
@@ -193,6 +196,32 @@ var geoPop = Ext.create('Ext.window.Window', {
                             }
                         }
                     })
+                },
+                {
+                    xtype: "combo",
+                    name: 'grade',
+                    id: 'grade',
+                    fieldLabel: '等级',
+                    displayField: 'name',
+                    valueField: 'id',
+                    triggerAction: 'all',
+                    queryMode: 'local',
+                    selectOnFocus: true,
+                    forceSelection: true,
+                    allowBlank: false,
+                    editable: true,
+                    emptyText: '请选择等级',
+                    blankText: '请选择等级',
+                    store: Ext.create('Ext.data.JsonStore', {
+                        storeId: 'gradeStore',
+                        autoLoad: true,
+                        fields: ['id', 'name'],
+                        data: [
+                            [1, '一级'],
+                            [2, '二级'],
+                            [99, '其他']
+                        ]
+                    })
                 }
             ]
         })
@@ -201,16 +230,11 @@ var geoPop = Ext.create('Ext.window.Window', {
         {
             text: '保存',
             handler: function () {
-
-                if (!Ext.getCmp('nodeForm').getForm().isValid()) {
-                    return;
-                }
-
-                Ext.getCmp('nodeForm').submit({
+                Ext.getCmp('geoForm').submit({
                     waitTitle: '系统提示',
                     waitMsg: '保存中......',
                     success: function (form, action) {
-                        Ext.getCmp('nodeWin').hide();
+                        Ext.getCmp('geoWin').hide();
                         centerPanel.getStore().reload();
                         Ext.Msg.alert('系统提示', '保存成功！');
                     },
@@ -234,16 +258,16 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
     title: '节点列表',
     columns: [
-        {header: 'ID', dataIndex: 'id', width: 60, sortable: true },
+        {header: 'ID', dataIndex: 'id', width: 80},
         {header: '国家', dataIndex: 'country', width: 80},
-        {header: '省份', dataIndex: 'province', width: 80},
-        {header: '地区', dataIndex: 'area', width: 80},
-        {header: '运营商', dataIndex: 'isp', width: 80},
-        {header: '节点', dataIndex: 'node', width: 300, sortable: true },
+        {header: '省份', dataIndex: 'provinceName', width: 80},
+        {header: '地区', dataIndex: 'districtName', width: 80},
+        {header: '运营商', dataIndex: 'ispName', width: 80},
+        {header: '节点', dataIndex: 'nodeName', width: 300, sortable: true },
         {header: '等级', dataIndex: 'grade', width: 85, sortable: true, renderer: function (value) {
             if (value == '1') {
                 return "一级";
-            } else if(value == '2'){
+            } else if (value == '2') {
                 return "二级";
             } else {
                 return "其他";
@@ -263,7 +287,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         autoLoad: true,
         storeId: 'centerStore',
         pageSize: 20,
-        fields: ['id', 'country', 'province', 'area', 'isp', 'node', 'grade'],
+        fields: ['id', 'country', 'provinceId', 'provinceName', 'districtId', 'districtName', 'ispId', 'ispName', 'node_id', 'nodeName', 'grade'],
         proxy: {
             type: 'ajax',
             url: '/abc/goeBasedDispatch/list',
@@ -279,7 +303,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             xtype: 'button',
             text: '增加',
             handler: function () {
-                Ext.getCmp('nodeForm').getForm().reset();
+                Ext.getCmp('geoForm').getForm().reset();
                 geoPop.setTitle('增加');
                 geoPop.show();
             }
@@ -299,7 +323,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 geoPop.setTitle('编辑');
                 geoPop.show();
 
-                Ext.getCmp('nodeForm').loadRecord(models[0]);
+                Ext.getCmp('geoForm').loadRecord(models[0]);
 
             }
         },
@@ -315,7 +339,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 }
                 Ext.Msg.confirm('系统提示', '您确认要删除吗?', function (option) {
                     if ('yes' === option) {
-                        deleteNodes(models);
+                        deleteGeo(models);
                     }
                 });
             }
@@ -340,15 +364,15 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 }
                 geoPop.setTitle('编辑');
                 geoPop.show();
-                Ext.getCmp('nodeForm').loadRecord(models[0]);
+                Ext.getCmp('geoForm').loadRecord(models[0]);
             }
         }
     }
 });
 
-function deleteNodes(records) {
+function deleteGeo(records) {
     Ext.Ajax.request({
-        url: path + '/abc/node/deleteNode?id=' + records[0].get('id'),
+        url: path + '/abc/goeBasedDispatch/del?id=' + records[0].get('id'),
         scope: this,
         async: true,
         success: function (response, options) {
