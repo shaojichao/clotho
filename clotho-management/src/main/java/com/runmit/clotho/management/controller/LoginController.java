@@ -51,8 +51,11 @@ public class LoginController {
 		
 		Admin admin = ldap.validAdmin(uid, password);
 		Admin a = this.adminService.getAdminByUid(uid);
-		if(null==admin||a==null){
-			resp.setMsg("账号不存在");
+		if(null==admin){
+			resp.setMsg("LDAP账号密码错误或者不存在");
+			resp.setSuccess(false);
+		}else if(null==a){
+			resp.setMsg("后台管理账号不存在");
 			resp.setSuccess(false);
 		}else{
 			admin.setId(a.getId());
