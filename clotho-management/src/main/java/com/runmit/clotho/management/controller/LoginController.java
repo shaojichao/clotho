@@ -65,6 +65,7 @@ public class LoginController {
 			resp.setSuccess(true);
 			LOGGER.info(admin.getName()+" login");
 		}
+		
 		return resp;
 	}
 	
