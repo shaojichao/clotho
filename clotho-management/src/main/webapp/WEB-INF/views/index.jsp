@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CLOTHO</title>
+        <title>润华运营系统</title>
         <%@ include file="../../header.jsp"%>
         <script type="text/javascript" src="<%=path %>/static/js/index.js"></script>
     </head>
