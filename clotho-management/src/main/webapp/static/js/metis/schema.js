@@ -344,9 +344,9 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         {header: 'md5', dataIndex: 'md5', width: 100},
         {header: '状态', dataIndex: 'inuse', width: 80,sortable:true,renderer:function(value) {
             if (value == '0') {
-                return "停用";
+                return "<span style='color: #ff0b49'>停用</span>";
             } else if (value == '1') {
-                return "使用中";
+                return "<span style='color: #34ff6d'>使用中</span>";
             }
         }
         },
