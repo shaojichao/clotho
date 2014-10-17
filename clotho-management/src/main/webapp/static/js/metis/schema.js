@@ -352,7 +352,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         },
         {header: '更新时间',  dataIndex: 'updatetime', width: 180},
         {header: '更新者', dataIndex: 'updateby', width: 80},
-        {header: '更新时间',  dataIndex: 'createtime', width: 180}
+        {header: '创建时间',  dataIndex: 'createtime', width: 180}
     ],
 
     store: Ext.create('Ext.data.JsonStore', {
