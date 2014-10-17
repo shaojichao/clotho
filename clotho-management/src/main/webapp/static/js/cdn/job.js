@@ -44,8 +44,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             }
         }
         },
-        {header: '说明',  dataIndex: 'memo', width: 80,sortable:true },
-        {header: 'taskId',  dataIndex: 'task_id', width: 50,sortable:true },
+        {header: '说明',  dataIndex: 'memo', width: 110,sortable:true },
+        {header: 'taskId',  dataIndex: 'task_id', width: 80,sortable:true },
         {header: 'mediaType',  dataIndex: 'media_type', width: 150,sortable:true },
         {header: 'mediaDataRate',  dataIndex: 'media_data_rate', width: 120,sortable:true },
         {header: 'videoType',  dataIndex: 'video_type', width: 150,sortable:true },
@@ -89,7 +89,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields :['id', 'md5','url','file_name','strategy','back_url','process','status','memo','task_id','media_type','media_data_rate','video_type','video_data_rate','audio_type','audio_data_rate','duration','size','storage_time','begin_time','end_time'],
         proxy: {
             type: 'ajax',
-            url: path + '/abc/job/list',
+            url: path + '/cdn-management/job/list',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -116,7 +116,7 @@ var taskPanel = Ext.create('Ext.grid.Panel', {
 	collapsible: true,
 	columns: [
 	          	{header: 'ID', align: 'center', width: 50, dataIndex: 'id'},
-	          	{header: '节点', align: 'center', width: 50, dataIndex: 'node_name'},
+	          	{header: '节点', align: 'center', width: 80, dataIndex: 'node_name'},
                  {header: '服务器', align: 'center', width: 150, dataIndex: 'server_ip_wan'},
                 {header: '激活状态', align: 'center', width: 100, dataIndex: 'active_flag', renderer: function (value) {
                     if (value == '1') {
@@ -164,7 +164,7 @@ var taskPanel = Ext.create('Ext.grid.Panel', {
 	    fields :['id','node_id','node_name','server_ip_wan','server_id','active_flag','begin_time','end_time'],
 	    proxy: {
 	        type: 'ajax',
-	        url: path + '/abc/task/getTaskListByJobId',
+	        url: path + '/cdn-management/task/getTaskListByJobId',
 	        reader: {
                 type: 'json',
 	        	totalProperty: 'results',
@@ -210,7 +210,7 @@ var taskLogPanel = Ext.create('Ext.grid.Panel', {
         fields :['id','status','memo','log_time'],
         proxy: {
             type: 'ajax',
-            url: path + '/abc/taskLog/getTaskLogsListByTaskId',
+            url: path + '/cdn-management/taskLog/getTaskLogsListByTaskId',
             reader: {
                 totalProperty: 'results',
                 root: 'rows'
