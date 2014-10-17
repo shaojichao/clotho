@@ -76,7 +76,7 @@ var rolePop = Ext.create('Ext.window.Window', {
 
 var centerPanel = Ext.create('Ext.grid.Panel', {
 	region : 'center',
-	title : '账号列表',
+	title : '角色列表',
 	columns : [ {
 		header : 'ID',
 		dataIndex : 'id',
