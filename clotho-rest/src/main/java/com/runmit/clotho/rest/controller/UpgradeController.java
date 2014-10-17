@@ -39,7 +39,7 @@ public class UpgradeController {
      * 参数说明在各自的RequestBody类中
      */
     @RequestMapping(value = "/getupgrade", method = RequestMethod.GET)
-    @ApiOperation(value = "获取升级版本接口", notes = "用于客户端获取软件的可升级最新版本", httpMethod = "POST", consumes = "application/json", produces = "application/json", protocols = "http, https", nickname = "", response = Upgrade.class)
+    @ApiOperation(value = "获取升级版本接口", notes = "用于客户端获取软件的可升级最新版本", httpMethod = "GET", consumes = "application/json", produces = "application/json", protocols = "http, https", nickname = "", response = Upgrade.class)
     @ApiResponses(value = {
             @ApiResponse(code=0,message = "成功"),
             @ApiResponse(code=-1,message = "当前版本无需升级"),
