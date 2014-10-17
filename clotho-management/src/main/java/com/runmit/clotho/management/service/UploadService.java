@@ -2,6 +2,7 @@ package com.runmit.clotho.management.service;
 
 import java.io.File;
 import java.io.Writer;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.runmit.clotho.core.util.DateUtils;
 import com.runmit.clotho.core.util.FileUtils;
 
 
@@ -44,14 +46,16 @@ public class UploadService {
 	
 	        try {
 	        	LOGGER.info("/upload/upload.do Upload  file {} ...", file.getName());
-	            FileUtils.ensureDirExist(uploadPath);
+	        	String tempPath = DateUtils.getDateString(new Date(),"yyyyMMdd")+"/";
+	        	String path = uploadPath+tempPath;
+	            FileUtils.ensureDirExist(path);
 	            
 	            // 将文件名进行改变，以防止覆盖
 	            String fileName = UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename();
 	            
-	            file.transferTo(new File(uploadPath + fileName));
+	            file.transferTo(new File(path + fileName));
 	            
-	            result = downloadUrl + fileName;
+	            result = downloadUrl + tempPath + fileName;
 	
 	        } catch (Exception ex) {
 	            LOGGER.error("Upload files in folder {} failure", file.getOriginalFilename(), ex);

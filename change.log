@@ -7,6 +7,9 @@ eg:
 1.增加ldap.host=192.168.20.112;
 2.增加file.upload.path=D:/dev/apache-tomcat-7.0.55/webapps/upload/
 	 file.download.url=http://localhost/clotho-management/upload/
+	 
+#2014-10-15 #zhipeng.tian #clotho-management/application.properties
+1.修改ldap.host=116.254.240.149
 
 
  

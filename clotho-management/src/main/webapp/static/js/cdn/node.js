@@ -31,6 +31,7 @@ var nodePop = Ext.create('Ext.window.Window', {
             		        fieldLabel: '节点名称',
             		        name: 'name',
             		        allowBlank: false,
+                            emptyText:'节点名称不能为空！',
             		        maxLength: 40,
             		        maxLengthText: '不能超过20个字符'
                 		},{
@@ -42,12 +43,12 @@ var nodePop = Ext.create('Ext.window.Window', {
             	                {
             	                    boxLabel: '不激活',
             	                    name: 'active',
-            	                    inputValue: '0',
-            	                    checked: true
+            	                    inputValue: '0'
             	                }, {
             	                    boxLabel: '激活',
             	                    name: 'active',
-            	                    inputValue: '1'
+            	                    inputValue: '1',
+                                    checked: true
             	                }
             	            ]
                 		},{
@@ -55,7 +56,8 @@ var nodePop = Ext.create('Ext.window.Window', {
             	    	   name: 'desc',
             	    	   xtype: 'textarea',
             	    	   height: 100,
-            	    	   allowBlank: false
+            	    	   allowBlank: false,
+                           emptyText:'节点名称不能为空'
             	       }]
             })
     ],
@@ -63,11 +65,11 @@ var nodePop = Ext.create('Ext.window.Window', {
         {
         	text: '保存',
         	handler: function(){
-        		
+
         		if(!Ext.getCmp('nodeForm').getForm().isValid()){
         			return;
         		}
-        		
+
         		Ext.getCmp('nodeForm').submit({
         			waitTitle: '系统提示',
         			waitMsg: '保存中......',
@@ -100,9 +102,9 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		        {header: '节点描述',  dataIndex: 'desc', width: 300,sortable:true },
 		        {header: '激活状态',  dataIndex: 'active', width: 85,sortable:true,renderer:function(value){
 			        	if(value=='1'){
-			        		return "激活";
+                            return "<span style='color: #3d90ff'>激活</span>";
 			        	}else{
-			        		return "未激活";
+                            return "<span style='color: #ff0000'>未激活";
 			        	}
 		        	}
 		        },
@@ -129,7 +131,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
          selModel: {
          listeners: {
             select: function(rowModel, record, index, eOpts){
-                eastPanel.getStore().load({params: {node: record.data.node}});
+                serverPanel.getStore().load({params: {nodeid: record.data.id}});
             }
         },
         mode: 'MULTI'
@@ -162,7 +164,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       		xtype: 'button',
 	       		text: '编辑',
 	       		handler: function(){
-	       			
+
 	       			var models = centerPanel.getSelectionModel().getSelection();
 	       			if(models.length <= 0){
 	       				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
@@ -171,7 +173,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                     nodePop.setTitle('编辑');
                     nodePop.show();
-	       			
+
 	       			Ext.getCmp('nodeForm').loadRecord(models[0]);
 
 	       		}
@@ -203,7 +205,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     listeners: {
     	dblclick: {
             element: 'body', //bind to the underlying body property on the panel
-            fn: function(){ 
+            fn: function(){
             	var models = centerPanel.getSelectionModel().getSelection();
        			if(models.length <= 0){
        				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
@@ -213,8 +215,51 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 nodePop.show();
        			Ext.getCmp('nodeForm').loadRecord(models[0]);
        			}
-        } 
+        }
     }
+});
+
+
+var serverPanel = Ext.create('Ext.grid.Panel', {
+    region: 'east',
+    title: '服务器列表',
+    width: 400,
+    split: true,
+    collapsible: true,
+    columns: [
+        {header: 'ID', align: 'center', width: 50, dataIndex: 'id'},
+        {header: '外网IP', align: 'center', width: 120, dataIndex: 'ip_wan'},
+        {header: '内网IP', align: 'center',width: 120, dataIndex: 'ip_lan'},
+        {header: '激活状态',align: 'center',  dataIndex: 'active',renderer:function(value){
+            if(value=='1'){
+                return "<span style='color: #3d90ff'>激活</span>";
+            }else{
+                return "<span style='color: #ff0000'>未激活</span>";
+            }
+        }
+        }
+    ],
+    store: Ext.create('Ext.data.JsonStore', {
+        storeId:'eastStore',
+        fields :['id','ip_wan','ip_lan','active'],
+        proxy: {
+            type: 'ajax',
+            url: path + '/abc/server/getServerListByNodeId',
+            reader: {
+                totalProperty: 'results',
+                root: 'rows'
+            }
+        }
+    }),
+    bbar: Ext.create('Ext.toolbar.Paging', {
+        store: Ext.data.StoreManager.get('eastStore'),
+        displayInfo: true,
+        displayMsg: '第{0}-{1}条，共{2}条',
+        emptyMsg: "没有数据",
+        beforePageText: '第',
+        afterPageText: '页，共 {0} 页'
+    })
+
 });
 
 function deleteNodes(records){
@@ -237,6 +282,6 @@ function deleteNodes(records){
 Ext.onReady(function(){
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
-		items:[centerPanel]
+		items:[centerPanel,serverPanel]
 	});
 });

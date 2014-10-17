@@ -60,8 +60,9 @@ var serverPop = Ext.create('Ext.window.Window', {
                             xtype: 'combo',
                             name: 'node_id',
                             fieldLabel: '节点',
+                            allowBlank: false,
                             store: Ext.create('Ext.data.JsonStore', {
-                                storeId: 'rootMenu',
+                                storeId: 'nodeMenu',
                                 autoLoad: true,
                                 fields: ['id', 'name'],
                                 proxy: {
@@ -82,12 +83,21 @@ var serverPop = Ext.create('Ext.window.Window', {
         {
         	text: '保存',
         	handler: function(){
-        		
+
         		if(!Ext.getCmp('serverForm').getForm().isValid()){
         			return;
         		}
-        		
-        		Ext.getCmp('serverForm').submit({
+                var ip_wan=Ext.getCmp('serverForm').getForm().findField('ip_wan').getValue();
+                if(!isIP(ip_wan)){
+                    alert('外网Ip不是一个IP地址，请您按照正确格式输入！');
+                    return;
+                }
+                var ip_lan=Ext.getCmp('serverForm').getForm().findField('ip_lan').getValue();
+                if(!isIP(ip_lan)){
+                    alert('内网Ip不是一个IP地址，请您按照正确格式输入！');
+                    return;
+                }
+                Ext.getCmp('serverForm').submit({
         			waitTitle: '系统提示',
         			waitMsg: '保存中......',
         			success: function(form, action){
@@ -115,17 +125,19 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	title: '服务器列表',
     columns: [
 		        {header: 'ID',  dataIndex: 'id', width: 60,sortable:true },
-		        {header: '外网IP', dataIndex: 'ip_wan', width: 80},
-		        {header: '内网IP',  dataIndex: 'ip_lan', width: 300,sortable:true },
+		        {header: '外网IP', dataIndex: 'ip_wan', width: 150,sortable:true },
+		        {header: '内网IP',  dataIndex: 'ip_lan', width: 150,sortable:true },
+
 		        {header: '激活状态',  dataIndex: 'active', width: 85,sortable:true,renderer:function(value){
 			        	if(value=='1'){
-			        		return "激活";
+                            return "<span style='color: #3d90ff'>激活</span>";
 			        	}else{
-			        		return "未激活";
+                            return "<span style='color: #ff0000'>未激活</span>";
 			        	}
 		        	}
 		        },
-                {header: '节点',  dataIndex: 'node_id', width: 160,sortable:true },
+                {header: '节点',  dataIndex: 'node_name', width: 160,sortable:true },
+                {header: '节点描述',  dataIndex: 'node_desc', width: 160,sortable:true },
 		        {header: '创建时间',  dataIndex: 'create_time', width: 160,sortable:true,renderer:function(value){
 		        	if(value != null){
 		        		return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
@@ -149,7 +161,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
          selModel: {
          listeners: {
             select: function(rowModel, record, index, eOpts){
-                eastPanel.getStore().load({params: {node: record.data.node}});
+                eastPanel.getStore().load({params: {server: record.data.server}});
             }
         },
         mode: 'MULTI'
@@ -158,7 +170,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		autoLoad: true,
 		storeId: 'centerStore',
 		pageSize: 20,
-	    fields :['id', 'ip_wan','ip_lan','active','node_id','create_time','update_time'],
+	    fields :['id', 'ip_wan','ip_lan','active','node_name','node_id','node_desc','create_time','update_time'],
 	    proxy: {
 	        type: 'ajax',
 	        url: path + '/abc/server/list',
@@ -182,7 +194,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       		xtype: 'button',
 	       		text: '编辑',
 	       		handler: function(){
-	       			
+
 	       			var models = centerPanel.getSelectionModel().getSelection();
 	       			if(models.length <= 0){
 	       				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
@@ -191,7 +203,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                     serverPop.setTitle('编辑');
                     serverPop.show();
-	       			
+
 	       			Ext.getCmp('serverForm').loadRecord(models[0]);
 
 	       		}
@@ -223,7 +235,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     listeners: {
     	dblclick: {
             element: 'body', //bind to the underlying body property on the panel
-            fn: function(){ 
+            fn: function(){
             	var models = centerPanel.getSelectionModel().getSelection();
        			if(models.length <= 0){
        				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
@@ -233,7 +245,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                 serverPop.show();
        			Ext.getCmp('serverForm').loadRecord(models[0]);
        			}
-        } 
+        }
     }
 });
 
@@ -250,6 +262,16 @@ function deleteServers(records){
 			Ext.Msg.alert('系统提示', action.result.msg);
 		}
 	});
+}
+
+
+function isIP(strIP) {
+    var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/g //匹配IP地址的正则表达式
+    if(re.test(strIP))
+    {
+        if( RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256) return true;
+    }
+    return false;
 }
 
 
