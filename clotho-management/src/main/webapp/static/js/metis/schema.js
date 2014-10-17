@@ -14,7 +14,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'upgradeForm',
             width: 460,
             height: 100,
-            url: path + '/abc/metis/upload.do',
+            url: path + '/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -97,7 +97,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
 
-                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        centerPanel.getStore().load({url:'/metis/schema.do'});
                         //centerPanel.clearValue();
                         detailStatus.show();
 
@@ -108,7 +108,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
 
-                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        centerPanel.getStore().load({url:'/metis/schema.do'});
                         //centerPanel.clearValue();
                         detailStatus.show();
 
@@ -131,7 +131,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
     columns: [
         {text: 'namespace',  dataIndex:'namespace', width: 160},
         {text: 'name',  dataIndex:'name', width: 100},
-        {header: '处理结果',  dataIndex: 'type', width: 370,sortable:true,renderer:function(value){
+        {header: '处理结果',  dataIndex: 'type', width: 360,sortable:true,renderer:function(value){
             if(value=='1'){
                 return "fullname不存在，直接入库";
             }else if(value=='2'){
@@ -164,7 +164,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
 
         }
     }),
-    width: 630,
+    width: 620,
     forceFit: true,
     renderTo: Ext.getBody()
 });
@@ -323,7 +323,7 @@ var names_store = Ext.create('Ext.data.Store', {
     fields: ['name'],
     proxy: {
         type: 'ajax',
-        url: '/abc/metis/names.do',
+        url: '/metis/names.do',
         reader: {
             totalProperty: 'result',
             root: 'rows'
@@ -377,7 +377,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields :['fingerprint', 'namespace','name','schema','md5','inuse','updatetime','updateby','createtime'],
         proxy: {
             type: 'ajax',
-            url:'/abc/metis/schema.do',
+            url:'/metis/schema.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -400,7 +400,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                 proxy: {
                     type: 'ajax',
-                    url:'/abc/metis/namespaces.do',
+                    url:'/metis/namespaces.do',
                     reader: {
                         totalProperty: 'result',
                         root: 'rows'
@@ -434,7 +434,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
         var statuscom = Ext.getCmp("statuscombox");
-        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
@@ -455,7 +455,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                     var namespacecom = Ext.getCmp("namespace");
                     var namecom = Ext.getCmp("name");
 
-                    centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
+                    centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
                     centerPanel.clearValue();
                 }
             },
@@ -467,7 +467,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             text: '全部',
             handler: function () {
 
-                centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                centerPanel.getStore().load({url:'/metis/schema.do'});
                 centerPanel.clearValue();
 
 
