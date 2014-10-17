@@ -42,7 +42,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	    fields :['id', 'md5','file_name','node_id','server_id','server_ip_wan','node_name','active_flag','begin_time','end_time'],
 	    proxy: {
 	        type: 'ajax',
-	        url: path + '/abc/task/list',
+	        url: path + '/cdn-management/task/list',
 	        reader: {
 	            type: 'json',
 	            totalProperty: "result",

@@ -24,7 +24,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields: ['id', 'ipWan', 'ipLan', 'fileName', 'active'],
         proxy: {
             type: 'ajax',
-            url: '/abc/serverFile/list',
+            url: '/cdn-management/serverFile/list',
             reader: {
                 type: 'json',
                 totalProperty: "result",
