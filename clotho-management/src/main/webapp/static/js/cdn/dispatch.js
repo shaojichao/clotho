@@ -256,7 +256,7 @@ var geoPop = Ext.create('Ext.window.Window', {
 
 var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
-    title: '节点列表',
+    title: 'GSLB调度策略列表',
     columns: [
         {header: 'ID', dataIndex: 'id', width: 80},
         {header: '国家', dataIndex: 'countryName', width: 80},
