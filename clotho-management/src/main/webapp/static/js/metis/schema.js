@@ -419,7 +419,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
         var statuscom = Ext.getCmp("statuscombox");
-        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
@@ -505,7 +505,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 //domReady
 Ext.onReady(function(){
-
+    Ext.getCmp('statuscombox').setValue(1);
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
 		items:[centerPanel]
