@@ -58,11 +58,13 @@ var westPanel = Ext.create('Ext.tree.Panel', {
 		itemclick: function(rowModel, record, index, eOpts){
 			var tabId = 'tab_' + record.data.id,
 				tab = centerPanel.getComponent(tabId);
-			if(!tab){
-				tab = createPanel(tabId, record.data.text, record.data.url);
-				centerPanel.add(tab);
+			if(record.data.url.trim()){
+				if(!tab){
+					tab = createPanel(tabId, record.data.text, record.data.url);
+					centerPanel.add(tab);
+				}
+				centerPanel.setActiveTab(tab);
 			}
-			centerPanel.setActiveTab(tab);
 		}
 	}
 });
