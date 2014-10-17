@@ -14,7 +14,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'upgradeForm',
             width: 460,
             height: 100,
-            url: path + '/metis/upload.do',
+            url: path + '/abc/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -96,18 +96,24 @@ var upgradePop = Ext.create('Ext.window.Window', {
 
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
-                        centerPanel.getStore().reload();
 
-                       //Ext.Msg.alert('系统成功提示', '保存成功！');
+                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        //centerPanel.clearValue();
                         detailStatus.show();
+
+                        statusPanel.getStore().loadData(action.result.rows);
+                        statusPanel.clearValue();
                     },
                     failure: function(form, action){
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
-                        centerPanel.getStore().load({url:'/metis/schema.do'});
 
+                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        //centerPanel.clearValue();
                         detailStatus.show();
+
                         statusPanel.getStore().loadData(action.result.rows);
+                        statusPanel.clearValue();
 
                     }
                 });
@@ -125,15 +131,17 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
     columns: [
         {text: 'namespace',  dataIndex:'namespace', width: 160},
         {text: 'name',  dataIndex:'name', width: 100},
-        {header: '处理结果',  dataIndex: 'type', width: 270,sortable:true,renderer:function(value){
+        {header: '处理结果',  dataIndex: 'type', width: 370,sortable:true,renderer:function(value){
             if(value=='1'){
                 return "fullname不存在，直接入库";
             }else if(value=='2'){
-                return "schema校验通过，指纹相同，更新schema";
+                return "schema校验通过，指纹相同，md5不同，更新schema";
             }else if(value=='3'){
-                return 'schema校验通过，指纹不相同,录入新指纹';
+                return 'schema校验通过，指纹不同,录入新指纹';
             }else if(value=='4'){
                 return 'schema校验不通过，不做处理';
+            }else if(value=='5'){
+                return 'schema校验通过，指纹相同，md5相同，不做处理';
             }else{
                 return 'unknown info';
             }
@@ -156,7 +164,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
 
         }
     }),
-    width: 530,
+    width: 630,
     forceFit: true,
     renderTo: Ext.getBody()
 });
@@ -185,8 +193,8 @@ var detailStatus = Ext.create('Ext.window.Window',{
 var detailInfo = Ext.create('Ext.window.Window', {
     id: 'detailInfo',
     title: '详细信息',
-    height: 400,
-    width: 550,
+    height: 600,
+    width: 850,
     bodyPadding: 5,
     maximizable: true,
     modal: true,
@@ -196,8 +204,8 @@ var detailInfo = Ext.create('Ext.window.Window', {
     items: [
         Ext.create('Ext.form.Panel', {
             id: 'detailInfoForm',
-            width: 550,
-            height: 400,
+            width: 800,
+            height: 560,
             url: path + '/menu/saveMenu.do',
             layout: 'anchor',
             defaults: {
@@ -227,35 +235,50 @@ var detailInfo = Ext.create('Ext.window.Window', {
                 allowBlank: false,
                 maxLength: 100,
                 maxLengthText: '不能超过20个字符'
+            },{
+                fieldLabel: 'md5',
+                name: 'md5',
+                allowBlank: false,
+                maxLength: 100,
+                maxLengthText: '不能超过20个字符'
             },
                 {
                     xtype: 'textareafield',
                     fieldLabel: 'schema',
                     name: 'schema',
-                    labelAlign: 'top',
-                    height: 120,
-                    margin: '0',
+                    height: 300,
                     allowBlank: false
             },{
-                fieldLabel: 'inuse',
-                name: 'inuse',
-                allowBlank: false,
-                maxLength: 100,
-                maxLengthText: '不能超过20个字符'
-            },{
-                fieldLabel: 'updatetime',
+                    fieldLabel: '状态',
+                    xtype: 'fieldcontainer',
+                    defaultType: 'radiofield',
+                    layout: 'hbox',
+                    items: [
+                        {
+                            boxLabel: '停用',
+                            name: 'inuse',
+                            inputValue: '0',
+                            checked: true
+                        }, {
+                            boxLabel: '使用中',
+                            name: 'inuse',
+                            inputValue: '1'
+                        }
+                    ]
+                },{
+                fieldLabel: '更新时间',
                 name: 'updatetime',
                 allowBlank: false,
                 maxLength: 100,
                 maxLengthText: '不能超过20个字符'
             },{
-                fieldLabel: 'updateby',
+                fieldLabel: '更新者',
                 name: 'updateby',
                 allowBlank: false,
                 maxLength: 100,
                 maxLengthText: '不能超过20个字符'
             },{
-                fieldLabel: 'createtime',
+                fieldLabel: '创建时间',
                 name: 'createtime',
                 allowBlank: false,
                 maxLength: 100,
@@ -275,14 +298,19 @@ var detailInfo = Ext.create('Ext.window.Window', {
         }
     ]
 });
-//var statusStore = Ext.create('Ext.data.Store', {
-//    fields: ['type', 'name'],
-//    data : [
-//        {"type":"1", "name":"使用中"},
-//        {"type":"0", "name":"停用"}
-//
-//    ]
-//});
+var statusStore = Ext.create('Ext.data.Store', {
+    autoLoad: true,
+    fields: [
+     { type: 'int', name: 'type' },
+      { type: 'String', name: 'name' }
+        ],
+
+    data : [
+        {"type":1, "name":"使用中"},
+        {"type":0, "name":"停用"}
+
+    ]
+});
 
 var name_Fields=[
     {name:"name"}
@@ -295,7 +323,7 @@ var names_store = Ext.create('Ext.data.Store', {
     fields: ['name'],
     proxy: {
         type: 'ajax',
-        url: '/metis/names.do',
+        url: '/abc/metis/names.do',
         reader: {
             totalProperty: 'result',
             root: 'rows'
@@ -313,6 +341,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         {header: 'namespace', dataIndex: 'namespace', width: 180},
         {header: 'name', dataIndex: 'name', width: 100},
         {header: 'schema', dataIndex: 'schema', width: 80},
+        {header: 'md5', dataIndex: 'md5', width: 100},
         {header: '状态', dataIndex: 'inuse', width: 80,sortable:true,renderer:function(value) {
             if (value == '0') {
                 return "停用";
@@ -321,19 +350,34 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             }
         }
         },
-        {header: '更新时间', dataIndex: 'updatetime', width: 180},
+        {header: '更新时间',  dataIndex: 'updatetime', width: 180,sortable:true,renderer:function(value){
+            if(value != null){
+                return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
+            }else{
+                return '';
+            }
+        }
+        }
+        ,
         {header: '更新者', dataIndex: 'updateby', width: 80},
-        {header: '创建时间', dataIndex: 'createtime', width: 180}
+        {header: '创建时间',  dataIndex: 'createtime', width: 180,sortable:true,renderer:function(value){
+            if(value != null){
+                return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
+            }else{
+                return '';
+            }
+        }
+        }
     ],
 
     store: Ext.create('Ext.data.JsonStore', {
         autoLoad: true,
         storeId: 'centerStore',
         pageSize: 20,
-        fields :['fingerprint', 'namespace','name','schema','inuse','updatetime','updateby','createtime'],
+        fields :['fingerprint', 'namespace','name','schema','md5','inuse','updatetime','updateby','createtime'],
         proxy: {
             type: 'ajax',
-            url:'/metis/schema.do',
+            url:'/abc/metis/schema.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -356,7 +400,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                 proxy: {
                     type: 'ajax',
-                    url:'/metis/namespaces.do',
+                    url:'/abc/metis/namespaces.do',
                     reader: {
                         totalProperty: 'result',
                         root: 'rows'
@@ -389,8 +433,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     {
 
         var namespacecom = Ext.getCmp("namespace");
-
-        centerPanel.getStore().load({url:'/metis//samplename.do',params:{name:this.value,namespace:namespacecom.value}});
+        var statuscom = Ext.getCmp("statuscombox");
+        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
@@ -398,11 +442,34 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             valueField: 'name'
         },
         {
+            xtype: 'combo',
+            id : 'statuscombox',
+            name: 'statuscombox',
+            fieldLabel: 'status',
+            store: statusStore,
+            listeners:
+            {
+                select : function(statuscombox, record,index)
+                {
+
+                    var namespacecom = Ext.getCmp("namespace");
+                    var namecom = Ext.getCmp("name");
+
+                    centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
+                    centerPanel.clearValue();
+                }
+            },
+            displayField: 'name',
+            valueField: 'type'
+        },
+        {
             xtype: 'button',
             text: '全部',
             handler: function () {
-                centerPanel.getStore().load({url:'/metis/schema.do'});
+
+                centerPanel.getStore().load({url:'/abc/metis/schema.do'});
                 centerPanel.clearValue();
+
 
             }
         },
