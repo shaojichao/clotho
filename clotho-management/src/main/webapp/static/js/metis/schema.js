@@ -350,24 +350,9 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             }
         }
         },
-        {header: '更新时间',  dataIndex: 'updatetime', width: 180,sortable:true,renderer:function(value){
-            if(value != null){
-                return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
-            }else{
-                return '';
-            }
-        }
-        }
-        ,
+        {header: '更新时间',  dataIndex: 'updatetime', width: 180},
         {header: '更新者', dataIndex: 'updateby', width: 80},
-        {header: '创建时间',  dataIndex: 'createtime', width: 180,sortable:true,renderer:function(value){
-            if(value != null){
-                return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
-            }else{
-                return '';
-            }
-        }
-        }
+        {header: '更新时间',  dataIndex: 'createtime', width: 180}
     ],
 
     store: Ext.create('Ext.data.JsonStore', {
@@ -434,7 +419,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
         var statuscom = Ext.getCmp("statuscombox");
-        centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
