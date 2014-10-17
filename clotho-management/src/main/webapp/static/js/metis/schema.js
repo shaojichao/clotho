@@ -505,8 +505,6 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 //domReady
 Ext.onReady(function(){
-    Ext.getCmp('statuscombox').setValue(1);
-
 
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
