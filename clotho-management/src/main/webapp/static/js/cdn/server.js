@@ -14,7 +14,7 @@ var serverPop = Ext.create('Ext.window.Window', {
             	id: 'serverForm',
             	width: 460,
             	height: 200,
-                url: path + '/abc/server/saveServer',
+                url: path + '/cdn-management/server/saveServer',
                 layout: 'anchor',
                 defaults: {
                     anchor: '80%',
@@ -67,7 +67,7 @@ var serverPop = Ext.create('Ext.window.Window', {
                                 fields: ['id', 'name'],
                                 proxy: {
                                     type: 'ajax',
-                                    url: path + '/abc/node/getAllNodes',
+                                    url: path + '/cdn-management/node/getAllNodes',
                                     reader: {
                                         totalProperty: 'results',
                                         root: 'rows'
@@ -173,7 +173,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	    fields :['id', 'ip_wan','ip_lan','active','node_name','node_id','node_desc','create_time','update_time'],
 	    proxy: {
 	        type: 'ajax',
-	        url: path + '/abc/server/list',
+	        url: path + '/cdn-management/server/list',
 	        reader: {
 	            type: 'json',
 	            totalProperty: "result",
@@ -251,7 +251,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteServers(records){
 	Ext.Ajax.request({
-		url: path + '/abc/server/deleteServer?id='+records[0].get('id'),
+		url: path + '/cdn-management/server/deleteServer?id='+records[0].get('id'),
 		scope: this,
 		async: true,
 		success: function(response, options){

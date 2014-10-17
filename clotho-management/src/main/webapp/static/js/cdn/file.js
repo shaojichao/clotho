@@ -15,7 +15,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	    fields :['fileName', 'url','mediaType','videoType','size'],
 	    proxy: {
 	        type: 'ajax',
-	        url: '/abc/file/list',
+	        url: '/cdn-management/file/list',
 	        reader: {
 	            type: 'json',
 	            totalProperty: "result",

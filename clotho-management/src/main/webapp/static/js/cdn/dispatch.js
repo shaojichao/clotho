@@ -14,7 +14,7 @@ var geoPop = Ext.create('Ext.window.Window', {
             id: 'geoForm',
             width: 460,
             height: 250,
-            url: '/abc/goeBasedDispatch/save',
+            url: '/cdn-management/goeBasedDispatch/save',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -60,7 +60,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                                 var district_model = Ext.getCmp("district");
                                 province_model.reset();
                                 district_model.reset();
-                                province_model.store.load({url: '/abc/province/jsonList?countryId=' + this.value});
+                                province_model.store.load({url: '/cdn-management/province/jsonList?countryId=' + this.value});
                             }
                             catch (ex) {
                                 Ext.MessageBox.alert("错误", "数据加载失败。");
@@ -89,7 +89,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                         fields: ['id', 'name'],
                         proxy: {
                             type: 'ajax',
-                            url: '/abc/province/jsonList',
+                            url: '/cdn-management/province/jsonList',
                             reader: {
                                 totalProperty: 'results',
                                 root: 'rows'
@@ -101,7 +101,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                             try {
                                 var district_model = Ext.getCmp("district");
                                 district_model.clearValue();
-                                district_model.store.load({url: '/abc/district/jsonList?provinceId=' + this.value});
+                                district_model.store.load({url: '/cdn-management/district/jsonList?provinceId=' + this.value});
                             }
                             catch (ex) {
                                 Ext.MessageBox.alert("错误", "数据加载失败。");
@@ -131,7 +131,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                         fields: ['id', 'districtname'],
                         proxy: {
                             type: 'ajax',
-                            url: '/abc/district/jsonList',
+                            url: '/cdn-management/district/jsonList',
                             reader: {
                                 totalProperty: 'results',
                                 root: 'rows'
@@ -160,7 +160,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                         fields: ['id', 'name'],
                         proxy: {
                             type: 'ajax',
-                            url: '/abc/isp/jsonList',
+                            url: '/cdn-management/isp/jsonList',
                             reader: {
                                 totalProperty: 'results',
                                 root: 'rows'
@@ -189,7 +189,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                         fields: ['id', 'name'],
                         proxy: {
                             type: 'ajax',
-                            url: '/abc/node/jsonList',
+                            url: '/cdn-management/node/jsonList',
                             reader: {
                                 totalProperty: 'results',
                                 root: 'rows'
@@ -290,7 +290,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields: ['id', 'countryId', 'countryName', 'provinceId', 'provinceName', 'districtId', 'districtName', 'ispId', 'ispName', 'node_id', 'nodeName', 'grade'],
         proxy: {
             type: 'ajax',
-            url: '/abc/goeBasedDispatch/list',
+            url: '/cdn-management/goeBasedDispatch/list',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -372,7 +372,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteGeo(records) {
     Ext.Ajax.request({
-        url: path + '/abc/goeBasedDispatch/del?id=' + records[0].get('id'),
+        url: path + '/cdn-management/goeBasedDispatch/del?id=' + records[0].get('id'),
         scope: this,
         async: true,
         success: function (response, options) {
