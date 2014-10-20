@@ -2,11 +2,11 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	region: 'center',
 	title: '文件信息列表',
     columns: [
-		        {header: '文件',  dataIndex: 'fileName', width: 660,sortable:true },
+		        {header: '文件',  dataIndex: 'fileName', width: 500,sortable:true },
 		        {header: 'url', dataIndex: 'url', width: 500},
                 {header: 'MediaType', dataIndex: 'mediaType', width: 100},
 		        {header: 'VideoType', dataIndex: 'videoType', width: 100},
-		        {header: 'Size',  dataIndex: 'size', width: 150,sortable:true }
+		        {header: 'Size(单位:字节)',  dataIndex: 'size', width: 150,sortable:true }
 		     ],
 	store: Ext.create('Ext.data.JsonStore', {
 		autoLoad: true,

@@ -35,4 +35,10 @@ public class RedirectClothoController {
 		LOGGER.info("toUpgradePlan");
 		return "clotho/upgradeplan";
 	}
+	
+	@RequestMapping(value = "/clotho/client.do")
+	public String toClient() {
+		LOGGER.info("toClient");
+		return "clotho/client";
+	}
 }
