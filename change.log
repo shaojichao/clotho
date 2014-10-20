@@ -12,7 +12,7 @@ eg:
 1.修改ldap.host=116.254.240.149
 
 #2014-10-20 #zhipeng.tian #create table
-CREATE TABLE `clotho`.`ClientId`(  
+CREATE TABLE `clotho`.`Client`(  
   `clientid` INT(10) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `description` VARCHAR(200),
