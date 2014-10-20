@@ -23,13 +23,13 @@ public class OpLogService{
 	private OpLogMapper mapper;
 	
 	@Transactional(readOnly=false)
-	public void saveOpLog(String content,OpType opType,String opMod,int systemId,String createby){
+	public void saveOpLog(String content,OpType opType,String opMod,String systemId,String createby){
 		OpLog opLog = new OpLog(content,createby,opType,systemId,opMod);
 		this.mapper.addOpLog(opLog);
 	}
 	
 	@Transactional(readOnly=false)
-	public void saveObj(Object obj,OpType opType,String opMod,int systemId,String createby){
+	public void saveObj(Object obj,OpType opType,String opMod,String systemId,String createby){
 		Gson gson = new Gson();
 		String content = gson.toJson(obj);
 		OpLog opLog = new OpLog(content,createby,opType,systemId,opMod);
@@ -37,7 +37,7 @@ public class OpLogService{
 	}
 	
 	@Transactional(readOnly=false)
-	public void updateObj(Object objbefore,Object objafter,OpType opType,String opMod,int systemId,String createby){
+	public void updateObj(Object objbefore,Object objafter,OpType opType,String opMod,String systemId,String createby){
 		Gson gson = new Gson();
 		String content = gson.toJson(objbefore)+"  <span style=\"color:red\">修改为</span>  "+gson.toJson(objafter);
 		OpLog opLog = new OpLog(content,createby,opType,systemId,opMod);

@@ -74,11 +74,11 @@ public class VersionService {
     	if(version.getId()==null||version.getId()==0){
     		version.setSerialno(DateUtils.getDateString(new Date(), "yyyyMMddHHmmss"));
     		this.versionMapper.addVersion(version);
-    		opLogService.saveObj(version, OpType.INSERT, "upgrade", 1, version.getCreateby());
+    		opLogService.saveObj(version, OpType.INSERT, "upgrade", "clotho", version.getCreateby());
     	}else{
     		Version temp = getbyid(version.getId());
     		this.versionMapper.updateVersion(version);
-    		opLogService.updateObj(temp,version, OpType.UPDATE, "upgrade", 1, version.getUpdateby());
+    		opLogService.updateObj(temp,version, OpType.UPDATE, "upgrade", "clotho", version.getUpdateby());
     	}
     }
     

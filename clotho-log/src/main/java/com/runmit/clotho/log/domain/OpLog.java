@@ -34,7 +34,7 @@ public class OpLog implements Serializable{
 	
 	private Long id;
 	private String content;
-	private int systemId;
+	private String systemId;
 	private OpType opType;
 	private String opMod;
 	private String createby;
@@ -44,7 +44,7 @@ public class OpLog implements Serializable{
 		
 	}
 	
-	public OpLog(String content,String createby,OpType opType,int systemId,String opMod){
+	public OpLog(String content,String createby,OpType opType,String systemId,String opMod){
 		this.content = content;
 		this.createby = createby;
 		this.systemId = systemId;
@@ -77,11 +77,11 @@ public class OpLog implements Serializable{
 		this.createtime = createtime;
 	}
 
-	public int getSystemId() {
+	public String getSystemId() {
 		return systemId;
 	}
 
-	public void setSystemId(int systemId) {
+	public void setSystemId(String systemId) {
 		this.systemId = systemId;
 	}
 
