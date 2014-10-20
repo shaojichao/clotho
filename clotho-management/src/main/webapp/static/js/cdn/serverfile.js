@@ -42,7 +42,9 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             typeAhead: false,
             hideTrigger: true,
             fieldLabel: '文件名',
-            emptyText: '同时支持明文，密文查询',
+            labelWidth:50,
+            width:200,
+            emptyText: '支持明文，密文查询',
             displayField: 'fileName',
             valueField: 'fileName'
         },
