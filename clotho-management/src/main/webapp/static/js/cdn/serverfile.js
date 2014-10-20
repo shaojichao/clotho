@@ -3,9 +3,11 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     title: '服务器文件列表',
     columns: [
         {header: 'ID', dataIndex: 'id', width: 60, sortable: true },
+        {header: '文件', dataIndex: 'fileName', width: 500},
+        {header: '节点', dataIndex: 'nodeName', width: 60},
+        {header: '节点描述', dataIndex: 'nodeDesc', width: 150},
         {header: '服务器IP（外网）', dataIndex: 'ipWan', width: 150},
         {header: '服务器IP（内网）', dataIndex: 'ipLan', width: 150},
-        {header: '文件', dataIndex: 'fileName', width: 700},
         {header: '激活状态', dataIndex: 'active', width: 85, sortable: true, renderer: function (value) {
             if (value == 1) {
                 return "<span  style='color:green'>激活</span>";
@@ -21,7 +23,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         autoLoad: true,
         storeId: 'centerStore',
         pageSize: 20,
-        fields: ['id', 'ipWan', 'ipLan', 'fileName', 'active'],
+        fields: ['id', 'nodeName', 'nodeDesc', 'ipWan', 'ipLan', 'fileName', 'active'],
         proxy: {
             type: 'ajax',
             url: '/cdn-management/serverFile/list',
@@ -32,6 +34,27 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             }
         }
     }),
+    tbar: [
+        {
+            xtype: 'combo',
+            id: 'fileName',
+            name: 'fileName',
+            typeAhead: false,
+            hideTrigger: true,
+            fieldLabel: '文件名',
+            emptyText: '同时支持明文，密文查询',
+            displayField: 'fileName',
+            valueField: 'fileName'
+        },
+        {
+            xtype: 'button',
+            text: '查询',
+            handler: function () {
+                var fileName = Ext.getCmp('fileName').getValue();
+                centerPanel.store.load({url: '/cdn-management/serverFile/search?fileName=' + fileName});
+            }
+        }
+    ],
     bbar: Ext.create('Ext.toolbar.Paging', {//xtype: pagingtoolbar
         store: Ext.data.StoreManager.get('centerStore'),
         displayInfo: true,
