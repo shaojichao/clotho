@@ -9,6 +9,7 @@
     <name>clotho</name>
     <modules>
         <module>clotho-core</module>
+        <module>clotho-log</module>
         <module>clotho-rest</module>
         <module>clotho-management</module>
     </modules>

@@ -8,6 +8,8 @@ import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
 import com.runmit.clotho.core.util.DateUtils;
+import com.runmit.clotho.log.domain.OpLog.OpType;
+import com.runmit.clotho.log.service.OpLogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class VersionService {
 
     @Autowired
     private VersionMapper versionMapper;
+    @Autowired
+	private OpLogService opLogService;
     
     @Transactional(readOnly = true)
     public Version getLastestbyclientid( int clientid) {
@@ -70,8 +74,11 @@ public class VersionService {
     	if(version.getId()==null||version.getId()==0){
     		version.setSerialno(DateUtils.getDateString(new Date(), "yyyyMMddHHmmss"));
     		this.versionMapper.addVersion(version);
+    		opLogService.saveObj(version, OpType.INSERT, "upgrade", "clotho", version.getCreateby());
     	}else{
+    		Version temp = getbyid(version.getId());
     		this.versionMapper.updateVersion(version);
+    		opLogService.updateObj(temp,version, OpType.UPDATE, "upgrade", "clotho", version.getUpdateby());
     	}
     }
     

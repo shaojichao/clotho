@@ -41,4 +41,10 @@ public class RedirectClothoController {
 		LOGGER.info("toClient");
 		return "clotho/client";
 	}
+	
+	@RequestMapping(value = "/clotho/oplog.do")
+	public String toOpLog() {
+		LOGGER.info("toOpLog");
+		return "clotho/oplog";
+	}
 }
