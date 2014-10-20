@@ -239,7 +239,7 @@ var detailStatus = Ext.create('Ext.window.Window',{
                 Ext.Ajax.request({
                     url: '/metis/insert.do',
                     method: 'GET',
-                    params: { ids: ids,path: parmpath,types:types},
+                    params: { ids: ids,path: parmpath,types:types,adminName:adminName},
                     success: function(resp,opts) {
                         centerPanel.getStore().load({url:'/metis/schema.do'});
 
