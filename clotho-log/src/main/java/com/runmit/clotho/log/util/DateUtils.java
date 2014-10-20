@@ -1,4 +1,4 @@
-package com.runmit.clotho.core.util.log;
+package com.runmit.clotho.log.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

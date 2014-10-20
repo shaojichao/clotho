@@ -20,23 +20,23 @@
     <!--Datasource,i.e. default datasource -->
     <bean id="dataSourceLOG" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClass" value="${jdbc.driverClassName}" />
-        <property name="jdbcUrl" value="${jdbc.url}" />
-        <property name="user" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
-        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
-        <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
-        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-        <property name="maxStatements" value="${jdbc.maxStatements}" />
-        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
-        <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}" />
-        <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
-        <property name="maxConnectionAge" value="${jdbc.maxConnectionAge}" />
-        <property name="maxIdleTimeExcessConnections" value="${jdbc.maxIdleTimeExcessConnections}" />
-        <property name="preferredTestQuery" value="${jdbc.preferredTestQuery}" />
-        <property name="testConnectionOnCheckout" value="${jdbc.testConnectionOnCheckout}" />
-        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
-        <property name="numHelperThreads" value="${jdbc.numHelperThreads}" />
+        <property name="driverClass" value="${log.jdbc.driverClassName}" />
+        <property name="jdbcUrl" value="${log.jdbc.url}" />
+        <property name="user" value="${log.jdbc.username}" />
+        <property name="password" value="${log.jdbc.password}" />
+        <property name="minPoolSize" value="${log.jdbc.minPoolSize}" />
+        <property name="initialPoolSize" value="${log.jdbc.initialPoolSize}" />
+        <property name="maxPoolSize" value="${log.jdbc.maxPoolSize}" />
+        <property name="maxStatements" value="${log.jdbc.maxStatements}" />
+        <property name="maxIdleTime" value="${log.jdbc.maxIdleTime}" />
+        <property name="checkoutTimeout" value="${log.jdbc.checkoutTimeout}" />
+        <property name="acquireIncrement" value="${log.jdbc.acquireIncrement}" />
+        <property name="maxConnectionAge" value="${log.jdbc.maxConnectionAge}" />
+        <property name="maxIdleTimeExcessConnections" value="${log.jdbc.maxIdleTimeExcessConnections}" />
+        <property name="preferredTestQuery" value="${log.jdbc.preferredTestQuery}" />
+        <property name="testConnectionOnCheckout" value="${log.jdbc.testConnectionOnCheckout}" />
+        <property name="idleConnectionTestPeriod" value="${log.jdbc.idleConnectionTestPeriod}" />
+        <property name="numHelperThreads" value="${log.jdbc.numHelperThreads}" />
     </bean>
 
     <bean id="transactionManagerLOG"
@@ -51,7 +51,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.runmit.clotho.core.mapper" />
+        <property name="basePackage" value="com.runmit.clotho.log.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryLOG" />
     </bean>
 </beans>

@@ -98,5 +98,10 @@
             <groupId>org.mybatis.caches</groupId>
             <artifactId>mybatis-memcached</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>clotho-log</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
