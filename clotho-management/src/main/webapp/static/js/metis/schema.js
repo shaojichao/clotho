@@ -1,6 +1,7 @@
+var parmpath='abc';
 var upgradePop = Ext.create('Ext.window.Window', {
     id: 'upgradeWin',
-    title: '增加',
+    title: 'schema校验',
     height: 370,
     width: 480,
     bodyPadding: 5,
@@ -14,7 +15,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'upgradeForm',
             width: 460,
             height: 100,
-            url: path + '/metis/upload.do',
+            url: path + '/abc/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -72,6 +73,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
                             success: function(form, action){
                                 Ext.getCmp('pkgUploadBtn').setDisabled(true);
                                 Ext.getCmp('path').setValue(action.result.msg);
+
                                 Ext.Msg.alert('系统提示', 'schema文件上传成功！');
                             }
                         });
@@ -82,7 +84,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
     ],
     buttons: [
         {
-            text: '保存',
+            text: '校验',
             handler: function(){
 
                 if(!Ext.getCmp('upgradeForm').getForm().isValid()){
@@ -93,26 +95,47 @@ var upgradePop = Ext.create('Ext.window.Window', {
                     waitTitle: '系统提示',
                     waitMsg: '保存中......',
                     success: function(form, action){
-
+                        parmpath=action.result.path;
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
 
-                        centerPanel.getStore().load({url:'/metis/schema.do'});
+
                         //centerPanel.clearValue();
                         detailStatus.show();
 
                         statusPanel.getStore().loadData(action.result.rows);
+                        var selMod = statusPanel.getSelectionModel();
+                        for ( var i = 0; i < action.result.rows.length; i++) {
+                            if(action.result.rows[i].type=='1'||action.result.rows[i].type=='2'||action.result.rows[i].type=='3'){
+                                selMod.select(i, true, false);
+
+                            }
+
+                        }
                         statusPanel.clearValue();
+
+
+
+
                     },
                     failure: function(form, action){
+                        parmpath=action.result.path;
                         Ext.getCmp('upgradeWin').hide();
                         Ext.getCmp('pkgUploadForm').getForm().reset();
 
-                        centerPanel.getStore().load({url:'/metis/schema.do'});
+
                         //centerPanel.clearValue();
                         detailStatus.show();
 
                         statusPanel.getStore().loadData(action.result.rows);
+                        var selMod = statusPanel.getSelectionModel();
+                        for ( var i = 0; i < action.result.rows.length; i++) {
+                            if(action.result.rows[i].type=='1'||action.result.rows[i].type=='2'||action.result.rows[i].type=='3'){
+                                selMod.select(i, true, false);
+
+                            }
+
+                        }
                         statusPanel.clearValue();
 
                     }
@@ -126,12 +149,18 @@ var upgradePop = Ext.create('Ext.window.Window', {
         }
     ]
 });
+
+var checkBox = Ext.create('Ext.selection.CheckboxModel',{checkOnly:true});
 var statusPanel=Ext.create('Ext.grid.Panel', {
-    title: '处理结果',
+    id:'statusPanel',
+    title: '校验结果',
+    selModel:checkBox,
     columns: [
+
+        {text: 'fingerprint',  dataIndex:'fingerprint', width: 30,hidden: true},
         {text: 'namespace',  dataIndex:'namespace', width: 160},
         {text: 'name',  dataIndex:'name', width: 100},
-        {header: '处理结果',  dataIndex: 'type', width: 360,sortable:true,renderer:function(value){
+        {header: '校验结果',  dataIndex: 'type', width: 360,sortable:true,renderer:function(value){
             if(value=='1'){
                 return "fullname不存在，直接入库";
             }else if(value=='2'){
@@ -153,7 +182,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
         autoLoad: true,
         storeId: 'statusStore',
         pageSize: 20,
-        fields:['namespace', 'name', 'type'],
+        fields:['fingerprint','namespace', 'name', 'type'],
         proxy: {
             type: 'ajax',
             url:'',
@@ -164,6 +193,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
 
         }
     }),
+
     width: 620,
     forceFit: true,
     renderTo: Ext.getBody()
@@ -171,7 +201,7 @@ var statusPanel=Ext.create('Ext.grid.Panel', {
 
 var detailStatus = Ext.create('Ext.window.Window',{
     id: 'detailStatus',
-    title: '状态详细',
+    title: '详细信息',
     height: 370,
     width: 580,
     bodyPadding: 5,
@@ -182,11 +212,51 @@ var detailStatus = Ext.create('Ext.window.Window',{
     overflowY: 'auto' ,
     items : [statusPanel],
     buttons: [{
-            text: '取消',
-            handler: function(){
-                detailStatus.hide();
+            text: '确定',
+        handler:function(){
+            var record = statusPanel.getSelectionModel().getSelection();
+            if(record.length==0){
+                Ext.MessageBox.show({
+                    title:"提示",
+                    msg:"请先选择您要操作的行!"
+                    //icon: Ext.MessageBox.INFO
+                })
+                return;
+            }else {
+                var ids = "";
+                var types="";
+                for (var i = 0; i < record.length; i++) {
+                    ids += record[i].get("fingerprint")
+                    if (i < record.length - 1) {
+                        ids = ids + ",";
+                    }
+                    types += record[i].get("type")
+                    if (i < record.length - 1) {
+                        types = types + ",";
+                    }
+
+                }
+                Ext.Ajax.request({
+                    url: '/abc/metis/insert.do',
+                    method: 'GET',
+                    params: { ids: ids,path: parmpath,types:types},
+                    success: function(resp,opts) {
+                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+
+                        Ext.Msg.alert('系统提示', '操作成功！');
+                        detailStatus.hide();
+                    }
+                    });
+
             }
         }
+    },
+    {
+        text: '取消',
+        handler: function(){
+            detailStatus.hide();
+        }
+    }
     ]
 });
 
@@ -306,6 +376,7 @@ var statusStore = Ext.create('Ext.data.Store', {
         ],
 
     data : [
+        {"type":2, "name":"全部"},
         {"type":1, "name":"使用中"},
         {"type":0, "name":"停用"}
 
@@ -323,7 +394,7 @@ var names_store = Ext.create('Ext.data.Store', {
     fields: ['name'],
     proxy: {
         type: 'ajax',
-        url: '/metis/names.do',
+        url: '/abc/metis/names.do',
         reader: {
             totalProperty: 'result',
             root: 'rows'
@@ -362,7 +433,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields :['fingerprint', 'namespace','name','schema','md5','inuse','updatetime','updateby','createtime'],
         proxy: {
             type: 'ajax',
-            url:'/metis/schema.do',
+            url:'/abc/metis/schema.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -385,7 +456,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                 proxy: {
                     type: 'ajax',
-                    url:'/metis/namespaces.do',
+                    url:'/abc/metis/namespaces.do',
                     reader: {
                         totalProperty: 'result',
                         root: 'rows'
@@ -419,7 +490,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
         var statuscom = Ext.getCmp("statuscombox");
-        centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
@@ -440,7 +511,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                     var namespacecom = Ext.getCmp("namespace");
                     var namecom = Ext.getCmp("name");
 
-                    centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
+                    centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
                     centerPanel.clearValue();
                 }
             },
@@ -452,7 +523,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             text: '全部',
             handler: function () {
 
-                centerPanel.getStore().load({url:'/metis/schema.do'});
+                centerPanel.getStore().load({url:'/abc/metis/schema.do'});
                 centerPanel.clearValue();
 
 
