@@ -34,7 +34,7 @@ import com.runmit.clotho.management.security.SecurityConstant;
 @RequestMapping(value = "/menu")
 public class MenuController {
 	private static final Logger LOGGER = LoggerFactory
-            .getLogger(RedirectController.class);
+            .getLogger(MenuController.class);
 	
 	@Autowired
     private MenuService menuService;

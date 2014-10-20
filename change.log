@@ -11,5 +11,17 @@ eg:
 #2014-10-15 #zhipeng.tian #clotho-management/application.properties
 1.修改ldap.host=116.254.240.149
 
+#2014-10-20 #zhipeng.tian #create table
+CREATE TABLE `clotho`.`ClientId`(  
+  `clientid` INT(10) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `description` VARCHAR(200),
+  `createtime` TIMESTAMP NOT NULL,
+  `createby` VARCHAR(20) NOT NULL,
+  `updatetime` DATETIME,
+  `updateby` VARCHAR(20),
+  PRIMARY KEY (`clientid`)
+) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
  
