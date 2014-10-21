@@ -37,7 +37,7 @@ public class OpLogController {
 			@RequestParam(value="limit",defaultValue="20")int limit,
 			@RequestParam(value="opType",required=false)OpType opType,
 			@RequestParam(value="opMod",required=false)String opMod,
-			@RequestParam(value="systemId",defaultValue="0")int systemId) {
+			@RequestParam(value="systemId",defaultValue="ALL")String systemId) {
 		List<OpLog> list = this.opLogService.getOpLogs(start, limit, opType, opMod,systemId);
 		ExtEntity<OpLog> entity = new ExtEntity<OpLog>();
 		entity.setResult(list.size());

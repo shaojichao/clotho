@@ -44,7 +44,43 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       				Ext.Msg.alert('系统提示', models[0].data.content);
 	       			}
 	       		}
-	       	}
+	       	},
+	       	{
+    			xtype: 'combo',
+				name: 'opType',
+				id: 'opType',
+				fieldLabel: '操作类型',
+				store: Ext.create('Ext.data.ArrayStore', {
+	       			fields: ['value', 'text'],
+	       			data: [['ALL','不限'],['INSERT','INSERT'],['UPDATE','UPDATE'],['DELETE','DELETE'],['SELECT','SELECT']]
+		   		}),
+		   		displayField: 'text',
+		   	    valueField: 'value'
+    		},
+    		{
+    			xtype: 'combo',
+				name: 'systemId',
+				id: 'systemId',
+				fieldLabel: '系统',
+				store: Ext.create('Ext.data.ArrayStore', {
+	       			fields: ['value', 'text'],
+	       			data: [['ALL','不限'],['CLOTHO','CLOTHO'],['CDN','CDN'],['UC','UC']]
+		   		}),
+		   		displayField: 'text',
+		   	    valueField: 'value'
+    		},
+    		{
+                xtype: 'button',
+                text: '查询',
+                handler: function () {
+                    centerPanel.getStore().load({url:path+'/clotho/oplog/list.do',
+                    	params:{opType:Ext.getCmp('opType').getValue(),
+                    		systemId:Ext.getCmp('systemId').getValue()}});
+                    centerPanel.clearValue();
+
+
+                }
+            }
 	      ],
 	bbar: Ext.create('Ext.toolbar.Paging', {//xtype: pagingtoolbar
         store: Ext.data.StoreManager.get('centerStore'),

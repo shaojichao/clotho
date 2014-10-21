@@ -17,6 +17,7 @@ public class OpLog implements Serializable{
 	private static final long serialVersionUID = 8338156643493508592L;
 	
 	public enum OpType {
+		ALL("for query"),
 		INSERT("insert obj"),
 		UPDATE("update obj"),
 		DELETE("delete obj"),

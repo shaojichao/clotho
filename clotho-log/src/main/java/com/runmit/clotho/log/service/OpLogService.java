@@ -44,7 +44,7 @@ public class OpLogService{
 		this.mapper.addOpLog(opLog);
 	}
 	
-	public List<OpLog> getOpLogs(int start,int limit,OpType opType,String opMod,int systemId){
+	public List<OpLog> getOpLogs(int start,int limit,OpType opType,String opMod,String systemId){
 		return this.mapper.getOpLogs(start, limit, opType, opMod,systemId);
 	}
 
