@@ -11,6 +11,8 @@ import com.runmit.clotho.core.domain.admin.AdminRole;
 import com.runmit.clotho.core.domain.admin.AdminRoleMember;
 import com.runmit.clotho.core.domain.admin.RoleMenuMember;
 import com.runmit.clotho.core.mapper.AdminMapper;
+import com.runmit.clotho.log.domain.OpLog.OpType;
+import com.runmit.clotho.log.service.OpLogService;
 
 /**
  * @author zhipeng.tian
@@ -22,6 +24,8 @@ import com.runmit.clotho.core.mapper.AdminMapper;
 public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
+	@Autowired
+	private OpLogService opLogService;
 	
 	public List<AdminRole> getRoleList(){
 		return this.adminMapper.getRoleList();
@@ -46,10 +50,11 @@ public class AdminService {
 	@Transactional(readOnly=false)
 	public void saveAdmin(Admin admin){
 		this.adminMapper.addAdmin(admin);
+		opLogService.saveObj(admin, OpType.INSERT, "admin", "clotho", admin.getCreateby());
 	}
 	
 	@Transactional(readOnly=false)
-	public void delAdminRole(int id){
+	public void delAdminRole(int id,String adminName){
 		this.adminMapper.delAdminRole(id);
 	}
 	
@@ -72,6 +77,7 @@ public class AdminService {
 	public void saveAdminRole(AdminRole role){
 		if(null==role.getId()||role.getId()==0){
 			this.adminMapper.addAdminRole(role);
+			opLogService.saveObj(role, OpType.INSERT, "admin", "clotho", role.getCreateby());
 		}else{
 			this.adminMapper.updateAdminRole(role);
 		}

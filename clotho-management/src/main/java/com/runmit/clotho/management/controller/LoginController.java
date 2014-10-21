@@ -18,6 +18,7 @@ import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.AdminService;
 import com.runmit.clotho.management.security.LDAPValidation;
 import com.runmit.clotho.management.security.SecurityConstant;
+import com.runmit.clotho.management.security.SessionUtil;
 
 /**
  * @author zhipeng.tian
@@ -59,8 +60,7 @@ public class LoginController {
 			resp.setSuccess(false);
 		}else{
 			admin.setId(a.getId());
-			HttpSession session = request.getSession();
-			session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
+			SessionUtil.setLoginAdmin(request, admin);
 			resp.setMsg("success");
 			resp.setSuccess(true);
 			LOGGER.info(admin.getName()+" login");

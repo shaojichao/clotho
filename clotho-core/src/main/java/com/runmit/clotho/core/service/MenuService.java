@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.runmit.clotho.core.domain.admin.Menu;
 import com.runmit.clotho.core.mapper.MenuMapper;
+import com.runmit.clotho.log.domain.OpLog.OpType;
+import com.runmit.clotho.log.service.OpLogService;
 
 /**
  *
@@ -20,13 +22,18 @@ public class MenuService {
 
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+	private OpLogService opLogService;
     
     @Transactional(readOnly = false)
     public void saveMenu(Menu menu) {
     	if(menu.getId()==null||menu.getId()==0){
     		menuMapper.addMenu(menu);
+    		opLogService.saveObj(menu, OpType.INSERT, "menu", "clotho", menu.getCreatedBy());
     	}else{
+    		Menu temp = this.menuMapper.getMenu(menu.getId());
     		menuMapper.updateMenu(menu);
+    		opLogService.updateObj(temp,menu, OpType.UPDATE, "menu", "clotho", menu.getUpdateby());
     	}
     	
     }
@@ -52,7 +59,8 @@ public class MenuService {
     }
     
     @Transactional(readOnly = false)
-    public void delMenu(int id){
+    public void delMenu(int id,String adminName){
+    	opLogService.saveObj(menuMapper.getMenu(id), OpType.DELETE, "menu", "clotho", adminName);
     	this.menuMapper.delMenu(id);
     }
 }

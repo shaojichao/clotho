@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.Menu;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.MenuService;
 import com.runmit.clotho.management.domain.MenuDTO;
-import com.runmit.clotho.management.security.SecurityConstant;
+import com.runmit.clotho.management.security.SessionUtil;
 
 /**
  * @author zhipeng.tian
@@ -127,10 +125,10 @@ public class MenuController {
 	public @ResponseBody ExtStatusEntity saveMenu(Menu menu,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		
-		HttpSession session = request.getSession();
-		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 		if(menu.getId()==null||menu.getId()==0){
-			menu.setCreatedBy(admin.getName());
+			menu.setCreatedBy(SessionUtil.getLoginAdminName(request));
+		}else{
+			menu.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try{
 			this.menuService.saveMenu(menu);
@@ -148,10 +146,10 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value = "/delMenu.do")
-	public @ResponseBody ExtStatusEntity delMenu(@RequestParam("id")int id){
+	public @ResponseBody ExtStatusEntity delMenu(@RequestParam("id")int id,HttpServletRequest request){
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			this.menuService.delMenu(id);
+			this.menuService.delMenu(id,SessionUtil.getLoginAdminName(request));
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){

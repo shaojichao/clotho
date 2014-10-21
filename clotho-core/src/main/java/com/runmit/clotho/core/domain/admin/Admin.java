@@ -18,6 +18,7 @@ public class Admin implements Serializable{
 	private String name;
 	private String mail;
 	private String uid;
+	private String createby;
 	public int getId() {
 		return id;
 	}
@@ -41,5 +42,11 @@ public class Admin implements Serializable{
 	}
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+	public String getCreateby() {
+		return createby;
+	}
+	public void setCreateby(String createby) {
+		this.createby = createby;
 	}
 }

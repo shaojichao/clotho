@@ -3,6 +3,7 @@ package com.runmit.clotho.management.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import com.runmit.clotho.core.domain.admin.RoleMenuMember;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.AdminService;
+import com.runmit.clotho.management.security.SecurityConstant;
 
 /**
  * @author zhipeng.tian
@@ -79,11 +81,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/saveAdmin.do",method=RequestMethod.POST)
-	public @ResponseBody ExtStatusEntity saveAdmin(@RequestParam("uid")String uid){
+	public @ResponseBody ExtStatusEntity saveAdmin(@RequestParam("uid")String uid,HttpServletRequest request){
 		ExtStatusEntity result = new ExtStatusEntity();
 		try{
+			HttpSession session = request.getSession();
+			Admin loginadmin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 			Admin admin = new Admin();
 			admin.setUid(uid);
+			admin.setCreateby(loginadmin.getName());
 			this.adminService.saveAdmin(admin);
 			result.setMsg("succeed");
 			result.setSuccess(true);
@@ -118,7 +123,9 @@ public class AdminController {
 	public @ResponseBody ExtStatusEntity delAdminRole(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			this.adminService.delAdminRole(id);
+			HttpSession session = request.getSession();
+			Admin loginadmin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+			this.adminService.delAdminRole(id,loginadmin.getName());
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
@@ -133,9 +140,12 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/saveRole.do",method=RequestMethod.POST)
-	public @ResponseBody ExtStatusEntity saveRole(AdminRole role){
+	public @ResponseBody ExtStatusEntity saveRole(AdminRole role,HttpServletRequest request){
 		ExtStatusEntity result = new ExtStatusEntity();
 		try{
+			HttpSession session = request.getSession();
+			Admin loginadmin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+			role.setCreateby(loginadmin.getName());
 			this.adminService.saveAdminRole(role);
 			result.setMsg("succeed");
 			result.setSuccess(true);

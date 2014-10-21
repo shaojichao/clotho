@@ -22,6 +22,7 @@ import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.VersionService;
 import com.runmit.clotho.management.security.SecurityConstant;
+import com.runmit.clotho.management.security.SessionUtil;
 
 /**
  * @author zhipeng.tian
@@ -71,12 +72,10 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity saveVersion(Version version,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		
-		HttpSession session = request.getSession();
-		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 		if(version.getId()==null||version.getId()==0){
-			version.setCreateby(admin.getName());
+			version.setCreateby(SessionUtil.getLoginAdminName(request));
 		}else{
-			version.setUpdateby(admin.getName());
+			version.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try{
 			this.versionService.saveVersion(version);
@@ -103,9 +102,7 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity saveVersion(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			HttpSession session = request.getSession();
-			Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
-			this.versionService.delVersion(id,admin.getName());
+			this.versionService.delVersion(id,SessionUtil.getLoginAdminName(request));
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
@@ -137,9 +134,7 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity delPlan(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			HttpSession session = request.getSession();
-			Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
-			this.versionService.delPlan(id,admin.getName());
+			this.versionService.delPlan(id,SessionUtil.getLoginAdminName(request));
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
@@ -157,12 +152,10 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity savePlan(UpgradePlan plan,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		
-		HttpSession session = request.getSession();
-		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 		if(plan.getId()==null||plan.getId()==0){
-			plan.setCreateby(admin.getName());
+			plan.setCreateby(SessionUtil.getLoginAdminName(request));
 		}else{
-			plan.setUpdateby(admin.getName());
+			plan.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try{
 			int result = this.versionService.savePlan(plan);

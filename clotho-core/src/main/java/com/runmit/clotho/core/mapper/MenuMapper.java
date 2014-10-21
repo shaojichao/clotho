@@ -20,6 +20,9 @@ public interface MenuMapper {
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addMenu(Menu menu);
     
+    @Select("SELECT * FROM Menu where id=#{id}")
+    Menu getMenu(@Param("id")int id);
+    
     @Insert("UPDATE Menu set `text`=#{text},`parentId`=#{parentID},`url`=#{url},`leaf`=#{leaf},`status`=#{status},`orderNum`=#{orderNum} where id=#{id}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateMenu(Menu menu);

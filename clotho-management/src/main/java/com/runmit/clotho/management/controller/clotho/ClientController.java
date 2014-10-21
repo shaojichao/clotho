@@ -19,6 +19,7 @@ import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.ClientService;
 import com.runmit.clotho.management.security.SecurityConstant;
+import com.runmit.clotho.management.security.SessionUtil;
 
 /**
  * @author zhipeng.tian
@@ -50,12 +51,10 @@ public class ClientController {
 	public @ResponseBody ExtStatusEntity saveClient(Client client,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		
-		HttpSession session = request.getSession();
-		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
 		if(client.getClientId()==null||client.getClientId()==0){
-			client.setCreateby(admin.getName());
+			client.setCreateby(SessionUtil.getLoginAdminName(request));
 		}else{
-			client.setUpdateby(admin.getName());
+			client.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try{
 			this.clientService.saveClient(client);

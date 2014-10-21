@@ -41,12 +41,8 @@ public class UserFeedBackController {
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
             @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit) {
 		
-		
-		
 		ExtEntity<UserFeedback> listdata = new ExtEntity<UserFeedback>();
-		
 		List<UserFeedback> list = userFeedbackService.getList(start, limit);
-		
 		listdata.setRows(list);
 		listdata.setResult(userFeedbackService.getCount());
 		

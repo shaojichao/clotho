@@ -24,6 +24,7 @@ public class Menu implements Serializable{
 	private CurrentStatus status;
 	private Date createTime;
 	private String createdBy;
+	private String updateby;
 	private Integer roleid;
 	private Integer orderNum;
 	public Date getCreateTime() {
@@ -99,5 +100,11 @@ public class Menu implements Serializable{
 	}
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
+	}
+	public String getUpdateby() {
+		return updateby;
+	}
+	public void setUpdateby(String updateby) {
+		this.updateby = updateby;
 	}
 }
