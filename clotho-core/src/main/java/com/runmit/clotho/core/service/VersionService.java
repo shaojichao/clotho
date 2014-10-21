@@ -83,12 +83,14 @@ public class VersionService {
     }
     
     @Transactional(readOnly = false)
-    public void delVersion(int id){
+    public void delVersion(int id,String adminName){
+    	opLogService.saveObj(this.getbyid(id), OpType.DELETE, "upgrade", "clotho", adminName);
     	this.versionMapper.delVersion(id);
     }
     
     @Transactional(readOnly = false)
-    public void delPlan(int id){
+    public void delPlan(int id,String adminName){
+    	opLogService.saveObj(this.versionMapper.getUpgradePlabById(id), OpType.DELETE, "upgrade-plan", "clotho", adminName);
     	this.versionMapper.delPlan(id);
     }
 
@@ -105,8 +107,11 @@ public class VersionService {
     			return -2;
     		}
     		this.versionMapper.addPlan(plan);
+    		opLogService.saveObj(plan, OpType.INSERT, "upgrade-plan", "clotho", plan.getCreateby());
     	}else{
+    		UpgradePlan temp = this.versionMapper.getUpgradePlabById(plan.getId());
     		this.versionMapper.updatePlan(plan);
+    		opLogService.updateObj(temp,plan, OpType.UPDATE, "upgrade-plan", "clotho", version.getUpdateby());
     	}
     	return 0;
     }

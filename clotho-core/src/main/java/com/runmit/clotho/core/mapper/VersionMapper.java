@@ -22,6 +22,10 @@ public interface VersionMapper {
     @Options(useCache = true, flushCache = false)
     UpgradePlan getUpgradePlanbyversion(@Param("version") String version);
     
+    @Select("SELECT * FROM UpgradePlan where id=#{id}")
+    UpgradePlan getUpgradePlabById(@Param("id")int id);
+    
+    
     @Select("SELECT * FROM UpgradePlan where originid=#{originid} and upgradeid=#{upgradeid} order by upgradeid desc limit 1 ")
     @Options(useCache = true, flushCache = false)
     UpgradePlan getUpgradePlan(@Param("originid") String originid,@Param("upgradeid") String upgradeid);

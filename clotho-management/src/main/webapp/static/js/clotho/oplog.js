@@ -44,8 +44,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       				Ext.Msg.alert('系统提示', models[0].data.content);
 	       			}
 	       		}
-	       	},
-	       	{
+	       	},{
     			xtype: 'combo',
 				name: 'opType',
 				id: 'opType',
@@ -56,8 +55,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		   		}),
 		   		displayField: 'text',
 		   	    valueField: 'value'
-    		},
-    		{
+    		},{
     			xtype: 'combo',
 				name: 'systemId',
 				id: 'systemId',
@@ -68,14 +66,19 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 		   		}),
 		   		displayField: 'text',
 		   	    valueField: 'value'
-    		},
-    		{
+    		},{
+    			xtype: 'textfield',
+		        fieldLabel: '模块',
+		        name: 'opMod',
+		        id: 'opMod'
+    		},{
                 xtype: 'button',
                 text: '查询',
                 handler: function () {
                     centerPanel.getStore().load({url:path+'/clotho/oplog/list.do',
                     	params:{opType:Ext.getCmp('opType').getValue(),
-                    		systemId:Ext.getCmp('systemId').getValue()}});
+                    		systemId:Ext.getCmp('systemId').getValue(),
+                    		opMod:Ext.getCmp('opMod').getValue()}});
                     centerPanel.clearValue();
 
 

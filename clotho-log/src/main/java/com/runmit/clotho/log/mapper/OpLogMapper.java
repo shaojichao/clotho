@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.springframework.util.StringUtils;
 
 import com.runmit.clotho.log.domain.OpLog;
 import com.runmit.clotho.log.domain.OpLog.OpType;
@@ -33,7 +34,7 @@ public interface OpLogMapper {
 			 if(para.get("opType")!=null&&(OpType)para.get("opType")!=OpType.ALL){
 				 sb.append(" and opType='").append(para.get("opType").toString()).append("'");
 			 }
-			 if(para.get("opMod")!=null){
+			 if(!StringUtils.isEmpty((String)para.get("opMod"))){
 				 sb.append(" and opMod='").append(para.get("opMod")).append("'");
 			 }
 			 if(para.get("systemId")!=null&&!((String)para.get("systemId")).equalsIgnoreCase("all")){

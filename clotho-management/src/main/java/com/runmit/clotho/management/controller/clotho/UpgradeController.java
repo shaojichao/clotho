@@ -103,7 +103,9 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity saveVersion(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			this.versionService.delVersion(id);
+			HttpSession session = request.getSession();
+			Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+			this.versionService.delVersion(id,admin.getName());
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
@@ -135,7 +137,9 @@ public class UpgradeController {
 	public @ResponseBody ExtStatusEntity delPlan(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			this.versionService.delPlan(id);
+			HttpSession session = request.getSession();
+			Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+			this.versionService.delPlan(id,admin.getName());
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
