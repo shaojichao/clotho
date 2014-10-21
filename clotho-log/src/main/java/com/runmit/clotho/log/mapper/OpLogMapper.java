@@ -37,7 +37,7 @@ public interface OpLogMapper {
 				 sb.append(" and opMod='").append(para.get("opMod")).append("'");
 			 }
 			 if(para.get("systemId")!=null&&!((String)para.get("systemId")).equalsIgnoreCase("all")){
-				 sb.append(" and systemId=").append(para.get("systemId"));
+				 sb.append(" and systemId='").append(para.get("systemId")).append("'");
 			 }
 			 sb.append(" order by id desc ");
 			 sb.append(" limit ").append(para.get("start")).append(",").append((Integer)para.get("start")+(Integer)para.get("limit"));
