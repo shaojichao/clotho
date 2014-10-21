@@ -387,7 +387,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 				eastPanel.getStore().load({params: {version: record.data.version}});
 			}
 		},	
-		mode: 'MULTI'
+		mode: 'SINGLE'
 	},
 	store: Ext.create('Ext.data.JsonStore', {
 		autoLoad: true,
