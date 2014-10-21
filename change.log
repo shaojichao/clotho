@@ -23,5 +23,21 @@ CREATE TABLE `clotho`.`Client`(
   PRIMARY KEY (`clientid`)
 ) ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_general_ci;
 
-
- 
+#clotho-management/jdbc.properties
+log.jdbc.driverClassName=com.mysql.jdbc.Driver
+log.jdbc.url=jdbc:mysql://192.168.20.87:3306/clotho?useUnicode=true&characterEncoding=UTF-8
+log.jdbc.username=clotho_rw
+log.jdbc.password=clothopass
+log.jdbc.minPoolSize=2
+log.jdbc.initialPoolSize=2
+log.jdbc.maxPoolSize=10
+log.jdbc.maxStatements=500
+log.jdbc.maxIdleTime=1800
+log.jdbc.checkoutTimeout=50000
+log.jdbc.acquireIncrement=3
+log.jdbc.maxConnectionAge=14400
+log.jdbc.maxIdleTimeExcessConnections=3600
+log.jdbc.preferredTestQuery=select 1 from dual
+log.jdbc.testConnectionOnCheckout=false
+log.jdbc.idleConnectionTestPeriod=60
+log.jdbc.numHelperThreads=4
