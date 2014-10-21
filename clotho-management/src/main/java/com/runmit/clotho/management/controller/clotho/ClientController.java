@@ -3,7 +3,6 @@ package com.runmit.clotho.management.controller.clotho;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.client.Client;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.ClientService;
-import com.runmit.clotho.management.security.SecurityConstant;
 import com.runmit.clotho.management.security.SessionUtil;
 
 /**
