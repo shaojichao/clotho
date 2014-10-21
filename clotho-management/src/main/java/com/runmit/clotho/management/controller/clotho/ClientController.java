@@ -59,7 +59,7 @@ public class ClientController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			LOGGER.error("saveVersion error",ex);
+			LOGGER.error("saveClient error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
