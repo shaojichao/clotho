@@ -72,5 +72,9 @@ public class OpLogService{
 	public List<OpLog> getOpLogs(int start,int limit,OpType opType,String opMod,String systemId){
 		return this.mapper.getOpLogs(start, limit, opType, opMod,systemId);
 	}
+	
+	public long getOpLogsCount(OpType opType,String opMod,String systemId){
+		return this.mapper.getOpLogsCount(opType, opMod, systemId);
+	}
 
 }

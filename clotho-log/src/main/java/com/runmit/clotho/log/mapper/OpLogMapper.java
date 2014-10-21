@@ -45,4 +45,23 @@ public interface OpLogMapper {
 			 return sb.toString();
 		 }
 	 }
+	 
+	 @SelectProvider(type=GetOpLogsCount.class,method="getOpLogsCount")
+	 long getOpLogsCount(@Param("opType")OpType opType,@Param("opMod")String opMod,@Param("systemId")String systemId);
+	 
+	 class GetOpLogsCount{
+		 public String getOpLogsCount(Map<String, Object> para){
+			 StringBuilder sb = new StringBuilder("select count(id) from OpLog where id!=0");
+			 if(para.get("opType")!=null&&(OpType)para.get("opType")!=OpType.ALL){
+				 sb.append(" and opType='").append(para.get("opType").toString()).append("'");
+			 }
+			 if(!StringUtils.isEmpty((String)para.get("opMod"))){
+				 sb.append(" and opMod='").append(para.get("opMod")).append("'");
+			 }
+			 if(para.get("systemId")!=null&&!((String)para.get("systemId")).equalsIgnoreCase("all")){
+				 sb.append(" and systemId='").append(para.get("systemId")).append("'");
+			 }
+			 return sb.toString();
+		 }
+	 }
 }
