@@ -15,7 +15,7 @@ var upgradePop = Ext.create('Ext.window.Window', {
             id: 'upgradeForm',
             width: 460,
             height: 100,
-            url: path + '/abc/metis/upload.do',
+            url: path + '/metis/upload.do',
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -237,11 +237,11 @@ var detailStatus = Ext.create('Ext.window.Window',{
 
                 }
                 Ext.Ajax.request({
-                    url: '/abc/metis/insert.do',
-                    method: 'GET',
-                    params: { ids: ids,path: parmpath,types:types,adminName:encodeURI(adminName)},
+                    url: '/metis/insert.do',
+                    method: 'POST',
+                    params: { ids: ids,path: parmpath,types:types,adminName:adminName},
                     success: function(resp,opts) {
-                        centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                        centerPanel.getStore().load({url:'/metis/schema.do'});
 
                         Ext.Msg.alert('系统提示', '操作成功！');
                         detailStatus.hide();
@@ -394,7 +394,7 @@ var names_store = Ext.create('Ext.data.Store', {
     fields: ['name'],
     proxy: {
         type: 'ajax',
-        url: '/abc/metis/names.do',
+        url: '/metis/names.do',
         reader: {
             totalProperty: 'result',
             root: 'rows'
@@ -433,7 +433,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields :['fingerprint', 'namespace','name','schema','md5','inuse','updatetime','updateby','createtime'],
         proxy: {
             type: 'ajax',
-            url:'/abc/metis/schema.do',
+            url:'/metis/schema.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -456,7 +456,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
                 proxy: {
                     type: 'ajax',
-                    url:'/abc/metis/namespaces.do',
+                    url:'/metis/namespaces.do',
                     reader: {
                         totalProperty: 'result',
                         root: 'rows'
@@ -490,7 +490,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
         var namespacecom = Ext.getCmp("namespace");
         var statuscom = Ext.getCmp("statuscombox");
-        centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
+        centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:statuscom.value,name:this.value,namespace:namespacecom.value}});
         centerPanel.clearValue();
     }
      },
@@ -511,7 +511,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                     var namespacecom = Ext.getCmp("namespace");
                     var namecom = Ext.getCmp("name");
 
-                    centerPanel.getStore().load({url:'/abc/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
+                    centerPanel.getStore().load({url:'/metis/samplename.do',params:{status:this.value,name:namecom.value,namespace:namespacecom.value}});
                     centerPanel.clearValue();
                 }
             },
@@ -523,7 +523,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             text: '全部',
             handler: function () {
 
-                centerPanel.getStore().load({url:'/abc/metis/schema.do'});
+                centerPanel.getStore().load({url:'/metis/schema.do'});
                 centerPanel.clearValue();
 
 
