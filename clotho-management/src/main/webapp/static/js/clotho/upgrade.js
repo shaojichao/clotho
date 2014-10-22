@@ -428,9 +428,9 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       			
 	       			upgradePop.setTitle('编辑');
 	       			upgradePop.show();
-	       			var record = centerPanel.getStore().getById(plans[0].get('id'));
+	       			var record = centerPanel.getStore().getById(models[0].get('id'));
 	       			Ext.getCmp('upgradeForm').loadRecord(record);
-	       			if(models[0].data.pkgurl){
+	       			if(record.data.pkgurl){
 	       				Ext.getCmp('pkgurl').setValue(record.data.pkgurl);
 	       			}
 	       		}
