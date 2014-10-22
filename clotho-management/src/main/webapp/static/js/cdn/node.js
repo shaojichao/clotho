@@ -47,8 +47,7 @@ var nodePop = Ext.create('Ext.window.Window', {
             	                }, {
             	                    boxLabel: '激活',
             	                    name: 'active',
-            	                    inputValue: '1',
-                                    checked: true
+            	                    inputValue: '1'
             	                }
             	            ]
                 		},{
@@ -174,7 +173,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
                     nodePop.setTitle('编辑');
                     nodePop.show();
 
-	       			Ext.getCmp('nodeForm').loadRecord(models[0]);
+                    var record = centerPanel.getStore().getById(models[0].get('id'));
+                    Ext.getCmp('nodeForm').loadRecord(record);
 
 	       		}
 	       	},'-',{
@@ -213,7 +213,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
        			}
                 nodePop.setTitle('编辑');
                 nodePop.show();
-       			Ext.getCmp('nodeForm').loadRecord(models[0]);
+                var record = centerPanel.getStore().getById(models[0].get('id'));
+                Ext.getCmp('nodeForm').loadRecord(record);
        			}
         }
     }
