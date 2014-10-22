@@ -106,6 +106,11 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 //domReady
 Ext.onReady(function(){
+	centerPanel.getStore().on("beforeload",function(){ 
+		Ext.apply(centerPanel.getStore().proxy.extraParams,{opType:Ext.getCmp('opType').getValue(),
+    		systemId:Ext.getCmp('systemId').getValue(),
+    		opMod:Ext.getCmp('opMod').getValue()}); 
+	}); 
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
 		items:[centerPanel]
