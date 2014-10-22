@@ -428,10 +428,10 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       			
 	       			upgradePop.setTitle('编辑');
 	       			upgradePop.show();
-	       			
-	       			Ext.getCmp('upgradeForm').loadRecord(models[0]);
+	       			var record = centerPanel.getStore().getById(plans[0].get('id'));
+	       			Ext.getCmp('upgradeForm').loadRecord(record);
 	       			if(models[0].data.pkgurl){
-	       				Ext.getCmp('pkgurl').setValue(models[0].data.pkgurl);
+	       				Ext.getCmp('pkgurl').setValue(record.data.pkgurl);
 	       			}
 	       		}
 	       	},'-',{
@@ -472,9 +472,10 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
        			upgradePop.setTitle('编辑');
        			upgradePop.show();
        			
-       			Ext.getCmp('upgradeForm').loadRecord(models[0]);
+       			var record = centerPanel.getStore().getById(models[0].get('id'));
+       			Ext.getCmp('upgradeForm').loadRecord(record);
        			if(models[0].data.pkgurl){
-       				Ext.getCmp('pkgurl').setValue(models[0].data.pkgurl);
+       				Ext.getCmp('pkgurl').setValue(record.data.pkgurl);
        			}
             }
         } 
@@ -631,11 +632,8 @@ var eastPanel = Ext.create('Ext.grid.Panel', {
        				Ext.getCmp('planForm').getForm().reset();
        				Ext.getCmp('planWin').setTitle('编辑');
        				Ext.getCmp('planWin').show();
-       				
-       				//初始化值
-       				var fields = Ext.getCmp('planForm').getForm().getFields(),
-       					plan = plans[0];
-       				Ext.getCmp('planForm').getForm().loadRecord(plan);
+       				var record = eastPanel.getStore().getById(plans[0].get('id'));
+       				Ext.getCmp('planForm').getForm().loadRecord(record);
        				
 	       		}
 	       	},'-',{

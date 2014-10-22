@@ -143,9 +143,10 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 				Ext.Msg.alert('系统提示', '请选择要编辑的数据');
 				return;
 			}
+			var record = centerPanel.getStore().getById(models[0].get('id'));
 			rolePop.setTitle('编辑');
 			rolePop.show();
-			Ext.getCmp('roleForm').loadRecord(models[0]);
+			Ext.getCmp('roleForm').loadRecord(record);
 		}
 	} ]
 });
