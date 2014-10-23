@@ -1,3 +1,4 @@
+
 var geoPop = Ext.create('Ext.window.Window', {
     id: 'geoWin',
     title: '增加',
@@ -14,7 +15,7 @@ var geoPop = Ext.create('Ext.window.Window', {
             id: 'geoForm',
             width: 460,
             height: 250,
-            url: '/cdn-management/goeBasedDispatch/save',
+            url: '/cdn-management/goeBasedDispatch/save?adminName='+adminName,
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -372,7 +373,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteGeo(records) {
     Ext.Ajax.request({
-        url: path + '/cdn-management/goeBasedDispatch/del?id=' + records[0].get('id'),
+        url: path + '/cdn-management/goeBasedDispatch/del?id=' + records[0].get('id')+'&adminName='+adminName,
         scope: this,
         async: true,
         success: function (response, options) {

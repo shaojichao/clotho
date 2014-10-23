@@ -14,7 +14,7 @@ var nodePop = Ext.create('Ext.window.Window', {
             	id: 'nodeForm',
             	width: 460,
             	height: 250,
-                url: path + '/cdn-management/node/saveNode',
+                url: path + '/cdn-management/node/saveNode?adminName='+adminName,
                 layout: 'anchor',
                 defaults: {
                     anchor: '80%',
@@ -265,7 +265,7 @@ var serverPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteNodes(records){
 	Ext.Ajax.request({
-		url: path + '/cdn-management/node/deleteNode?id='+records[0].get('id'),
+		url: path + '/cdn-management/node/deleteNode?id='+records[0].get('id')+'&adminName='+adminName,
 		scope: this,
 		async: true,
 		success: function(response, options){
