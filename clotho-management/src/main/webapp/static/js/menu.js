@@ -124,7 +124,7 @@ var menuPop = Ext.create('Ext.window.Window', {
         },{
         	text: '取消',
         	handler: function(){
-        		upgradePop.hide();
+        		menuPop.hide();
         	}
         }
     ]
