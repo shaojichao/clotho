@@ -175,12 +175,6 @@
                 <version>${spring.xml.version}</version>
             </dependency>
 
-            <!--need mail support of spring-context-support-->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
             <dependency>
                 <groupId>javax.mail</groupId>
                 <artifactId>mail</artifactId>
