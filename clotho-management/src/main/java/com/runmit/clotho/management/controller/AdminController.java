@@ -100,9 +100,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/saveAdminRoleMember.do",method=RequestMethod.POST)
-	public @ResponseBody ExtStatusEntity saveAdminRoleMember(AdminRoleMember member){
+	public @ResponseBody ExtStatusEntity saveAdminRoleMember(AdminRoleMember member,HttpServletRequest request){
 		ExtStatusEntity result = new ExtStatusEntity();
 		try{
+			member.setCreateby(SessionUtil.getLoginAdminName(request));
 			this.adminService.saveAdminRoleMember(member);
 			result.setMsg("succeed");
 			result.setSuccess(true);
@@ -167,6 +168,7 @@ public class AdminController {
 				RoleMenuMember member = new RoleMenuMember();
 				member.setRoleid(roleid);
 				member.setMenuid(Integer.valueOf(menu));
+				member.setCreateby(SessionUtil.getLoginAdminName(request));
 				this.adminService.saveRoleMenuMember(member);
 			}
 			result.setMsg("succeed");

@@ -61,11 +61,13 @@ public class AdminService {
 	
 	@Transactional(readOnly=false)
 	public void saveAdminRoleMember(AdminRoleMember adminRoleMember){
+		opLogService.saveObj(adminRoleMember, OpType.INSERT, "role", "clotho", adminRoleMember.getCreateby());
 		this.adminMapper.addAdminRoleMember(adminRoleMember);
 	}
 	
 	@Transactional(readOnly=false)
 	public void saveRoleMenuMember(RoleMenuMember member){
+		opLogService.saveObj(member, OpType.INSERT, "role", "clotho", member.getCreateby());
 		this.adminMapper.addRoleMenuMember(member);
 	}
 	
