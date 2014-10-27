@@ -14,7 +14,7 @@ var serverPop = Ext.create('Ext.window.Window', {
             id: 'serverForm',
             width: 460,
             height: 200,
-            url: path + '/cdn-management/server/saveServer',
+            url: path + '/cdn-management/server/saveServer?adminName='+adminName,
             layout: 'anchor',
             defaults: {
                 anchor: '80%',
@@ -244,7 +244,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteServers(records){
     Ext.Ajax.request({
-        url: path + '/cdn-management/server/deleteServer?id='+records[0].get('id'),
+        url: path + '/cdn-management/server/deleteServer?id='+records[0].get('id')+'&adminName='+adminName,
         scope: this,
         async: true,
         success: function(response, options){
