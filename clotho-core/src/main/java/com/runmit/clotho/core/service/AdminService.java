@@ -55,6 +55,7 @@ public class AdminService {
 	
 	@Transactional(readOnly=false)
 	public void delAdminRole(int id,String adminName){
+		opLogService.saveObj(this.adminMapper.getAdminRoleMember(id), OpType.DELETE, "role", "clotho", adminName);
 		this.adminMapper.delAdminRole(id);
 	}
 	
@@ -69,7 +70,8 @@ public class AdminService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void delRoleMenuMember(int id){
+	public void delRoleMenuMember(int id,String adminName){
+		opLogService.saveObj(this.adminMapper.getRoleMenuMember(id), OpType.DELETE, "role", "clotho", adminName);
 		this.adminMapper.delRoleMenuMember(id);
 	}
 	
@@ -77,9 +79,11 @@ public class AdminService {
 	public void saveAdminRole(AdminRole role){
 		if(null==role.getId()||role.getId()==0){
 			this.adminMapper.addAdminRole(role);
-			opLogService.saveObj(role, OpType.INSERT, "admin", "clotho", role.getCreateby());
+			opLogService.saveObj(role, OpType.INSERT, "role", "clotho", role.getCreateby());
 		}else{
+			AdminRole temp = this.adminMapper.getAdminRole(role.getId());
 			this.adminMapper.updateAdminRole(role);
+			opLogService.updateObj(temp, role, OpType.UPDATE, "role", "clotho", role.getUpdateby());
 		}
 	}
 }
