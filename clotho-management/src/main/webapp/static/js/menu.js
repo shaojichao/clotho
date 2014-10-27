@@ -170,7 +170,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	store: Ext.create('Ext.data.JsonStore', {
 		autoLoad: true,
 		storeId: 'centerStore',
-		pageSize: 20,
+		pageSize: 999,
 	    fields :['id', 'text','parentID','parentName','orderNum','url','leaf','status','createTime','createdBy'],
 	    proxy: {
 	        type: 'ajax',
