@@ -12,6 +12,7 @@ public class AdminRole {
     private String description; // 角色描述
     private CurrentStatus status;
     private String createby;
+    private String updateby;
     public Integer getId() {
 		return id;
 	}
@@ -41,5 +42,11 @@ public class AdminRole {
 	}
 	public void setCreateby(String createby) {
 		this.createby = createby;
+	}
+	public String getUpdateby() {
+		return updateby;
+	}
+	public void setUpdateby(String updateby) {
+		this.updateby = updateby;
 	}
 }

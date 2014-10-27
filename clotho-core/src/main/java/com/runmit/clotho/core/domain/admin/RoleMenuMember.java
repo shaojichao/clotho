@@ -9,6 +9,7 @@ package com.runmit.clotho.core.domain.admin;
 public class RoleMenuMember {
 	private int roleid;
 	private int menuid;
+	private String createby;
 	public int getRoleid() {
 		return roleid;
 	}
@@ -20,5 +21,11 @@ public class RoleMenuMember {
 	}
 	public void setMenuid(int menuid) {
 		this.menuid = menuid;
+	}
+	public String getCreateby() {
+		return createby;
+	}
+	public void setCreateby(String createby) {
+		this.createby = createby;
 	}
 }

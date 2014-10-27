@@ -44,6 +44,9 @@ public interface AdminMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid")
 	void delAdminRole(@Param("roleid")int roleid);
 	
+	@Select("select * from AdminRoleMember where roleid=#{roleid}")
+	AdminRoleMember getAdminRoleMember(@Param("roleid")int roleid);
+	
 	@Insert("insert into AdminRoleMember (adminid,roleid) values (#{adminid},#{roleid})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addAdminRoleMember(AdminRoleMember member);
@@ -56,9 +59,15 @@ public interface AdminMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateAdminRole(AdminRole role);
 	
+	@Select("select * from AdminRole where id=#{id}")
+	AdminRole getAdminRole(@Param("id")int id);
+	
 	@Delete("delete from RoleMenuMember where roleid=#{roleid}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid")
 	void delRoleMenuMember(@Param("roleid")int roleid);
+	
+	@Select("select * from RoleMenuMember where roleid=#{roleid}")
+	RoleMenuMember getRoleMenuMember(@Param("roleid")int roleid);
 	
 	@Insert("insert into RoleMenuMember (roleid,menuid) values (#{roleid},#{menuid})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid,menuid")

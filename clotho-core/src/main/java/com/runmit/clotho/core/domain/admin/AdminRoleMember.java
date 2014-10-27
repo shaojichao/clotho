@@ -9,6 +9,7 @@ package com.runmit.clotho.core.domain.admin;
 public class AdminRoleMember {
 	private int adminid;
 	private int roleid;
+	private String createby;
 	public int getAdminid() {
 		return adminid;
 	}
@@ -20,5 +21,11 @@ public class AdminRoleMember {
 	}
 	public void setRoleid(int roleid) {
 		this.roleid = roleid;
+	}
+	public String getCreateby() {
+		return createby;
+	}
+	public void setCreateby(String createby) {
+		this.createby = createby;
 	}
 }
