@@ -80,7 +80,7 @@ Ext.onReady(function() {
 		closable : false,
 		border: false,
 		buttons : [{
-			text : "登陆",
+			text : "登录",
 			id : "login",
 			minWidth: 50,
 			handler : login
