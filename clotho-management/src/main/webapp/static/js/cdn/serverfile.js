@@ -26,7 +26,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields: ['id', 'nodeName', 'nodeDesc', 'ipWan', 'ipLan', 'fileName', 'active'],
         proxy: {
             type: 'ajax',
-            url: '/cdn-management/serverFile/list',
+            url: path + '/cdn-management/serverFile/list',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -53,7 +53,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             text: '查询',
             handler: function () {
                 var fileName = Ext.getCmp('fileName').getValue();
-                centerPanel.store.load({url: '/cdn-management/serverFile/search?fileName=' + fileName});
+                centerPanel.store.load({url: path + '/cdn-management/serverFile/search?fileName=' + fileName});
             }
         }
     ],
