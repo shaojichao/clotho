@@ -79,11 +79,11 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
     title: '设备列表',
     columns: [
-        {header: 'clientId',  dataIndex: 'clientId', width: 60,sortable:true },
-        {header: '名称', dataIndex: 'name', width: 100},
-        {header: '描述', dataIndex: 'description', width: 200},
-        {header: '创建人',  dataIndex: 'createby', width: 80,sortable:true },
-        {header: '创建时间',  dataIndex: 'createtime', width: 160,sortable:true,renderer:function(value){
+        {header: '设备Id',  dataIndex: 'deviceid', width: 60,sortable:true },
+        {header: '设备硬件号', dataIndex: 'devicesn', width: 100},
+        {header: '设备类型', dataIndex: 'devicetype', width: 200},
+        {header: '所在区域',  dataIndex: 'createby', width: 80,sortable:true },
+        {header: '生产日期',  dataIndex: 'createtime', width: 160,sortable:true,renderer:function(value){
             if(value != null){
                 return Ext.util.Format.date(new Date(value),'Y-m-d H:i:s');
             }else{
