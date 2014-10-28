@@ -70,7 +70,7 @@ Ext.onReady(function() {
 	var win = new Ext.Window({
 		el : "win",
 		
-		title : "登录",
+		title : "润华运营系统",
 		width : 300,
 		height : 180,
 		layout: 'border',
@@ -80,7 +80,7 @@ Ext.onReady(function() {
 		closable : false,
 		border: false,
 		buttons : [{
-			text : "登陆",
+			text : "登录",
 			id : "login",
 			minWidth: 50,
 			handler : login

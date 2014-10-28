@@ -77,7 +77,7 @@ var clientPop = Ext.create('Ext.window.Window', {
 
 var centerPanel = Ext.create('Ext.grid.Panel', {
 	region: 'center',
-	title: '菜单列表',
+	title: 'clientId列表',
     columns: [
 		        {header: 'clientId',  dataIndex: 'clientId', width: 60,sortable:true },
 		        {header: '名称', dataIndex: 'name', width: 100},
