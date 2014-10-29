@@ -117,7 +117,7 @@ var devicePop = Ext.create('Ext.window.Window', {
 
 var centerPanel = Ext.create('Ext.grid.Panel', {
     region: 'center',
-    title: '菜单列表',
+    title: '设备列表',
     columns: [
         {header: '设备序号', dataIndex: 'deviceid', width: 80, sortable: true },
         {header: '设备硬件号', dataIndex: 'devicesn', width: 200},
