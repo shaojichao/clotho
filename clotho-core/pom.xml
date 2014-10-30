@@ -98,10 +98,28 @@
             <groupId>org.mybatis.caches</groupId>
             <artifactId>mybatis-memcached</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>clotho-log</artifactId>
             <version>${project.version}</version>
+        </dependency> -->
+        <!-- log api -->
+        <dependency>
+        	<groupId>com.runmit.clotho</groupId>
+        	<artifactId>dubbo-log-api</artifactId>
         </dependency>
+        <!-- dubbo dependency -->
+        <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
     </dependencies>
 </project>

@@ -4,9 +4,11 @@ package com.runmit.clotho.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.domain.admin.Menu;
 import com.runmit.clotho.core.mapper.MenuMapper;
 import com.runmit.clotho.log.domain.OpLog.OpType;
@@ -18,13 +20,15 @@ import com.runmit.clotho.log.service.OpLogService;
  */
 @Service
 @Transactional
+@Component
 public class MenuService {
 
     @Autowired
     private MenuMapper menuMapper;
-    @Autowired
+//  @Autowired
+    @Reference(version="1.0.0")
 	private OpLogService opLogService;
-    
+  
     @Transactional(readOnly = false)
     public void saveMenu(Menu menu) {
     	if(menu.getId()==null||menu.getId()==0){

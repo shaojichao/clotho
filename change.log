@@ -41,3 +41,6 @@ log.jdbc.preferredTestQuery=select 1 from dual
 log.jdbc.testConnectionOnCheckout=false
 log.jdbc.idleConnectionTestPeriod=60
 log.jdbc.numHelperThreads=4
+
+#2014-10-30#zhipeng.tian#clotho-management/application.properties
+zookeeper.addr=192.168.20.176:2181

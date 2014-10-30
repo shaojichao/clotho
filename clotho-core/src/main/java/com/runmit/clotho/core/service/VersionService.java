@@ -4,6 +4,7 @@ package com.runmit.clotho.core.service;
 import java.util.Date;
 import java.util.List;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
@@ -12,6 +13,7 @@ import com.runmit.clotho.log.domain.OpLog.OpType;
 import com.runmit.clotho.log.service.OpLogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +23,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@Component
 public class VersionService {
 
     @Autowired
     private VersionMapper versionMapper;
-    @Autowired
+//    @Autowired
+    @Reference(version="1.0.0")
 	private OpLogService opLogService;
     
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
     public Version getLastestbyclientid( int clientid) {
         return versionMapper.getLastestbyclientid(clientid);
     }

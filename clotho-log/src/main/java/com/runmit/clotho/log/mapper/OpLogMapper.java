@@ -41,7 +41,7 @@ public interface OpLogMapper {
 				 sb.append(" and systemId='").append(para.get("systemId")).append("'");
 			 }
 			 sb.append(" order by id desc ");
-			 sb.append(" limit ").append(para.get("start")).append(",").append((Integer)para.get("start")+(Integer)para.get("limit"));
+			 sb.append(" start ").append(para.get("start")).append(",").append((Integer)para.get("limit"));
 			 return sb.toString();
 		 }
 	 }

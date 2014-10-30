@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.dto.ExtEntity;
+import com.runmit.clotho.core.service.LogService;
 import com.runmit.clotho.log.domain.OpLog;
 import com.runmit.clotho.log.domain.OpLog.OpType;
 import com.runmit.clotho.log.service.OpLogService;
@@ -30,17 +32,17 @@ public class OpLogController {
             .getLogger(OpLogController.class);
 	
 	@Autowired
-    private OpLogService opLogService;
-	
+	private LogService logService;
+  
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody ExtEntity<OpLog> getlist(@RequestParam(value="start",defaultValue="0")int start,
 			@RequestParam(value="limit",defaultValue="20")int limit,
 			@RequestParam(value="opType",required=false)OpType opType,
 			@RequestParam(value="opMod",required=false)String opMod,
 			@RequestParam(value="systemId",defaultValue="ALL")String systemId) {
-		List<OpLog> list = this.opLogService.getOpLogs(start, limit, opType, opMod,systemId);
+		List<OpLog> list = this.logService.getOpLogs(start, limit, opType, opMod,systemId);
 		ExtEntity<OpLog> entity = new ExtEntity<OpLog>();
-		entity.setResult(this.opLogService.getOpLogsCount(opType, opMod, systemId));
+		entity.setResult(this.logService.getOpLogsCount(opType, opMod, systemId));
 		entity.setRows(list);
 		LOGGER.info("getLogs");
 		return entity;

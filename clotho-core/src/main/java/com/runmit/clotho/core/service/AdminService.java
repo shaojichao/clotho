@@ -3,9 +3,11 @@ package com.runmit.clotho.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.domain.admin.AdminRole;
 import com.runmit.clotho.core.domain.admin.AdminRoleMember;
@@ -21,12 +23,14 @@ import com.runmit.clotho.log.service.OpLogService;
  */
 @Service
 @Transactional(readOnly=true)
+@Component
 public class AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
-	@Autowired
+//  @Autowired
+	@Reference(version="1.0.0")
 	private OpLogService opLogService;
-	
+  
 	public List<AdminRole> getRoleList(){
 		return this.adminMapper.getRoleList();
 	}
