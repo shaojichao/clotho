@@ -51,21 +51,21 @@
 
     <properties>
         <release.version>0.0.1-SNAPSHOT</release.version>
-        <spring.version>4.0.6.RELEASE</spring.version>
+        <spring.version>4.1.1.RELEASE</spring.version>
         <spring.asm.version>3.1.4.RELEASE</spring.asm.version>
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
-        <spring.xml.version>1.5.9</spring.xml.version>
+        <spring.xml.version>2.2.0.RELEASE</spring.xml.version>
         <cglib.version>2.2.2</cglib.version>
         <mysql.version>5.1.31</mysql.version>
         <c3p0.version>0.9.1.2</c3p0.version>
-        <mybatis.version>3.2.7</mybatis.version>
+        <mybatis.version>3.2.8</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
         <log4j.version>1.2.16</log4j.version>
         <aspectj.version>1.6.8</aspectj.version>
         <org.slf4j-version>1.6.1</org.slf4j-version>
-        <ehcache.version>2.4.3</ehcache.version>
+        <ehcache.version>2.6.9</ehcache.version>
         <jdom.version>1.1</jdom.version>
-        <jackson.version>2.2.2</jackson.version>
+        <jackson.version>2.4.3</jackson.version>
         <httpclient.version>3.1</httpclient.version>
         <jaxb.version>2.2.11</jaxb.version>
         <!-- for DateFormat annotation for converter support in Spring MVC 3 -->
