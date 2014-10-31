@@ -41,7 +41,8 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 	       			if(models.length <= 0){
 	       				Ext.Msg.alert('系统提示', "请选择数据");
 	       			}else{
-	       				Ext.Msg.alert('系统提示', models[0].data.content);
+	       				logPop.show();
+	           			Ext.getCmp('logForm').loadRecord(models[0]);
 	       			}
 	       		}
 	       	},{
@@ -98,12 +99,55 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             element: 'body',
             fn: function(){ 
             	var models = centerPanel.getSelectionModel().getSelection();
-       			Ext.Msg.alert('系统提示', models[0].data.content);
+       			logPop.show();
+       			Ext.getCmp('logForm').loadRecord(models[0]);
+//            	var content = models[0].data.content;
+//       			Ext.Msg.alert('系统提示',content);
             }
         } 
     }
 });
-
+var logPop = Ext.create('Ext.window.Window', {
+	id: 'logWin',
+    title: 'LOG',
+    height: 370,
+    width: 480,
+    bodyPadding: 5,
+    maximizable: true,
+    modal: true,
+    closeAction: 'hide',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    items: [
+            Ext.create('Ext.form.Panel', {
+            	id: 'logForm',
+            	width: 500,
+            	height: 250,
+                layout: 'anchor',
+                defaults: {
+                    anchor: '85%',
+                    labelAlign: 'right',
+                    labelWidth: 50,
+                    blankText: '必填项'
+                },
+                defaultType: 'textfield',
+                items: [{
+            	    	   fieldLabel: '内容',
+            	    	   name: 'content',
+            	    	   xtype: 'textarea',
+            	    	   height: 230,
+            	       }]
+            })           
+    ],
+    buttons: [
+        {
+        	text: '关闭',
+        	handler: function(){
+        		logPop.hide();
+        	}
+        }
+    ]
+});
 //domReady
 Ext.onReady(function(){
 	centerPanel.getStore().on("beforeload",function(){ 
