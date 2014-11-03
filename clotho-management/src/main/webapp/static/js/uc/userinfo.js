@@ -192,14 +192,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             }
         }},
         {header: '修改人', dataIndex: 'updateby', width: 120, sortable: true },
-        {header: '修改时间', dataIndex: 'updatetime', width: 160, sortable: true, renderer: function (value) {
-            if (value != null) {
-                return Ext.util.Format.date(new Date(value), 'Y-m-d H:i:s');
-            } else {
-                return '';
-            }
-        }
-        }
+        {header: '修改时间', dataIndex: 'updatetime', width: 160, sortable: true}
     ],
     store: Ext.create('Ext.data.JsonStore', {
         autoLoad: true,
