@@ -1,12 +1,18 @@
 package com.runmit.clotho.core.domain.admin;
 
+import java.io.Serializable;
+
 /**
  * @author zhipeng.tian
  * 
  * 2014年9月29日
  */
 
-public class AdminRole {
+public class AdminRole implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7382967512136289316L;
 	private Integer id;
 	private String name; // 角色名
     private String description; // 角色描述

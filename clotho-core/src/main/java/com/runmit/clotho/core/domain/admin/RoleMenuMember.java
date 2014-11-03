@@ -1,12 +1,18 @@
 package com.runmit.clotho.core.domain.admin;
 
+import java.io.Serializable;
+
 /**
  * @author zhipeng.tian
  * 
  * 2014年9月29日
  */
 
-public class RoleMenuMember {
+public class RoleMenuMember implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4298387310795633816L;
 	private int roleid;
 	private int menuid;
 	private String createby;
