@@ -14,7 +14,7 @@ var userPop = Ext.create('Ext.window.Window', {
             id: 'userForm',
             width: 600,
             height: 400,
-            url: path + '/abc/uc_management/usermanage/saveUser.do',
+            url: path + '/uc_management/usermanage/saveUser.do',
             method: 'POST',
             layout: 'anchor',
             defaults: {
@@ -207,7 +207,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
         fields: ['id', 'userid', 'useridtype', 'name', 'nickname','age','gender','mobile','mail','occupation','address','viplevel','location','headposter','updateby', 'updatetime'],
         proxy: {
             type: 'ajax',
-            url: path + '/abc/uc_management/usermanage/list.do',
+            url: path + '/uc_management/usermanage/list.do',
             reader: {
                 type: 'json',
                 totalProperty: "result",
@@ -278,7 +278,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
             xtype: 'button',
             text: '查询',
             handler: function () {
-                centerPanel.getStore().load({url: path + '/abc/uc_management/usermanage/getuser.do',
+                centerPanel.getStore().load({url: path + '/uc_management/usermanage/getuser.do',
                     params: {usermail: Ext.getCmp('usermail').getValue(),usermobile: Ext.getCmp('usermobile').getValue()}});
                 centerPanel.clearValue();
             }
@@ -313,7 +313,7 @@ var centerPanel = Ext.create('Ext.grid.Panel', {
 
 function deleteUser(records) {
     Ext.Ajax.request({
-        url: path + '/abc/uc_management/usermanage/delUser.do',
+        url: path + '/uc_management/usermanage/delUser.do',
         scope: this,
         async: true,
         method: "POST",
