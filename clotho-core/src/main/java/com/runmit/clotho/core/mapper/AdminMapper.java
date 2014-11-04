@@ -67,7 +67,7 @@ public interface AdminMapper {
 	void delRoleMenuMember(@Param("roleid")int roleid);
 	
 	@Select("select * from RoleMenuMember where roleid=#{roleid}")
-	RoleMenuMember getRoleMenuMember(@Param("roleid")int roleid);
+	List<RoleMenuMember> getRoleMenuMember(@Param("roleid")int roleid);
 	
 	@Insert("insert into RoleMenuMember (roleid,menuid) values (#{roleid},#{menuid})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid,menuid")

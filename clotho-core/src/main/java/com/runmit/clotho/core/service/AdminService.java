@@ -76,7 +76,7 @@ public class AdminService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void delRoleMenuMember(int id,String adminName){
+	public void delRoleMenuMember(int id,String adminName) throws Exception{
 		opLogService.saveObj(this.adminMapper.getRoleMenuMember(id), OpType.DELETE, "role", "clotho", adminName);
 		this.adminMapper.delRoleMenuMember(id);
 	}
