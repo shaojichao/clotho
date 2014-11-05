@@ -37,7 +37,7 @@ public class LDAPValidation {
 		
 		String loginDN = "uid="+uid+",ou=users,dc=runmit,dc=com";
 		String searchBase = "ou=users,dc=runmit,dc=com";
-		String searchFilter = "";
+		String searchFilter = "(uid="+uid+")";
 
 		int ldapPort = LDAPConnection.DEFAULT_PORT;
 		int searchScope = LDAPConnection.SCOPE_SUB;
