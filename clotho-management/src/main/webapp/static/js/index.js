@@ -104,6 +104,6 @@ function createPanel(id, title, href){
 		autoScroll : false,
 		closable : true,
 		border: false,
-		html : '<iframe id="' + id + '" src="' + href + '" scrolling="no" frameborder="0" style="width:100%; height:100%;"></iframe>'
+		html : '<iframe id="' + id + '" src="' + href + '" scrolling="yes" frameborder="0" style="width:100%; height:100%;"></iframe>'
 	});
 }
