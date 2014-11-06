@@ -6,7 +6,7 @@
 	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<dubbo:registry protocol="zookeeper" address="${zookeeper.addr}" />
-	<dubbo:application name="dubbo-log-consumer" />
+	<dubbo:application name="clotho-log-consumer" />
 	<dubbo:annotation package="com.runmit.clotho.core.service" />
 	<dubbo:monitor address="${dubbo.monitor}" />
 
