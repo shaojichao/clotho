@@ -45,7 +45,7 @@ public interface AdminMapper {
 	void delAdminRole(@Param("roleid")int roleid);
 	
 	@Select("select * from AdminRoleMember where roleid=#{roleid}")
-	AdminRoleMember getAdminRoleMember(@Param("roleid")int roleid);
+	List<AdminRoleMember> getAdminRoleMember(@Param("roleid")int roleid);
 	
 	@Insert("insert into AdminRoleMember (adminid,roleid) values (#{adminid},#{roleid})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
