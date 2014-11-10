@@ -58,9 +58,9 @@ public class AdminService {
 	}
 	
 	@Transactional(readOnly=false)
-	public void delAdminRole(int id,String adminName){
+	public void delAdminRole(int id,String adminName,String uid){
 		opLogService.saveObj(this.adminMapper.getAdminRoleMember(id), OpType.DELETE, "role", "clotho", adminName);
-		this.adminMapper.delAdminRole(id);
+		this.adminMapper.delAdminRole(id,uid);
 	}
 	
 	@Transactional(readOnly=false)

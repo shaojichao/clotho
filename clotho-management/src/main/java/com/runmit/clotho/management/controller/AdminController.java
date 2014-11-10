@@ -121,7 +121,7 @@ public class AdminController {
 	public @ResponseBody ExtStatusEntity delAdminRole(@RequestParam("id")int id,HttpServletRequest request) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		try{
-			this.adminService.delAdminRole(id,SessionUtil.getLoginAdminName(request));
+			this.adminService.delAdminRole(id,SessionUtil.getLoginAdminName(request),SessionUtil.getLoginAdminUid(request));
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
