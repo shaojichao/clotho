@@ -209,16 +209,6 @@
 				<version>${sorcerer_version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.zookeeper</groupId>
-				<artifactId>zookeeper</artifactId>
-				<version>${zookeeper_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.sgroschupf</groupId>
-				<artifactId>zkclient</artifactId>
-				<version>${zkclient_version}</version>
-			</dependency>
-			<dependency>
 				<groupId>com.netflix.curator</groupId>
 				<artifactId>curator-framework</artifactId>
 				<version>${curator_version}</version>
@@ -313,11 +303,6 @@
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging-api</artifactId>
 				<version>${jcl_version}</version>
-			</dependency>
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j_version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -494,21 +479,11 @@
                 <scope>runtime</scope>
             </dependency>
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>2.5</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache-core</artifactId>
                 <version>${ehcache.version}</version>
                 <!-- <scope>runtime</scope> -->
             </dependency>
-           
-           
-
             <!--Database wieh MySQL-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -546,19 +521,9 @@
             
             <!-- Loggine -->
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${org.slf4j-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${org.slf4j-version}</version>
-            </dependency>
-            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
+                <version>${log4j_version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>javax.mail</groupId>
@@ -646,12 +611,6 @@
                 <version>${dbunit.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
             <!--ssm config-->
             <dependency>
                 <groupId>com.google.code.simple-spring-memcached</groupId>
@@ -673,19 +632,6 @@
                 <artifactId>mybatis-memcached</artifactId>
                 <version>${mybatis-memcached}</version>
             </dependency>
-            
-            <!-- Form Validation using Annotations -->
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validation-api}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator}</version>
-            </dependency>
-		        
         </dependencies>
     </dependencyManagement>
     
