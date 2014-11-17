@@ -8,7 +8,6 @@
 	<dubbo:registry protocol="zookeeper" address="${zookeeper.addr}" />
 	<dubbo:application name="clotho-log-consumer" />
 	<dubbo:annotation package="com.runmit.clotho.core.service" />
-	<!-- <dubbo:monitor address="${dubbo.monitor}" /> -->
 	<dubbo:monitor protocol="registry"/>
 
 </beans>
