@@ -35,9 +35,12 @@ public class LDAPValidation {
 	public Admin validAdmin(String uid,String password) {
 		Admin admin = new Admin();
 		
-		String loginDN = "uid="+uid+",ou=users,dc=runmit,dc=com";
+		/*String loginDN = "uid="+uid+",ou=users,dc=runmit,dc=com";
 		String searchBase = "ou=users,dc=runmit,dc=com";
-		String searchFilter = "(uid="+uid+")";
+		String searchFilter = "(uid="+uid+")";*/
+		String loginDN = "superd\\"+uid;
+		String searchBase = "OU=Runmit,OU=Users & Workstations,DC=SuperD,DC=com,DC=cn";
+		String searchFilter = "(sAMAccountName="+uid+")";
 
 		int ldapPort = LDAPConnection.DEFAULT_PORT;
 		int searchScope = LDAPConnection.SCOPE_SUB;
@@ -72,7 +75,8 @@ public class LDAPValidation {
                     }
                     while (allValues.hasMoreElements()) {  
                         String value = allValues.nextElement(); 
-                        if(attributeName.equalsIgnoreCase("uid")){
+                        if(attributeName.equalsIgnoreCase("sAMAccountName")){
+//                        if(attributeName.equalsIgnoreCase("uid")){
                         	admin.setUid(value);
     					}else if(attributeName.equalsIgnoreCase("mail")){
     						admin.setMail(value);
