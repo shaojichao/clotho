@@ -20,12 +20,6 @@ var topPanel = Ext.create('Ext.toolbar.Toolbar', {
 								});  
 		        		 })
 		        	 }
-		         },'-',
-		         {
-		        	 text: '修改密码'	,
-		        	 handler: function(){
-		        		 window.open("http://116.254.240.149:8888/");
-		        	 }
 		         },'-'
 		    ]
 });
@@ -81,15 +75,6 @@ var centerPanel = Ext.create('Ext.tab.Panel', {
 
 //
 Ext.onReady(function(){
-	if(adminID==6||adminID==1||adminID==2){
-		topPanel.add(
-	        {
-		   	 text: '添加LDAP账号'	,
-		   	 handler: function(){
-		   		 window.open("http://116.254.240.149:8888/ldapadmin/");
-		   	 }
-		    });
-	}
 	Ext.create('Ext.container.Viewport', {
 		layout: 'border',
 		items: [topPanel, westPanel, centerPanel]
