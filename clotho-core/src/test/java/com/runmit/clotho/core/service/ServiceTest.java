@@ -23,8 +23,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @TransactionConfiguration(defaultRollback = false)
 public class ServiceTest {
 
-   /* @Autowired
-    private VersionService VersionService;*/
+//    @Autowired
+//    private VersionService VersionService;
     
     @Test
     public void test(){
