@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.dubbo.common.json.JSONObject;
+import com.google.gson.Gson;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.AdminService;
@@ -61,7 +63,8 @@ public class LoginController {
 		}else{
 			admin.setId(a.getId());
 			SessionUtil.setLoginAdmin(request, admin);
-			resp.setMsg("success");
+			String gson = (new Gson()).toJson(admin);
+			resp.setMsg(gson);
 			resp.setSuccess(true);
 			LOGGER.info(admin.getName()+" login");
 		}
