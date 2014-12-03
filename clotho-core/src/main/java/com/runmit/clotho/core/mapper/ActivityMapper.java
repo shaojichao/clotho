@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.runmit.clotho.core.domain.activity.Activity;
 import com.runmit.clotho.core.domain.activity.ActivityGift;
+import com.runmit.clotho.core.domain.activity.ActivityRecord;
 
 /**
  * @author zhipeng.tian
@@ -40,6 +41,12 @@ public interface ActivityMapper {
 	
 	@SelectProvider(type=GetActivities.class,method="getActivityCount")
 	long getActivityCount(@Param("status")int status);
+	
+	@SelectProvider(type=GetActivities.class,method="getRecord")
+	List<ActivityRecord> getRecord(@Param("start")int start,@Param("limit")int limit,@Param("activityId")int activityId);
+	
+	@SelectProvider(type=GetActivities.class,method="getRecordCount")
+	long getRecordCount(@Param("activityId")int activityId);
 	 
 	 class GetActivities{
 		 public String getActivityList(Map<String, Object> para){
@@ -71,6 +78,28 @@ public interface ActivityMapper {
 				 }else{//当前有效
 					 sb.append(" and status=1 and dateBegin<=now() and dateEnd>= now() ");
 				 }
+				 
+			 }
+			 return sb.toString();
+		 }
+		 
+		 public String getRecord(Map<String, Object> para){
+			 StringBuilder sb = new StringBuilder("select a.*,b.name as activityName from ActivityRecord a left join Activity b on a.activityId = b.id where a.id!=0");
+			 int activityId = (Integer)para.get("activityId");
+			 if(activityId != 0){
+				 sb.append(" and a.activityId=").append(activityId);
+				 
+			 }
+			 sb.append(" order by a.id desc ");
+			 sb.append(" limit ").append(para.get("start")).append(",").append((Integer)para.get("limit"));
+			 return sb.toString();
+		 }
+		 
+		 public String getRecordCount(Map<String, Object> para){
+			 StringBuilder sb = new StringBuilder("select count(id) from ActivityRecord where id!=0");
+			 int activityId = (Integer)para.get("activityId");
+			 if(activityId != 0){
+				 sb.append(" and activityId=").append(activityId);
 				 
 			 }
 			 return sb.toString();

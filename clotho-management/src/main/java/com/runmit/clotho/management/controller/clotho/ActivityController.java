@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runmit.clotho.core.domain.activity.Activity;
 import com.runmit.clotho.core.domain.activity.ActivityGift;
+import com.runmit.clotho.core.domain.activity.ActivityRecord;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.ActivityService;
@@ -116,5 +117,20 @@ public class ActivityController {
 		}
 		LOGGER.info("delGift");
 		return entity;
+	}
+	
+	@RequestMapping(value = "/recordlist.do")
+	public @ResponseBody ExtEntity<ActivityRecord> getRecord(
+			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
+            @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit,
+            @RequestParam(value = "activityId", required = false,defaultValue="0") Integer activityId) {
+		
+		ExtEntity<ActivityRecord> listdata = new ExtEntity<ActivityRecord>();
+		List<ActivityRecord> list = this.activityService.getRecord(start, limit, activityId);
+		listdata.setRows(list);
+		listdata.setResult(activityService.getRecordCount(activityId));
+		
+		LOGGER.info("getRecord");
+		return listdata;
 	}
 }

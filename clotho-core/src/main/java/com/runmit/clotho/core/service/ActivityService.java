@@ -10,6 +10,7 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.domain.activity.Activity;
 import com.runmit.clotho.core.domain.activity.ActivityGift;
+import com.runmit.clotho.core.domain.activity.ActivityRecord;
 import com.runmit.clotho.core.mapper.ActivityMapper;
 import com.runmit.clotho.core.util.DateUtils;
 import com.runmit.clotho.log.domain.OpLog.OpType;
@@ -35,6 +36,14 @@ public class ActivityService {
 	
 	public long getActivityCount(int status){
 		return this.activityMapper.getActivityCount(status);
+	}
+	
+	public List<ActivityRecord> getRecord(int start,int limit,int activityId){
+		return this.activityMapper.getRecord(start, limit, activityId);
+	}
+	
+	public long getRecordCount(int activityId){
+		return this.activityMapper.getRecordCount(activityId);
 	}
 	
 	@Transactional(readOnly=false)
