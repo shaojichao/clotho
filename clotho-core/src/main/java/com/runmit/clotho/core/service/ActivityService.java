@@ -38,6 +38,10 @@ public class ActivityService {
 		return this.activityMapper.getActivityCount(status);
 	}
 	
+	public Activity getActiveActivityById(int id){
+		return this.activityMapper.getActiveActivityById(id);
+	}
+	
 	public List<ActivityRecord> getRecord(int start,int limit,int activityId){
 		return this.activityMapper.getRecord(start, limit, activityId);
 	}
@@ -78,5 +82,14 @@ public class ActivityService {
 	public void saveGift(ActivityGift gift){
 		this.activityMapper.saveGift(gift);
 		this.opLogService.saveObj(gift, OpType.INSERT, "activity-gift", "clotho", gift.getAdminName());
+	}
+	
+	public long getRecordCountByUid(int activityId,int uid){
+		return this.activityMapper.getRecordCountByUid(activityId, uid);
+	}
+	
+	@Transactional(readOnly=false)
+	public void saveActivityRecord(ActivityRecord record){
+		this.activityMapper.saveActivityRecord(record);
 	}
 }

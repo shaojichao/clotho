@@ -36,6 +36,9 @@ public interface ActivityMapper {
 	@Select("select * from Activity where id=#{id}")
 	Activity getActivityById(@Param("id")int id);
 	
+	@Select("select * from Activity where id=#{id} and (dateBegin is null or dateBegin<=now()) and (dateEnd is null or dateEnd>= now())")
+	Activity getActiveActivityById(@Param("id")int id);
+	
 	@SelectProvider(type=GetActivities.class,method="getActivityList")
 	List<Activity> getActivityList(@Param("start")int start,@Param("limit")int limit,@Param("status")int status);
 	
@@ -118,4 +121,11 @@ public interface ActivityMapper {
 	
 	@Select("select * from ActivityGift where id=#{id}")
 	ActivityGift getActivityGift(@Param("id")int id);
+	
+	@Select("select count(id) from ActivityRecord where activityId=#{activityId} and uid=#{uid}")
+	long getRecordCountByUid(@Param("activityId")int activityId,@Param("uid")int uid);
+	
+	@Insert("insert into ActivityRecord (activityId,uid,username)"
+			+ " values (#{activityId},#{uid},#{username})")
+	void saveActivityRecord(ActivityRecord record);
 }

@@ -20,4 +20,14 @@ public class CommonResp {
 
 	@ApiModelProperty(value = "状态返回参数", notes = "调用接口的返回状态,特殊状态请参考各接口中的说明,公共状态:0-成功", required = true, dataType = "String")
     private String rtn;
+	
+	private String rtmsg;
+
+	public String getRtmsg() {
+		return rtmsg;
+	}
+
+	public void setRtmsg(String rtmsg) {
+		this.rtmsg = rtmsg;
+	}
 }

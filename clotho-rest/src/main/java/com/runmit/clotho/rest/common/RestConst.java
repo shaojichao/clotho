@@ -21,4 +21,11 @@ public class RestConst {
     public final static String RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST = "1";//传入版本不存在
     public final static String RTN_GETUPGRADE_CLIENTIDGETVERSION_NOTEXIST="2";//clientid无对应最新版本信息
     public final static String RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST = "3";//关联版本无法找到基础版本信息
+    
+    /*
+     * 活动管理
+     */
+    public final static String RTN_ACTIVITY_NOTEXIST = "1";
+    public final static String RTN_ACTIVITY_HADJOINED = "2";
+    public final static String RTN_ACTIVITY_NOTENOUGHSCORE = "3";
 }
