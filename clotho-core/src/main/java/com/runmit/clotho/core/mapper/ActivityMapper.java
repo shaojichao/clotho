@@ -58,7 +58,7 @@ public interface ActivityMapper {
 				 }else if(status == 1){//有效
 					 sb.append(" and status=1 ");
 				 }else{//当前有效
-					 sb.append(" and status=1 and dateBegin<=now() and dateEnd>= now() ");
+					 sb.append(" and status=1 and (dateBegin is null or dateBegin<=now()) and (dateEnd is null or dateEnd>= now()) ");
 				 }
 				 
 			 }
@@ -76,7 +76,7 @@ public interface ActivityMapper {
 				 }else if(status == 1){//有效
 					 sb.append(" and status=1 ");
 				 }else{//当前有效
-					 sb.append(" and status=1 and dateBegin<=now() and dateEnd>= now() ");
+					 sb.append(" and status=1 and (dateBegin is null or dateBegin<=now()) and (dateEnd is null or dateEnd>= now()) ");
 				 }
 				 
 			 }
