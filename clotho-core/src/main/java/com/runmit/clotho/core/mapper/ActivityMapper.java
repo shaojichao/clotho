@@ -23,13 +23,13 @@ import com.runmit.clotho.core.domain.activity.ActivityRecord;
 
 public interface ActivityMapper {
 	
-	@Insert("INSERT INTO Activity (`name`,`content`,`status`,`dateBegin`,`dateEnd`,`timeLimit`,`scoreLimit`,`createby`) "
-			+ "values (#{name},#{content},#{status},#{dateBegin},#{dateEnd},#{timeLimit},#{scoreLimit},#{createby})")
+	@Insert("INSERT INTO Activity (`name`,`content`,`status`,`dateBegin`,`dateEnd`,`timeLimit`,`scoreLimit`,`createby`,`channel`) "
+			+ "values (#{name},#{content},#{status},#{dateBegin},#{dateEnd},#{timeLimit},#{scoreLimit},#{createby},#{channel})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void saveActivity(Activity activity);
 	
 	@Update("update Activity set name=#{name},content=#{content},status=#{status},dateBegin=#{dateBegin},dateEnd=#{dateEnd},"
-			+ "timeLimit=#{timeLimit},scoreLimit=#{scoreLimit},updateby=#{updateby},updatetime=now() where id=#{id}")
+			+ "timeLimit=#{timeLimit},scoreLimit=#{scoreLimit},updateby=#{updateby},updatetime=now(),channel=#{channel} where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void updateActivity(Activity activity);
 	

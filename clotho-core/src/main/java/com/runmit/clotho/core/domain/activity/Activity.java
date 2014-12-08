@@ -25,6 +25,13 @@ public class Activity extends BaseDomain implements Serializable{
 	private String dateBeginStr;
 	private Date dateEnd;
 	private String dateEndStr;
+	private String channel;
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
 	public String getDateBeginStr() {
 		return dateBeginStr;
 	}

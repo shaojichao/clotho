@@ -59,6 +59,14 @@ public class ActivityController {
 			activity.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try{
+			String channel = activity.getChannel();
+			if(!channel.endsWith(",")){
+				channel = channel+",";
+			}
+			if(!channel.startsWith(",")){
+				channel = ","+channel;
+			}
+			activity.setChannel(channel);
 			this.activityService.saveOrUpdateAcitivity(activity);;
 			
 			entity.setMsg("succeed");
