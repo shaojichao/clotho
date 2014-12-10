@@ -51,3 +51,5 @@ dubbo.monitor=dubbo://192.168.20.176:7070/com.alibaba.dubbo.monitor.MonitorServi
 #2014-12-10#zhipeng.tian#*/application.properties
 rest.service.timeout=11000
 rest.service.connectionTimeout=5000
+rest.service.maxTotal=500
+rest.service.defaultMaxPerRoute=500

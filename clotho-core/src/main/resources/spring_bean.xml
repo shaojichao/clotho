@@ -22,6 +22,14 @@
 
     <context:component-scan base-package="com.runmit.clotho.core" />
     
+    <bean id="httpClient" class="org.apache.http.impl.client.MinimalHttpClient">
+        <constructor-arg>
+            <bean class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+                <property name="maxTotal" value="${rest.service.maxTotal}" />
+                <property name="defaultMaxPerRoute" value="${rest.service.defaultMaxPerRoute}" />
+            </bean>
+        </constructor-arg>
+    </bean>
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">  
         <property name="requestFactory">  
             <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">  
@@ -38,9 +46,4 @@
             </list>
         </property>  -->
     </bean>  
-    <bean id="httpClient" class="org.apache.http.impl.client.MinimalHttpClient">
-        <constructor-arg>
-            <bean class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager"/>
-        </constructor-arg>
-    </bean>
 </beans>
