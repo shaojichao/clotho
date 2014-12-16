@@ -30,6 +30,8 @@ public class ActivityController {
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(ActivityController.class);
 
+	private final static int ACTIVITY_ACTIVE = 3;
+	
     @Autowired
     private ActivityService activityService;
     
@@ -41,7 +43,7 @@ public class ActivityController {
 		ExtEntity<Activity> listdata = new ExtEntity<Activity>();
 		List<Activity> list = this.activityService.getActivityList(start, limit, 3);
 		listdata.setRows(list);
-		listdata.setResult(activityService.getActivityCount(3));
+		listdata.setResult(activityService.getActivityCount(ACTIVITY_ACTIVE));
 		
 		LOGGER.info("getActivities");
 		return listdata;
