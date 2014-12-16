@@ -33,7 +33,7 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
     
-    @RequestMapping(value = "/list.do")
+    @RequestMapping(value = "/list")
 	public @ResponseBody ExtEntity<Activity> getActivities(
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
             @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit) {
@@ -47,7 +47,7 @@ public class ActivityController {
 		return listdata;
 	}
     
-    @RequestMapping(value = "/join.do")
+    @RequestMapping(value = "/join")
 	public ResponseEntity<CommonResp> joinActivity(@RequestParam("activityId") Integer activityId,
 			@RequestParam("userId") Integer userId) {
     	CommonResp cr=new CommonResp();
