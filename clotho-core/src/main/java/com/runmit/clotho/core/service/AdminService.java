@@ -52,9 +52,14 @@ public class AdminService {
     }
 	
 	@Transactional(readOnly=false)
-	public void saveAdmin(Admin admin){
+	public boolean saveAdmin(Admin admin){
+		Admin adm = getAdminByUid(admin.getUid());
+		if(null != adm){
+			return false;
+		}
 		this.adminMapper.addAdmin(admin);
 		opLogService.saveObj(admin, OpType.INSERT, "admin", "clotho", admin.getCreateby());
+		return true;
 	}
 	
 	@Transactional(readOnly=false)

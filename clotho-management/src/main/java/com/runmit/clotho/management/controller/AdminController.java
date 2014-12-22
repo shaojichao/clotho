@@ -86,9 +86,14 @@ public class AdminController {
 			Admin admin = new Admin();
 			admin.setUid(uid);
 			admin.setCreateby(SessionUtil.getLoginAdminName(request));
-			this.adminService.saveAdmin(admin);
-			result.setMsg("succeed");
-			result.setSuccess(true);
+			boolean addResult = this.adminService.saveAdmin(admin);
+			if(!addResult){
+				result.setMsg("已经添加过该账号");
+				result.setSuccess(false);
+			}else{
+				result.setMsg("succeed");
+				result.setSuccess(true);
+			}
 		}catch(Exception ex){
 			LOGGER.error("save admin error",ex);
 			result.setMsg("保存失败");
