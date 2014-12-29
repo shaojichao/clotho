@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.service.LogService;
 import com.runmit.clotho.log.domain.OpLog;
 import com.runmit.clotho.log.domain.OpLog.OpType;
-import com.runmit.clotho.log.service.OpLogService;
 
 /**
  * @author zhipeng.tian

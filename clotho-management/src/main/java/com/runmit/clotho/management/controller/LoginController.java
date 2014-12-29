@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.common.json.JSONObject;
 import com.google.gson.Gson;
 import com.runmit.clotho.core.domain.admin.Admin;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
