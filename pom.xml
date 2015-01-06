@@ -79,6 +79,7 @@
         <hibernate-validator>5.1.2.Final</hibernate-validator>
         <swagger.version>0.3.3</swagger.version>
         <javax.mail>1.4.7</javax.mail>
+        <fastjson.version>1.2.3</fastjson.version>
         
         <dubbo_version>2.5.3</dubbo_version>
 		<skip_maven_deploy>true</skip_maven_deploy>
@@ -632,6 +633,11 @@
                 <artifactId>mybatis-memcached</artifactId>
                 <version>${mybatis-memcached}</version>
             </dependency>
+            <dependency>
+			    <groupId>com.alibaba</groupId>
+			    <artifactId>fastjson</artifactId>
+			    <version>${fastjson.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
     
