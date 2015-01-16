@@ -18,9 +18,9 @@ import com.runmit.clotho.core.domain.upgrade.Version;
 public interface VersionMapper {
 
 
-    @Select("SELECT * FROM UpgradePlan where originid=(select serialno from Version where version=#{version}) order by upgradeid desc limit 1 ")
+    @Select("SELECT * FROM UpgradePlan where originid=(select serialno from Version where version=#{version}) and clientId=#{clientId} order by upgradeid desc limit 1 ")
     @Options(useCache = true, flushCache = false)
-    UpgradePlan getUpgradePlanbyversion(@Param("version") String version);
+    UpgradePlan getUpgradePlanbyversion(@Param("version") String version,@Param("clientId") int clientId);
     
     @Select("SELECT * FROM UpgradePlan where id=#{id}")
     UpgradePlan getUpgradePlabById(@Param("id")int id);
@@ -48,9 +48,9 @@ public interface VersionMapper {
     @Options(useCache = true, flushCache = false)
     long getCount();
 
-    @Select("SELECT * FROM Version WHERE version=#{version}")
+    @Select("SELECT * FROM Version WHERE version=#{version} and clientId=#{clientId}")
     @Options(useCache = true, flushCache = false)
-    Version getbyversion(@Param("version") String version);
+    Version getbyversion(@Param("version") String version,@Param("clientId") int clientId);
 
     @Select("SELECT * FROM Version WHERE serialno=#{serialno}")
     @Options(useCache = true, flushCache = false)

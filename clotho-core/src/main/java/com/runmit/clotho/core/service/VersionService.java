@@ -48,14 +48,14 @@ public class VersionService {
     }
 
     @Transactional(readOnly = true)
-    public Version getbyversion(String version) {
-        return versionMapper.getbyversion(version);
+    public Version getbyversion(String version,int clientId) {
+        return versionMapper.getbyversion(version,clientId);
     }
 
     @Transactional(readOnly = true)
 //    @Cacheable(value="defaultCache", key="#root.targetClass.simpleName+'_'+#devicesn")
-    public UpgradePlan getUpgradePlanbyversion(String version) {
-        return versionMapper.getUpgradePlanbyversion(version);
+    public UpgradePlan getUpgradePlanbyversion(String version,int clientId) {
+        return versionMapper.getUpgradePlanbyversion(version,clientId);
     }
     
     @Transactional(readOnly = true)
@@ -100,7 +100,7 @@ public class VersionService {
 
     @Transactional(readOnly = false)
     public int savePlan(UpgradePlan plan){
-    	Version version = this.versionMapper.getbyversion(plan.getVersion());
+    	Version version = this.versionMapper.getbyversion(plan.getVersion(),plan.getClientid());
     	if(null==version){
     		return -1;
     	}

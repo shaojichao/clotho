@@ -68,13 +68,13 @@ public class UpgradeController {
             LOGGER.error("getupgrade request error,clientid is not int"+e);
             return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
         }
-        Version currentversion=versionService.getbyversion(upgrade.getVersion());
+        Version currentversion=versionService.getbyversion(upgrade.getVersion(),clientid);
         if(currentversion==null){
             LOGGER.error("getupgrade request error,current version is not exists:"+upgrade.getVersion());
             ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }
-        UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion());
+        UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion(),clientid);
         if(upgradePlan==null){
 //            无对应关联升级版本,查找clientid对应的最新版本
             Version lastestversion=versionService.getLastestbyclientid(clientid);
