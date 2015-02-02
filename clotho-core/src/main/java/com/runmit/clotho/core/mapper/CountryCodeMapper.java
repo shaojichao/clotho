@@ -2,6 +2,7 @@ package com.runmit.clotho.core.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +18,7 @@ import com.runmit.clotho.core.domain.CountryCode;
  */
 public interface CountryCodeMapper {
 	@Insert("INSERT INTO CountryCode (`name`,`countrycode`,`locale`,`language`,`createby`) "
-			+ "values (#{country},#{code},#{createby})")
+			+ "values (#{name},#{countrycode},#{locale},#{language},#{createby})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void saveCountryCode(CountryCode countryCode);
 	
@@ -30,4 +31,8 @@ public interface CountryCodeMapper {
 	
 	@Select("select * from CountryCode where id=#{id}")
 	CountryCode getCountryCode(@Param("id") int id);
+	
+	@Delete("delete from CountryCode where id=#{id}")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+	void delete(@Param("id") int id);
 }

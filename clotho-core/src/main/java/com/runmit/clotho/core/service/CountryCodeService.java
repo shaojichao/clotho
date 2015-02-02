@@ -31,8 +31,8 @@ public class CountryCodeService {
     }
     
     @Transactional(readOnly = false)
-    void save(CountryCode code){
-    	if(code.getId()==null||code.getId()!=0){
+    public void save(CountryCode code){
+    	if(code.getId()==null||code.getId()==0){
     		this.codeMapper.saveCountryCode(code);
     		this.opLogService.saveObj(code, OpType.INSERT, "countryCode", "clotho", code.getCreateby());
     	}else{
@@ -40,6 +40,13 @@ public class CountryCodeService {
     		this.codeMapper.updateCountryCode(code);
     		this.opLogService.updateObj(temp, code, OpType.UPDATE, "countryCode", "clotho", code.getUpdateby());
     	}
+    }
+    
+    @Transactional(readOnly = false)
+    public void delete(int id,String oper){
+    	CountryCode temp = this.codeMapper.getCountryCode(id);
+    	this.opLogService.saveObj(temp, OpType.DELETE, "countryCode", "clotho", oper);
+    	this.codeMapper.delete(id);
     }
     
 }
