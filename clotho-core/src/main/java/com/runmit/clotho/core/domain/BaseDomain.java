@@ -1,5 +1,6 @@
 package com.runmit.clotho.core.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,8 +8,12 @@ import java.util.Date;
  * 
  * 2014年10月20日
  */
-public class BaseDomain{
+public class BaseDomain implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3785806847115489293L;
 	private Integer id;
 	private Date createtime;
 	private String createby;

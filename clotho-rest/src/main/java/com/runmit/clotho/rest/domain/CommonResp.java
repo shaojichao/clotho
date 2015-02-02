@@ -30,4 +30,6 @@ public class CommonResp {
 	public void setRtmsg(String rtmsg) {
 		this.rtmsg = rtmsg;
 	}
+	
+	private Object data;
 }
