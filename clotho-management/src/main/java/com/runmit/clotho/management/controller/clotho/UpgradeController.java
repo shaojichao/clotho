@@ -47,10 +47,11 @@ public class UpgradeController {
 	public @ResponseBody ExtEntity<Version> getVersions(
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
             @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit,
+            @RequestParam(value = "se_clientId", required = false,defaultValue="1") Integer clientid,
             HttpServletRequest request) {
 		ExtEntity<Version> listdata = new ExtEntity<Version>();
 		
-		List<Version> list = versionService.getList(start, limit);
+		List<Version> list = versionService.getList(start, limit, clientid);
 		
 		listdata.setRows(list);
 		listdata.setResult(versionService.getCount());
@@ -115,10 +116,10 @@ public class UpgradeController {
 	}
 	
 	@RequestMapping(value = "/planlist.do")
-	public @ResponseBody ExtEntity<UpgradePlan> getPlans(@RequestParam("version")String version,HttpServletRequest request) {
+	public @ResponseBody ExtEntity<UpgradePlan> getPlans(@RequestParam("version")String version,@RequestParam("clientid")int clientid,HttpServletRequest request) {
 		ExtEntity<UpgradePlan> listdata = new ExtEntity<UpgradePlan>();
 		
-		List<UpgradePlan> list = versionService.getUpgradePlans(version);
+		List<UpgradePlan> list = versionService.getUpgradePlans(version,clientid);
 		
 		listdata.setRows(list);
 		listdata.setResult(list.size());

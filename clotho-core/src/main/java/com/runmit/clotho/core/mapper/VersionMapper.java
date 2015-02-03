@@ -18,7 +18,7 @@ import com.runmit.clotho.core.domain.upgrade.Version;
 public interface VersionMapper {
 
 
-    @Select("SELECT * FROM UpgradePlan where originid=(select serialno from Version where version=#{version}) and clientId=#{clientId} order by upgradeid desc limit 1 ")
+    @Select("SELECT * FROM UpgradePlan where (originid='' or originid LIKE CONCAT('%,',(SELECT serialno FROM Version WHERE version=#{version} AND clientId=#{clientId}),',%')) and clientId=#{clientId} order by upgradeid desc limit 1 ")
     @Options(useCache = true, flushCache = false)
     UpgradePlan getUpgradePlanbyversion(@Param("version") String version,@Param("clientId") int clientId);
     
@@ -31,26 +31,26 @@ public interface VersionMapper {
     UpgradePlan getUpgradePlan(@Param("originid") String originid,@Param("upgradeid") String upgradeid);
     
     @Select("SELECT UpgradePlan.*,version FROM UpgradePlan left join Version on originid = serialno "
-    		+ "where upgradeid=(select serialno from Version where version=#{version}) "
+    		+ "where upgradeid=(select serialno from Version where version=#{version} and clientid=#{clientid}) "
     		+ "order by upgradeid desc")
     @Options(useCache = true, flushCache = false)
-    List<UpgradePlan> getUpgradePlans(@Param("version") String version);
+    List<UpgradePlan> getUpgradePlans(@Param("version") String version,@Param("clientid") int clientid);
 
     @Select("SELECT * FROM Version WHERE id=#{id}")
     @Options(useCache = true, flushCache = false)
     Version getbyid(@Param("id") int id);
     
-    @Select("SELECT * FROM Version ORDER BY id DESC LIMIT #{start},#{limit}")
+    @Select("SELECT ver.*,cli.name as clientname FROM Version ver left join Client cli on ver.clientid = cli.clientId where ver.clientid=#{clientid} ORDER BY ver.id DESC LIMIT #{start},#{limit}")
     @Options(useCache = true, flushCache = false)
-    List<Version> getList(@Param("start")int start,@Param("limit")int limit);
+    List<Version> getList(@Param("start")int start,@Param("limit")int limit,@Param("clientid")int clientid);
     
     @Select("SELECT count(id) FROM Version")
     @Options(useCache = true, flushCache = false)
     long getCount();
 
-    @Select("SELECT * FROM Version WHERE version=#{version} and clientId=#{clientId}")
+    @Select("SELECT * FROM Version WHERE version=#{version} and clientid=#{clientid}")
     @Options(useCache = true, flushCache = false)
-    Version getbyversion(@Param("version") String version,@Param("clientId") int clientId);
+    Version getbyversion(@Param("version") String version,@Param("clientid") int clientid);
 
     @Select("SELECT * FROM Version WHERE serialno=#{serialno}")
     @Options(useCache = true, flushCache = false)
@@ -79,12 +79,12 @@ public interface VersionMapper {
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void delPlan(@Param("id") int id);
     
-    @Insert("INSERT INTO UpgradePlan (`originid`,`upgradeid`,`memo`,`clientid`,`showtype`,`upgradetype`,`createby`) "
-            + "VALUES (#{originid},#{upgradeid},#{memo},#{clientid},#{showtype},#{upgradetype},#{createby})")
+    @Insert("INSERT INTO UpgradePlan (`originid`,`versions`,`upgradeid`,`memo`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+            + "VALUES (#{originid},#{versions},#{upgradeid},#{memo},#{clientid},#{showtype},#{upgradetype},#{createby})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addPlan(UpgradePlan plan);
     
-    @Insert("UPDATE UpgradePlan SET `originid`=#{originid},`memo`=#{memo},"
+    @Insert("UPDATE UpgradePlan SET `originid`=#{originid},`versions`=#{versions},`memo`=#{memo},"
     		+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
     		+ " where `id`=#{id}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")

@@ -75,8 +75,10 @@ public class UpgradeController {
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }
         UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion(),clientid);
-        if(upgradePlan==null){
-//            无对应关联升级版本,查找clientid对应的最新版本
+        if(upgradePlan==null){//无对应关联升级版本,不升级
+        	ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+        	return new ResponseEntity<>(ur, HttpStatus.OK);
+/*//            无对应关联升级版本,查找clientid对应的最新版本
             Version lastestversion=versionService.getLastestbyclientid(clientid);
             if(lastestversion==null){
                 LOGGER.error("getupgrade request error,clientid get lastestversion is not exists:"+upgrade.getVersion());
@@ -95,7 +97,7 @@ public class UpgradeController {
                 LOGGER.debug("getupgrade request error,current version is lastest:" + upgrade.getVersion());
                 ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
             }
-            return new ResponseEntity<>(ur, HttpStatus.OK);
+            return new ResponseEntity<>(ur, HttpStatus.OK);*/
         }else{
             Version lastestversion=versionService.getbyserialno(upgradePlan.getUpgradeid());
             if(lastestversion==null){
