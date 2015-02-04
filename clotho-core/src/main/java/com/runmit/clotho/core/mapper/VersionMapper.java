@@ -64,12 +64,12 @@ public interface VersionMapper {
 	@Options(useCache = true, flushCache = false)
 	Version getLastestbyclientid(@Param("clientid") int clientid);
 
-	@Insert("INSERT INTO Version (`version`,`serialno`,`memo`,`pkgurl`,`clientid`,`showtype`,`upgradetype`,`createby`) "
-			+ "VALUES (#{version},#{serialno},#{memo},#{pkgurl},#{clientid},#{showtype},#{upgradetype},#{createby})")
+	@Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+			+ "VALUES (#{version},#{serialno},#{pkgurl},#{clientid},#{showtype},#{upgradetype},#{createby})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addVersion(Version version);
 
-	@Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`memo`=#{memo},`pkgurl`=#{pkgurl},"
+	@Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},"
 			+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
 			+ " where `id`=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
@@ -83,12 +83,12 @@ public interface VersionMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delPlan(@Param("id") int id);
 
-	@Insert("INSERT INTO UpgradePlan (`originid`,`versions`,`upgradeid`,`memo`,`clientid`,`showtype`,`upgradetype`,`createby`) "
-			+ "VALUES (#{originid},#{versions},#{upgradeid},#{memo},#{clientid},#{showtype},#{upgradetype},#{createby})")
+	@Insert("INSERT INTO UpgradePlan (`originid`,`versions`,`upgradeid`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+			+ "VALUES (#{originid},#{versions},#{upgradeid},#{clientid},#{showtype},#{upgradetype},#{createby})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addPlan(UpgradePlan plan);
 
-	@Insert("UPDATE UpgradePlan SET `originid`=#{originid},`versions`=#{versions},`memo`=#{memo},"
+	@Insert("UPDATE UpgradePlan SET `originid`=#{originid},`versions`=#{versions},"
 			+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
 			+ " where `id`=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
