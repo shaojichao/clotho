@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
@@ -54,7 +55,7 @@ public class UpgradeController {
 		List<Version> list = versionService.getList(start, limit, clientid);
 		
 		listdata.setRows(list);
-		listdata.setResult(versionService.getCount());
+		listdata.setResult(versionService.getCount(clientid));
 		
 		LOGGER.info("getVersions");
 		return listdata;
@@ -168,12 +169,71 @@ public class UpgradeController {
 				entity.setSuccess(true);
 			}
 		}catch(Exception ex){
-			LOGGER.error("saveVersion error",ex);
+			LOGGER.error("savePlan error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
 		
-		LOGGER.info("saveVersion");
+		LOGGER.info("savePlan");
+		return entity;
+	}
+	
+	@RequestMapping(value = "/memolist.do")
+	public @ResponseBody ExtEntity<UpgradePlanMemo> getMemos(@RequestParam("planid")int planid,HttpServletRequest request) {
+		ExtEntity<UpgradePlanMemo> listdata = new ExtEntity<UpgradePlanMemo>();
+		
+		List<UpgradePlanMemo> list = versionService.getMemos(planid);
+		
+		listdata.setRows(list);
+		listdata.setResult(list.size());
+		
+		LOGGER.info("getPlanMemos");
+		return listdata;
+	}
+	
+	@RequestMapping(value = "/delMemo.do")
+	public @ResponseBody ExtStatusEntity delMemo(@RequestParam("id")int id,HttpServletRequest request) {
+		ExtStatusEntity entity = new ExtStatusEntity();
+		try{
+			this.versionService.delPlanMemo(id,SessionUtil.getLoginAdminName(request));
+			
+			entity.setMsg("succeed");
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			LOGGER.error("delPlanMemo error",ex);
+			entity.setMsg("删除失败");
+			entity.setSuccess(false);
+		}
+		
+		LOGGER.info("delPlanMemo");
+		return entity;
+	}
+	
+	@RequestMapping(value = "/saveMemo.do",method=RequestMethod.POST)
+	public @ResponseBody ExtStatusEntity saveMemo(UpgradePlanMemo memo,HttpServletRequest request) {
+		ExtStatusEntity entity = new ExtStatusEntity();
+		
+		if(memo.getId()==null||memo.getId()==0){
+			memo.setCreateby(SessionUtil.getLoginAdminName(request));
+		}else{
+			memo.setUpdateby(SessionUtil.getLoginAdminName(request));
+		}
+		try{
+			int result = this.versionService.savePlanMemo(memo);
+			if(result == -1){
+				entity.setMsg("该语言已经添加过");
+				entity.setSuccess(false);
+			}else{
+				entity.setMsg("操作成功");
+				entity.setSuccess(true);
+			}
+		}catch(Exception ex){
+			LOGGER.error("saveMemo error",ex);
+			entity.setMsg("保存失败");
+			entity.setSuccess(false);
+		}
+		
+		LOGGER.info("saveMemo");
 		return entity;
 	}
 }

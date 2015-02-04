@@ -80,4 +80,14 @@ public class CountryCodeController {
 		}
 		return entity;
 	}
+	
+	@RequestMapping(value = "/languages.do")
+	public @ResponseBody ExtEntity<CountryCode> getLanguages() {
+		
+		List<CountryCode> list = this.codeService.getLanguages();
+		ExtEntity<CountryCode> entity = new ExtEntity<CountryCode>();
+		entity.setResult(list.size());
+		entity.setRows(list);
+		return entity;
+	}
 }

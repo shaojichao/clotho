@@ -49,4 +49,9 @@ public class CountryCodeService {
     	this.codeMapper.delete(id);
     }
     
+    @Transactional(readOnly = true)
+    public List<CountryCode> getLanguages(){
+    	return codeMapper.getLanguages();
+    }
+    
 }

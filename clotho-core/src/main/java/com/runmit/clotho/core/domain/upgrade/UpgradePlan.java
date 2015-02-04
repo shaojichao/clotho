@@ -20,7 +20,6 @@ public class UpgradePlan implements Serializable {
     private String originid;
     private String upgradeid;
     private Integer clientid;
-    private String memo;
     private Integer showtype;
     private Integer upgradetype;
     private String createby;

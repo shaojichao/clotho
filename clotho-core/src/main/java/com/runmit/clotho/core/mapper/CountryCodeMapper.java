@@ -35,4 +35,7 @@ public interface CountryCodeMapper {
 	@Delete("delete from CountryCode where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delete(@Param("id") int id);
+	
+	@Select("select distinct language from CountryCode")
+	List<CountryCode> getLanguages();
 }

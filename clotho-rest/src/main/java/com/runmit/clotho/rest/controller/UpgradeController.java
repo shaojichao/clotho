@@ -1,16 +1,5 @@
 package com.runmit.clotho.rest.controller;
 
-import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
-import com.runmit.clotho.core.domain.upgrade.Version;
-import com.runmit.clotho.core.service.VersionService;
-import com.runmit.clotho.rest.common.RestConst;
-import com.runmit.clotho.rest.domain.Upgrade;
-import com.runmit.clotho.rest.domain.UpgradeResp;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
-
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
+import com.runmit.clotho.core.domain.upgrade.Version;
+import com.runmit.clotho.core.service.VersionService;
+import com.runmit.clotho.rest.common.RestConst;
+import com.runmit.clotho.rest.domain.Upgrade;
+import com.runmit.clotho.rest.domain.UpgradeResp;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 /**
  * @author XP
@@ -48,15 +48,12 @@ public class UpgradeController {
             @ApiResponse(code=3,message = "关联版本无法找到基础版本信息")
     })
     public ResponseEntity<UpgradeResp> getupgrade(@RequestParam("version") String version,
-                                                  @RequestParam("clientid") String clientidget) {
+                                                  @RequestParam("clientid") String clientidget,
+                                                  @RequestParam(value="lang",required=false,defaultValue="zh") String lang) {
         Upgrade upgrade=new Upgrade();
         upgrade.setClientid(clientidget);
         upgrade.setVersion(version);
         UpgradeResp ur=new UpgradeResp();
-//        if (bindingResult.hasErrors()) {
-//            LOGGER.error("getupgrade request error,request error code:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
-//            return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
-//        }
         int clientid;
         try {
             clientid = Integer.parseInt(upgrade.getClientid());
@@ -78,26 +75,6 @@ public class UpgradeController {
         if(upgradePlan==null){//无对应关联升级版本,不升级
         	ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
         	return new ResponseEntity<>(ur, HttpStatus.OK);
-/*//            无对应关联升级版本,查找clientid对应的最新版本
-            Version lastestversion=versionService.getLastestbyclientid(clientid);
-            if(lastestversion==null){
-                LOGGER.error("getupgrade request error,clientid get lastestversion is not exists:"+upgrade.getVersion());
-                ur.setRtn(RestConst.RTN_GETUPGRADE_CLIENTIDGETVERSION_NOTEXIST);
-                return new ResponseEntity<>(ur, HttpStatus.OK);
-            }
-            if(lastestversion.getSerialno().compareToIgnoreCase(currentversion.getSerialno())>0){
-                ur.setRtn(RestConst.RTN_OK);
-                ur.setIntroduction(lastestversion.getMemo());
-                ur.setNew_version(lastestversion.getVersion());
-                ur.setShow_type(String.valueOf(lastestversion.getShowtype()));
-                ur.setUpgrade_type(String.valueOf(lastestversion.getUpgradetype()));
-                ur.setUpgrade_url(lastestversion.getPkgurl());
-                return new ResponseEntity<>(ur, HttpStatus.OK);
-            }else{
-                LOGGER.debug("getupgrade request error,current version is lastest:" + upgrade.getVersion());
-                ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
-            }
-            return new ResponseEntity<>(ur, HttpStatus.OK);*/
         }else{
             Version lastestversion=versionService.getbyserialno(upgradePlan.getUpgradeid());
             if(lastestversion==null){
@@ -105,12 +82,8 @@ public class UpgradeController {
                 ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
-//            版本升级变更中信息为空,则到基础版本中找版本描述信息
-            if(StringUtils.isBlank(upgradePlan.getMemo())){
-                ur.setIntroduction(lastestversion.getMemo());
-            }else{
-                ur.setIntroduction(upgradePlan.getMemo());
-            }
+            UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), lang);
+            ur.setIntroduction(memo==null?"":memo.getMemo());
             ur.setRtn(RestConst.RTN_OK);
             ur.setShow_type(String.valueOf(upgradePlan.getShowtype()));
             ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));

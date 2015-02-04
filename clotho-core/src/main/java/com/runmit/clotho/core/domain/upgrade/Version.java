@@ -19,7 +19,6 @@ public class Version implements Serializable {
 	private Integer id;
     private String version;
     private String serialno;
-    private String memo;
     private String clientname;
 	private String pkgurl;
     private Integer clientid;//客户端类型

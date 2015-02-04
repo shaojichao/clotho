@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
 import com.runmit.clotho.core.util.DateUtils;
@@ -53,10 +54,13 @@ public class VersionService {
 	}
 
 	@Transactional(readOnly = true)
-	// @Cacheable(value="defaultCache",
-	// key="#root.targetClass.simpleName+'_'+#devicesn")
 	public UpgradePlan getUpgradePlanbyversion(String version, int clientId) {
 		return versionMapper.getUpgradePlanbyversion(version, clientId);
+	}
+	
+	@Transactional(readOnly = true)
+	public UpgradePlanMemo getUpgradePlanMemo(int planid, String lang) {
+		return versionMapper.getMemoByLang(planid, lang);
 	}
 
 	@Transactional(readOnly = true)
@@ -70,8 +74,8 @@ public class VersionService {
 	}
 
 	@Transactional(readOnly = true)
-	public long getCount() {
-		return versionMapper.getCount();
+	public long getCount(int clientid) {
+		return versionMapper.getCount(clientid);
 	}
 
 	@Transactional(readOnly = false)
@@ -140,5 +144,35 @@ public class VersionService {
 					"clotho", plan.getUpdateby());
 		}
 		return 0;
+	}
+	
+	@Transactional(readOnly = false)
+	public void delPlanMemo(int id, String adminName) {
+		opLogService.saveObj(this.versionMapper.getUpgradePlabById(id),
+				OpType.DELETE, "upgrade-plan-memo", "clotho", adminName);
+		this.versionMapper.delPlanMemo(id);
+	}
+	
+	@Transactional(readOnly = false)
+	public int savePlanMemo(UpgradePlanMemo memo){
+		if(memo.getId()==null||memo.getId()==0){
+			if(this.versionMapper.getMemoCount(memo.getPlanid(), memo.getLanguage())>0){
+				return -1;
+			}
+			this.versionMapper.savePlanMemo(memo);
+			opLogService.saveObj(memo, OpType.INSERT, "upgrade-plan-memo", "clotho",
+					memo.getCreateby());
+		}else{
+			UpgradePlanMemo temp = this.versionMapper.getMemo(memo.getId());
+			this.versionMapper.updatePlanMemo(memo);
+			opLogService.updateObj(temp, memo, OpType.UPDATE, "upgrade-plan-memo",
+					"clotho", memo.getUpdateby());
+		}
+		return 0;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<UpgradePlanMemo> getMemos(int planid){
+		return this.versionMapper.getMemos(planid);
 	}
 }
