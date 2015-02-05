@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
@@ -275,8 +276,8 @@ public class UpgradeController {
 	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
 	public @ResponseBody Object cdnback(CDNBackRes back,
 			HttpServletRequest request) {
-		
-		if(back.getStatus()!=0){
+		LOGGER.info((new Gson()).toJson(back));
+		if(back.getStatus()!=0&&back.getStatus()!=5){
 			LOGGER.error("cdn dispatch response error",back.getDesc());
 		}else{
 			Version version = this.versionService.getbyid(back.getTaskId());

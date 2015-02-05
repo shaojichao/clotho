@@ -49,6 +49,7 @@ public class CDNService {
 			json.put("callbackContext", "clotho file dispatch");
 			String result = this.restTemplate.postForObject(url, json,
 					String.class);
+			LOGGER.info(result);
 			JSONObject response = JSONObject.fromObject(result);
 			if (response.getInt("status") == 0) {
 				return 0;
