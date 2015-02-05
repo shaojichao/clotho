@@ -275,14 +275,16 @@ public class UpgradeController {
 	}
 	
 	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
-	public @ResponseBody Object cdnback(CDNBackRes back,
-			HttpServletRequest request) {
-		LOGGER.info((new Gson()).toJson(back));
-		if(back.getStatus()!=0&&back.getStatus()!=5){
-			LOGGER.error("cdn dispatch response error",back.getDesc());
+	public @ResponseBody Object cdnback(HttpServletRequest request) {
+		Integer status = Integer.valueOf(request.getParameter("status"));
+		String filename = request.getParameter("url");
+		Integer taskId = Integer.valueOf(request.getParameter("taskId"));
+		LOGGER.info("status:"+status+",filename:"+filename+",taskId:"+taskId);
+		if(status!=null&&status!=0&&status!=5){
+			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
 		}else{
-			Version version = this.versionService.getbyid(back.getTaskId());
-			version.setPkgurl(back.getUrl());
+			Version version = this.versionService.getbyid(taskId);
+			version.setPkgurl(filename);
 			version.setPkgurl(this.cdnService.getGSLBUrl(version));
 			this.versionService.saveVersion(version);
 		}
