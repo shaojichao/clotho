@@ -50,7 +50,7 @@ public class CDNService {
 			String result = this.restTemplate.postForObject(url, json,
 					String.class);
 			LOGGER.debug(result);
-			return 1;
+			return 0;
 		} catch (Exception ex) {
 			LOGGER.error("cdn dispatch request error", ex);
 			return -1;
