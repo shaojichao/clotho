@@ -1,12 +1,14 @@
 package com.runmit.clotho.management.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.Writer;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +39,7 @@ public class UploadService {
 		try{
 			String result = null;
 	        Writer writer = response.getWriter();
+	        String md5 = "";
 	        if (file.getSize() <= 0) {
 	            writer.write("{'success': false,'msg': 'uploadfailed'}");
 	            writer.close();
@@ -55,6 +58,10 @@ public class UploadService {
 	            
 	            file.transferTo(new File(path + fileName));
 	            
+	            FileInputStream fis = new FileInputStream(new File(path + fileName));
+	            md5 = DigestUtils.md5Hex(fis);
+	            fis.close();
+	            
 	            result = downloadUrl + tempPath + fileName;
 	
 	        } catch (Exception ex) {
@@ -66,7 +73,7 @@ public class UploadService {
 	        }
 	        response.setContentType("text/html; charset=utf-8");
 	    	
-	    	writer.write("{'success': true, 'msg': '" + result + "'}");
+	    	writer.write("{'success': true, 'msg': '" + result + "', 'size': '" + file.getSize() + "', 'md5': '" + md5 + "'}");
 	    	writer.close();
 	    	writer.flush();
 		}catch(Exception ex){
