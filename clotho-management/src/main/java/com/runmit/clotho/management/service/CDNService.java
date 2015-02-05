@@ -47,17 +47,10 @@ public class CDNService {
 			json.put("strategy", 3);
 			json.put("backUrl", backurl);
 			json.put("callbackContext", "clotho file dispatch");
-			LOGGER.debug("cdn request {}",url);
 			String result = this.restTemplate.postForObject(url, json,
 					String.class);
 			LOGGER.debug(result);
-			JSONObject response = JSONObject.fromObject(result);
-			if (response.getInt("status") == 0) {
-				return 0;
-			} else {
-				LOGGER.error("cdn dispatch error", result);
-				return 1;
-			}
+			return 1;
 		} catch (Exception ex) {
 			LOGGER.error("cdn dispatch request error", ex);
 			return -1;

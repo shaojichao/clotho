@@ -9,7 +9,6 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -94,6 +93,7 @@ public class UpgradeController {
 			this.versionService.saveVersion(version);
 			
 			//file dispatch
+			LOGGER.info("size:{},md5:{}",size,md5);
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
 				int res = this.cdnService.dispatchApp(version, md5, size);
 				if(res!=0){
@@ -274,7 +274,7 @@ public class UpgradeController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
 	public @ResponseBody Object cdnback(CDNBackRes back,
 			HttpServletRequest request) {
 		LOGGER.debug((new Gson()).toJson(back));
