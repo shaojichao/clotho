@@ -52,9 +52,10 @@ public class UploadService {
 	        	String tempPath = DateUtils.getDateString(new Date(),"yyyyMMdd")+"/";
 	        	String path = uploadPath+tempPath;
 	            FileUtils.ensureDirExist(path);
+	            String str = file.getOriginalFilename();
 	            
 	            // 将文件名进行改变，以防止覆盖
-	            String fileName = UUID.randomUUID().toString().replace("-", "");
+	            String fileName = UUID.randomUUID().toString().replace("-", "") + str.substring(str.lastIndexOf("."));
 	            
 	            file.transferTo(new File(path + fileName));
 	            
