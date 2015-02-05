@@ -19,7 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class SpringLoginInterceptor extends HandlerInterceptorAdapter{
 	private String mappingURL =".*/.*\\.do" ;
-	private String[] ignoreUrls = {"upload/upload.do"};
+	private String[] ignoreUrls = {"upload/upload.do","upgrade/cdnback.do"};
 	
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(SpringLoginInterceptor.class);

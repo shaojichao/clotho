@@ -277,7 +277,7 @@ public class UpgradeController {
 	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
 	public @ResponseBody Object cdnback(CDNBackRes back,
 			HttpServletRequest request) {
-		LOGGER.debug((new Gson()).toJson(back));
+		LOGGER.info((new Gson()).toJson(back));
 		if(back.getStatus()!=0&&back.getStatus()!=5){
 			LOGGER.error("cdn dispatch response error",back.getDesc());
 		}else{
