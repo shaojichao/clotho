@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.VersionService;
+import com.runmit.clotho.management.domain.CDNBackRes;
 import com.runmit.clotho.management.security.SessionUtil;
 import com.runmit.clotho.management.service.CDNService;
 
@@ -90,7 +93,12 @@ public class UpgradeController {
 			
 			//file dispatch
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
-				this.cdnService.dispatchApp(version, md5, size);
+				int res = this.cdnService.dispatchApp(version, md5, size);
+				if(res!=0){
+					entity.setMsg("cdn分发失败");
+					entity.setSuccess(false);
+					return entity;
+				}
 			}
 			
 			entity.setMsg("succeed");
@@ -263,4 +271,23 @@ public class UpgradeController {
 		LOGGER.info("saveMemo");
 		return entity;
 	}
+	
+	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
+	public @ResponseBody Object cdnback(CDNBackRes back,
+			HttpServletRequest request) {
+		
+		if(back.getStatus()!=0){
+			LOGGER.error("cdn dispatch response error",back.getDesc());
+		}else{
+			Version version = this.versionService.getbyid(back.getTaskId());
+			version.setPkgurl(back.getUrl());
+			version.setPkgurl(this.cdnService.getGSLBUrl(version));
+			this.versionService.saveVersion(version);
+		}
+		JSONObject json = new JSONObject();
+		json.put("status", 0);
+		json.put("desc", "成功");
+		return json;
+	}
+	
 }
