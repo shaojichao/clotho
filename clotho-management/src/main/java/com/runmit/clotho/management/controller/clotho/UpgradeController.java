@@ -1,5 +1,6 @@
 package com.runmit.clotho.management.controller.clotho;
 
+import java.io.BufferedReader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.VersionService;
-import com.runmit.clotho.management.domain.CDNBackRes;
 import com.runmit.clotho.management.security.SessionUtil;
 import com.runmit.clotho.management.service.CDNService;
 
@@ -276,18 +275,30 @@ public class UpgradeController {
 	
 	@RequestMapping(value = "/cdnback.do", method = RequestMethod.POST)
 	public @ResponseBody Object cdnback(HttpServletRequest request) {
-		Integer status = Integer.valueOf(request.getParameter("status"));
-		String filename = request.getParameter("url");
-		Integer taskId = Integer.valueOf(request.getParameter("taskId"));
-		LOGGER.info("status:"+status+",filename:"+filename+",taskId:"+taskId);
-		if(status!=null&&status!=0&&status!=5){
-			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
-		}else{
-			Version version = this.versionService.getbyid(taskId);
-			version.setPkgurl(filename);
-			version.setPkgurl(this.cdnService.getGSLBUrl(version));
-			this.versionService.saveVersion(version);
-		}
+		String line;
+        StringBuilder data = new StringBuilder();
+        try {
+        	BufferedReader in = request.getReader();
+            while ((line = in.readLine()) != null) {
+                data.append(line);
+            } 
+            LOGGER.info(data.toString());
+            JSONObject json = JSONObject.fromObject(data.toString());
+            Integer status = json.getInt("status");
+    		String filename = json.getString("url");
+    		Integer taskId = json.getInt("taskId");
+    		if(status!=0&&status!=5){
+    			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
+    		}else{
+    			Version version = this.versionService.getbyid(taskId);
+    			version.setPkgurl(filename);
+    			version.setPkgurl(this.cdnService.getGSLBUrl(version));
+    			this.versionService.saveVersion(version);
+    		}
+        }catch (Exception e) {
+        	LOGGER.error("cdn back read error",e);
+        } 
+		
 		JSONObject json = new JSONObject();
 		json.put("status", 0);
 		json.put("desc", "成功");
