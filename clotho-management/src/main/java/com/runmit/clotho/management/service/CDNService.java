@@ -66,7 +66,7 @@ public class CDNService {
 		StringBuffer sb = new StringBuffer();
 		sb.append(gslburl).append(version.getPkgurl()).append("?appid=")
 				.append(appid).append("&appkey=").append(appkey)
-				.append("&hwid=").append(hwid).append("kv=1.0&bt=bt&ts=")
+				.append("&hwid=").append(hwid).append("&kv=1.0&bt=bt&ts=")
 				.append(ts).append("&key=").append(key);
 		return sb.toString();
 	}
