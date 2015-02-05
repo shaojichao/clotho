@@ -54,7 +54,7 @@ public class UploadService {
 	            FileUtils.ensureDirExist(path);
 	            
 	            // 将文件名进行改变，以防止覆盖
-	            String fileName = UUID.randomUUID().toString().replace("-", "") + file.getOriginalFilename();
+	            String fileName = UUID.randomUUID().toString().replace("-", "");
 	            
 	            file.transferTo(new File(path + fileName));
 	            
