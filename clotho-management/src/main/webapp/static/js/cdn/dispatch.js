@@ -52,6 +52,7 @@ var geoPop = Ext.create('Ext.window.Window', {
                         data: [
                             ['0', '未知'],
                             ['CN', '中国']
+                            ['TW','台湾']
                         ]
                     }),
                     listeners: {
