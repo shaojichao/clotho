@@ -62,7 +62,7 @@ public class CDNService {
 		String hwid = version.getId() + "";
 		int appid = version.getClientid();
 		String appkey = version.getVersion();
-		String key = DigestUtils.md5DigestAsHex((hwid+version.getPkgurl()+gslbkey+appid+appkey).getBytes());
+		String key = DigestUtils.md5DigestAsHex((hwid+ts+version.getPkgurl()+gslbkey+appid+appkey).getBytes());
 		StringBuffer sb = new StringBuffer();
 		sb.append(gslburl).append(version.getPkgurl()).append("?appid=")
 				.append(appid).append("&appkey=").append(appkey)
