@@ -58,11 +58,11 @@ public class CDNService {
 	}
 
 	public String getGSLBUrl(Version version) {
-		long ts = System.currentTimeMillis() + 3600000 * 24 * 7300;
+		long ts = System.currentTimeMillis() + (long)3600000 * 24 * 7300;
 		String hwid = version.getId() + "";
 		int appid = version.getClientid();
 		String appkey = version.getVersion();
-		String key = DigestUtils.md5DigestAsHex((hwid+ts+version.getPkgurl()+gslbkey+appid+appkey).getBytes());
+		String key = DigestUtils.md5DigestAsHex((hwid+version.getPkgurl()+gslbkey+appid+appkey).getBytes());
 		StringBuffer sb = new StringBuffer();
 		sb.append(gslburl).append(version.getPkgurl()).append("?appid=")
 				.append(appid).append("&appkey=").append(appkey)
@@ -70,4 +70,5 @@ public class CDNService {
 				.append(ts).append("&key=").append(key);
 		return sb.toString();
 	}
+	
 }
