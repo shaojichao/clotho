@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
@@ -283,10 +282,10 @@ public class UpgradeController {
                 data.append(line);
             } 
             LOGGER.info(data.toString());
-            JSONObject json = JSONObject.fromObject(data.toString());
-            Integer status = json.getInt("status");
+            JSONObject json = JSONObject.parseObject(data.toString());
+            Integer status = json.getInteger("status");
     		String filename = json.getString("url");
-    		Integer taskId = json.getInt("taskId");
+    		Integer taskId = json.getInteger("taskId");
     		if(status!=0&&status!=5){
     			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
     		}else{
