@@ -40,9 +40,9 @@ public interface AdminMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addAdmin(Admin admin);
 	
-	@Delete("delete from AdminRoleMember where roleid=#{roleid} AND adminid IN (SELECT id FROM Admin WHERE uid=#{adminName})")
+	@Delete("delete from AdminRoleMember where roleid=#{roleid} AND adminid=#{uid}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "roleid")
-	void delAdminRole(@Param("roleid")int roleid,@Param("adminName")String adminName);
+	void delAdminRole(@Param("roleid")int roleid,@Param("uid")int uid);
 	
 	@Select("select * from AdminRoleMember where roleid=#{roleid}")
 	List<AdminRoleMember> getAdminRoleMember(@Param("roleid")int roleid);
