@@ -21,6 +21,7 @@ public class Version implements Serializable {
     private String serialno;
     private String clientname;
 	private String pkgurl;
+	private long filesize;
     private Integer clientid;//客户端类型
     private Integer showtype;//是否弹出提示:1-不弹出提示,2-弹出提示
     private Integer upgradetype;//依赖升级类型:1-可选升级,2-强制升级

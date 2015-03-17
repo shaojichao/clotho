@@ -89,6 +89,7 @@ public class UpgradeController {
             ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));
             ur.setNew_version(lastestversion.getVersion());
             ur.setUpgrade_url(lastestversion.getPkgurl());
+            ur.setFilesize(lastestversion.getFilesize());
             return new ResponseEntity<>(ur, HttpStatus.OK);
         }
     }

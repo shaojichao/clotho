@@ -64,12 +64,12 @@ public interface VersionMapper {
 	@Options(useCache = true, flushCache = false)
 	Version getLastestbyclientid(@Param("clientid") int clientid);
 
-	@Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`clientid`,`showtype`,`upgradetype`,`createby`) "
-			+ "VALUES (#{version},#{serialno},#{pkgurl},#{clientid},#{showtype},#{upgradetype},#{createby})")
+	@Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`showtype`,`upgradetype`,`createby`) "
+			+ "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{showtype},#{upgradetype},#{createby})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addVersion(Version version);
 
-	@Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},"
+	@Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},`filesize`=#{filesize},"
 			+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
 			+ " where `id`=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")

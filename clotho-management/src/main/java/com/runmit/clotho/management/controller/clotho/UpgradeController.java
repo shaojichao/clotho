@@ -88,6 +88,9 @@ public class UpgradeController {
 			version.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try {
+			if(size!=null&&size!=0){
+				version.setFilesize(size);
+			}
 			this.versionService.saveVersion(version);
 			
 			//file dispatch
