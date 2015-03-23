@@ -46,6 +46,7 @@ public class CDNService {
 			json.put("strategy", 3);
 			json.put("backUrl", backurl);
 			json.put("callbackContext", "clotho file dispatch");
+			LOGGER.debug("dispatchApp params:"+json.toJSONString());
 			String result = this.restTemplate.postForObject(url, json,
 					String.class);
 			LOGGER.info(result);
