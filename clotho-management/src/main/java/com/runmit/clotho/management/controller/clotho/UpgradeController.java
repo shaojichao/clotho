@@ -96,7 +96,14 @@ public class UpgradeController {
 			//file dispatch
 			LOGGER.info("size:{},md5:{}",size,md5);
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
-				int res = this.cdnService.dispatchApp(version, md5, size);
+				int res = -1;
+				int tryTime = 2;
+				for(int i=0;i<tryTime;i++){
+					res = this.cdnService.dispatchApp(version, md5, size);
+					if(res==0){
+						break;
+					}
+				}
 				if(res!=0){
 					entity.setMsg("cdn分发失败");
 					entity.setSuccess(false);
