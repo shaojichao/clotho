@@ -82,6 +82,10 @@ public interface VersionMapper {
 	@Delete("DELETE FROM UpgradePlan WHERE id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delPlan(@Param("id") int id);
+	
+	@Delete("DELETE FROM UpgradePlan WHERE upgradeid=#{upgradeid}")
+	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+	void delPlanByUpgradeid(@Param("upgradeid") String upgradeid);
 
 	@Insert("INSERT INTO UpgradePlan (`originid`,`versions`,`upgradeid`,`clientid`,`showtype`,`upgradetype`,`createby`) "
 			+ "VALUES (#{originid},#{versions},#{upgradeid},#{clientid},#{showtype},#{upgradetype},#{createby})")
