@@ -56,6 +56,18 @@ public interface VersionMapper {
 	Version getbyversion(@Param("version") String version,
 			@Param("clientid") int clientid);
 
+    @Select("<script>SELECT * FROM Version " +
+            "WHERE 1=1 " +
+            "<if test=\"brand != null\"> AND brand = #{brand} </if>" +
+            "<if test=\"model != null\"> AND model = #{model} </if>" +
+            "<if test=\"country != null\"> AND country = #{country} </if>" +
+            "<if test=\"hardwareVersion != null\"> AND hardwareVersion = #{hardwareVersion} </if>" +
+            "<if test=\"firmwareVersion != null\"> AND firmwareVersion = #{firmwareVersion} </if> " +
+            "</script>" )
+    @Options(useCache = true, flushCache = false)
+    Version getOtaVersion(@Param("brand") String brand,@Param("model") String model,@Param("country") String country,
+                         @Param("hardwareVersion") String hardwareVersion,@Param("firmwareVersion") String firmwareVersion);
+
 	@Select("SELECT * FROM Version WHERE serialno=#{serialno}")
 	@Options(useCache = true, flushCache = false)
 	Version getbyserialno(@Param("serialno") String serialno);

@@ -29,5 +29,12 @@ public class Version implements Serializable {
     private Date createtime;
     private String updateby;
     private Date updatetime;
+    /*OTA升级信息扩展属性*/
+    private String brand;//考虑作为方案贴牌的可能
+    private String model;//产品型号
+    private String country;//销售地区
+    private String hardwareVersion;//硬件版本号，以PCBA版本标识
+    private String firmwareVersion;//固件版本号，以ROM版本标识
+    private String latitude;//客户端指定校验码
 
 }

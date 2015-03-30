@@ -94,4 +94,81 @@ public class UpgradeController {
         }
     }
 
+    /**
+     * 获取当前升级版本
+     * 参数说明在各自的RequestBody类中
+     */
+    @RequestMapping(value = "/getOtaUpgrade", method = RequestMethod.GET)
+    @ApiOperation(value = "获取OTA升级版本接口", notes = "用于客户端获取软件的可升级最新版本", httpMethod = "GET", consumes = "application/json", produces = "application/json", protocols = "http, https", nickname = "", response = Upgrade.class)
+    @ApiResponses(value = {
+            @ApiResponse(code=0,message = "成功"),
+            @ApiResponse(code=-1,message = "当前版本无需升级"),
+            @ApiResponse(code=1,message = "传入版本不存在"),
+            @ApiResponse(code=2,message = "clientid无对应最新版本信息"),
+            @ApiResponse(code=3,message = "关联版本无法找到基础版本信息")
+    })
+    public ResponseEntity<UpgradeResp> getOtaUpgrade(@RequestParam("clientVersion") String clientVersion,@RequestParam("brand") String brand,@RequestParam("model") String model,
+                                                     @RequestParam("country") String country,@RequestParam("hardwareVersion") String hardwareVersion,@RequestParam("firmwareVersion") String firmwareVersion,
+                                                     @RequestParam(value="lang",required=false,defaultValue="zh") String lang) {
+
+        // 判断客户端版本号
+        if ("1.0".equals(clientVersion)){
+            Upgrade upgrade=new Upgrade();
+            // TODO:OTA升级版本号
+            upgrade.setClientid("8");
+            // 固件版本号
+            upgrade.setVersion(firmwareVersion);
+            UpgradeResp ur=new UpgradeResp();
+            int clientId = 0;
+            try {
+                clientId = Integer.parseInt(upgrade.getClientid());
+                if(clientId<=0){
+                    LOGGER.error("getOtaUpgrade request error,clientId value error:"+clientId);
+                    return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
+                }
+            }catch (NumberFormatException e){
+                LOGGER.error("getOtaUpgrade request error,clientId is not int"+e);
+                return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
+            }
+            // 校验是否存在OTA新的升级版本信息
+            Version currentOtaVersion=versionService.getOtaVersion(brand, model,country,hardwareVersion,firmwareVersion);
+            if(currentOtaVersion==null){
+                LOGGER.error("getOtaUpgrade request error,current version is not exists:"+upgrade.getVersion());
+                ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
+                return new ResponseEntity<>(ur, HttpStatus.OK);
+            }
+            UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion(),clientId);
+            if(upgradePlan==null){//无对应关联升级版本,不升级
+                ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+                return new ResponseEntity<>(ur, HttpStatus.OK);
+            }else{
+                Version lastVersion=versionService.getbyserialno(upgradePlan.getUpgradeid());
+                if(lastVersion==null){
+                    LOGGER.error("getOtaUpgrade request error,upgradePlan get version is not exists:"+upgrade.getVersion());
+                    ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
+                    return new ResponseEntity<>(ur, HttpStatus.OK);
+                }
+                UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), lang);
+                ur.setIntroduction(memo == null ? "" : memo.getMemo());
+                ur.setRtn(RestConst.RTN_OK);
+                ur.setShow_type(String.valueOf(upgradePlan.getShowtype()));
+                ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));
+                ur.setNew_version(lastVersion.getVersion());
+                ur.setUpgrade_url(lastVersion.getPkgurl());
+                ur.setFilesize(lastVersion.getFilesize());
+                // OTA升级信息扩展属性
+                ur.setBrand(lastVersion.getBrand());
+                ur.setCountry(lastVersion.getCountry());
+                ur.setModel(lastVersion.getModel());
+                ur.setHardwareVersion(lastVersion.getHardwareVersion());
+                ur.setFirmwareVersion(lastVersion.getFirmwareVersion());
+                ur.setLatitude(lastVersion.getLatitude());
+                return new ResponseEntity<>(ur, HttpStatus.OK);
+            }
+        }else{
+            return new ResponseEntity<>(new UpgradeResp(), HttpStatus.OK);
+        }
+
+    }
+
 }

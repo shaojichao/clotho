@@ -53,6 +53,11 @@ public class VersionService {
 		return versionMapper.getbyversion(version, clientId);
 	}
 
+    @Transactional(readOnly = true)
+    public Version getOtaVersion(String brand, String model,String country,String hardwareVersion,String firmwareVersion) {
+        return versionMapper.getOtaVersion(brand, model, country, hardwareVersion, firmwareVersion);
+    }
+
 	@Transactional(readOnly = true)
 	public UpgradePlan getUpgradePlanbyversion(String version, int clientId) {
 		return versionMapper.getUpgradePlanbyversion(version, clientId);
