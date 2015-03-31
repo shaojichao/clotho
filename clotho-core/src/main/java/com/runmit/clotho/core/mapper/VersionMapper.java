@@ -87,6 +87,18 @@ public interface VersionMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void updateVersion(Version version);
 
+    @Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`showtype`,`upgradetype`,`createby`,`brand`,`model`,`country`,`hardwareVersion`,`latitude`) "
+            + "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{showtype},#{upgradetype},#{createby},#{brand},#{model},#{country},#{hardwareVersion},#{latitude})")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void addOtaVersion(Version version);
+
+    @Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},`filesize`=#{filesize},"
+            + "`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now(),"
+            + "`brand`=#{brand},`model`=#{model},`country`=#{country},`hardwareVersion`=#{hardwareVersion},`latitude`=#{latitude}"
+            + " where `id`=#{id}")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    void updateOtaVersion(Version version);
+
 	@Delete("DELETE FROM Version WHERE id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delVersion(@Param("id") int id);
