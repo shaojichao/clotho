@@ -62,11 +62,11 @@ public interface VersionMapper {
             "<if test=\"model != null\"> AND model = #{model} </if>" +
             "<if test=\"country != null\"> AND country = #{country} </if>" +
             "<if test=\"hardwareVersion != null\"> AND hardwareVersion = #{hardwareVersion} </if>" +
-            "<if test=\"firmwareVersion != null\"> AND firmwareVersion = #{firmwareVersion} </if> " +
+            "<if test=\"version != null\"> AND version = #{version} </if> " +
             "</script>" )
     @Options(useCache = true, flushCache = false)
     Version getOtaVersion(@Param("brand") String brand,@Param("model") String model,@Param("country") String country,
-                         @Param("hardwareVersion") String hardwareVersion,@Param("firmwareVersion") String firmwareVersion);
+                         @Param("hardwareVersion") String hardwareVersion,@Param("version") String version);
 
 	@Select("SELECT * FROM Version WHERE serialno=#{serialno}")
 	@Options(useCache = true, flushCache = false)

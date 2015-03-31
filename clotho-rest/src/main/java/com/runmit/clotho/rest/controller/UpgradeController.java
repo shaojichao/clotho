@@ -21,6 +21,9 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author XP
  */
@@ -110,7 +113,7 @@ public class UpgradeController {
     public ResponseEntity<UpgradeResp> getOtaUpgrade(@RequestParam("clientVersion") String clientVersion,@RequestParam("brand") String brand,@RequestParam("model") String model,
                                                      @RequestParam("country") String country,@RequestParam("hardwareVersion") String hardwareVersion,@RequestParam("firmwareVersion") String firmwareVersion,
                                                      @RequestParam(value="lang",required=false,defaultValue="zh") String lang) {
-
+        UpgradeResp ur=new UpgradeResp();
         // 判断客户端版本号
         if ("1.0".equals(clientVersion)){
             Upgrade upgrade=new Upgrade();
@@ -118,12 +121,12 @@ public class UpgradeController {
             upgrade.setClientid("8");
             // 固件版本号
             upgrade.setVersion(firmwareVersion);
-            UpgradeResp ur=new UpgradeResp();
             int clientId = 0;
             try {
                 clientId = Integer.parseInt(upgrade.getClientid());
                 if(clientId<=0){
                     LOGGER.error("getOtaUpgrade request error,clientId value error:"+clientId);
+                    ur.setRtmsg("当前版本无需升级");
                     return new ResponseEntity<>(ur, HttpStatus.BAD_REQUEST);
                 }
             }catch (NumberFormatException e){
@@ -133,42 +136,60 @@ public class UpgradeController {
             // 校验是否存在OTA新的升级版本信息
             Version currentOtaVersion=versionService.getOtaVersion(brand, model,country,hardwareVersion,firmwareVersion);
             if(currentOtaVersion==null){
-                LOGGER.error("getOtaUpgrade request error,current version is not exists:"+upgrade.getVersion());
+                LOGGER.error("getOtaUpgrade request error,current version does not exists:"+upgrade.getVersion());
                 ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
+                ur.setRtmsg("传入版本不存在");
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
             UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion(),clientId);
             if(upgradePlan==null){//无对应关联升级版本,不升级
                 ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+                ur.setRtmsg("当前版本无需升级");
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }else{
                 Version lastVersion=versionService.getbyserialno(upgradePlan.getUpgradeid());
                 if(lastVersion==null){
-                    LOGGER.error("getOtaUpgrade request error,upgradePlan get version is not exists:"+upgrade.getVersion());
+                    LOGGER.error("getOtaUpgrade request error,upgradePlan get version does not exists:"+upgrade.getVersion());
                     ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
+                    ur.setRtmsg("关联版本无法找到基础版本信息");
                     return new ResponseEntity<>(ur, HttpStatus.OK);
                 }
                 UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), lang);
                 ur.setIntroduction(memo == null ? "" : memo.getMemo());
                 ur.setRtn(RestConst.RTN_OK);
+                ur.setRtmsg("成功");
                 ur.setShow_type(String.valueOf(upgradePlan.getShowtype()));
                 ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));
                 ur.setNew_version(lastVersion.getVersion());
                 ur.setUpgrade_url(lastVersion.getPkgurl());
                 ur.setFilesize(lastVersion.getFilesize());
-                // OTA升级信息扩展属性
-                ur.setBrand(lastVersion.getBrand());
-                ur.setCountry(lastVersion.getCountry());
-                ur.setModel(lastVersion.getModel());
-                ur.setHardwareVersion(lastVersion.getHardwareVersion());
-                ur.setFirmwareVersion(lastVersion.getFirmwareVersion());
+                // OTA升级包指定名
+                StringBuffer upgradeName = new StringBuffer();
+                // 产品品牌
+                upgradeName.append(lastVersion.getBrand()).append("-");
+                // 产品型号
+                upgradeName.append(lastVersion.getCountry()).append("-");
+                // 销售国家
+                upgradeName.append(lastVersion.getModel()).append("-");
+                // 硬件版本号
+                upgradeName.append(lastVersion.getHardwareVersion()).append("-");
+                // 固件版本号
+                upgradeName.append(lastVersion.getFirmwareVersion()).append("-");
+                // 固件编译或发布时间
+                Date currentTime = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+                String dateString = formatter.format(currentTime);
+                upgradeName.append(dateString).append(".zip");
+                ur.setUpgrade_name(upgradeName.toString());
                 ur.setLatitude(lastVersion.getLatitude());
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
         }else{
-            return new ResponseEntity<>(new UpgradeResp(), HttpStatus.OK);
+            LOGGER.error("getOtaUpgrade request error,current clientVersion does not exists:"+ clientVersion);
+            ur.setRtn(RestConst.RTN_GETUPGRADE_CURRENTVERSION_NOTEXIST);
+            ur.setRtmsg("传入版本不存在");
+            return new ResponseEntity<>(ur, HttpStatus.OK);
         }
-
     }
 
 }

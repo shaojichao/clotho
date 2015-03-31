@@ -29,20 +29,8 @@ public class UpgradeResp extends CommonResp{
     @ApiModelProperty(value = "客户端类型", notes = "", required = true, dataType = "String")
     private String upgrade_url;
 
-    @ApiModelProperty(value = "产品Brand", notes = "", required = true, dataType = "String")
-    private String brand;
-
-    @ApiModelProperty(value = "产品型号", notes = "", required = true, dataType = "String")
-    private String model;
-
-    @ApiModelProperty(value = "销售地区", notes = "", required = true, dataType = "String")
-    private String country;
-
-    @ApiModelProperty(value = "硬件版本号", notes = "", required = true, dataType = "String")
-    private String hardwareVersion;
-
-    @ApiModelProperty(value = "固件版本号", notes = "", required = true, dataType = "String")
-    private String firmwareVersion;
+    @ApiModelProperty(value = "OTA升级包指定名", notes = "", required = true, dataType = "String")
+    private String upgrade_name;
 
     @ApiModelProperty(value = "校验码", notes = "", required = false, dataType = "String")
     private String latitude;
