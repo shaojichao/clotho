@@ -101,9 +101,12 @@ public class VersionService {
 
 	@Transactional(readOnly = false)
 	public void delVersion(int id, String adminName) {
-		opLogService.saveObj(this.getbyid(id), OpType.DELETE, "upgrade",
+		Version ver = this.getbyid(id);
+		opLogService.saveObj(ver, OpType.DELETE, "upgrade",
 				"clotho", adminName);
+		String upgradeid = ver.getSerialno();
 		this.versionMapper.delVersion(id);
+		this.versionMapper.delPlanByUpgradeid(upgradeid);
 	}
 
 	@Transactional(readOnly = false)
