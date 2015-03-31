@@ -117,8 +117,8 @@ public class UpgradeController {
         // 判断客户端版本号
         if ("1.0".equals(clientVersion)){
             Upgrade upgrade=new Upgrade();
-            // TODO:OTA升级版本号
-            upgrade.setClientid("8");
+            // OTA升级版本号
+            upgrade.setClientid("20");
             // 固件版本号
             upgrade.setVersion(firmwareVersion);
             int clientId = 0;
