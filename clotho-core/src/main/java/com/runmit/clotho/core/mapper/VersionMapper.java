@@ -18,10 +18,18 @@ import com.runmit.clotho.core.domain.upgrade.Version;
  */
 public interface VersionMapper {
 
-	@Select("SELECT * FROM UpgradePlan where (originid='' or originid LIKE CONCAT('%,',(SELECT serialno FROM Version WHERE version=#{version} AND clientId=#{clientId}),',%')) and clientId=#{clientId} order by upgradeid desc limit 1 ")
+	@Select("SELECT * FROM UpgradePlan where (originid='' or originid LIKE CONCAT('%,'," +
+            "(SELECT serialno FROM Version WHERE version=#{version} AND clientId=#{clientId}" +
+            " AND brand=#{brand} AND model=#{model} AND country=#{country} AND hardwareVersion=#{hardwareVersion}) " +
+            ",',%')) and clientId=#{clientId} order by upgradeid desc limit 1 ")
 	@Options(useCache = true, flushCache = false)
-	UpgradePlan getUpgradePlanbyversion(@Param("version") String version,
-			@Param("clientId") int clientId);
+	UpgradePlan getOtaUpgradePlanbyversion(@Param("version") String version,@Param("clientId") int clientId,@Param("brand") String brand,
+			@Param("model") String model,@Param("country") String country,@Param("hardwareVersion") String hardwareVersion);
+
+    @Select("SELECT * FROM UpgradePlan where (originid='' or originid LIKE CONCAT('%,',(SELECT serialno FROM Version WHERE version=#{version} AND clientId=#{clientId}),',%')) and clientId=#{clientId} order by upgradeid desc limit 1 ")
+    @Options(useCache = true, flushCache = false)
+    UpgradePlan getUpgradePlanbyversion(@Param("version") String version,
+                                        @Param("clientId") int clientId);
 
 	@Select("SELECT * FROM UpgradePlan where id=#{id}")
 	UpgradePlan getUpgradePlabById(@Param("id") int id);

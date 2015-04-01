@@ -59,9 +59,14 @@ public class VersionService {
     }
 
 	@Transactional(readOnly = true)
-	public UpgradePlan getUpgradePlanbyversion(String version, int clientId) {
-		return versionMapper.getUpgradePlanbyversion(version, clientId);
+	public UpgradePlan getOtaUpgradePlanbyversion(String version, int clientId,String brand,String model,String country,String hardwareVersion) {
+		return versionMapper.getOtaUpgradePlanbyversion(version, clientId, brand, model, country, hardwareVersion);
 	}
+
+    @Transactional(readOnly = true)
+    public UpgradePlan getUpgradePlanbyversion(String version, int clientId) {
+        return versionMapper.getUpgradePlanbyversion(version, clientId);
+    }
 	
 	@Transactional(readOnly = true)
 	public UpgradePlanMemo getUpgradePlanMemo(int planid, String lang) {

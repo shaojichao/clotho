@@ -141,7 +141,8 @@ public class UpgradeController {
                 ur.setRtmsg("传入版本不存在");
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
-            UpgradePlan upgradePlan=versionService.getUpgradePlanbyversion(upgrade.getVersion(),clientId);
+            UpgradePlan upgradePlan=versionService.getOtaUpgradePlanbyversion(currentOtaVersion.getVersion(), clientId,
+                    currentOtaVersion.getBrand(),currentOtaVersion.getModel(),currentOtaVersion.getCountry(),currentOtaVersion.getHardwareVersion());
             if(upgradePlan==null){//无对应关联升级版本,不升级
                 ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
                 ur.setRtmsg("当前版本无需升级");
@@ -174,7 +175,7 @@ public class UpgradeController {
                 // 硬件版本号
                 upgradeName.append(lastVersion.getHardwareVersion()).append("-");
                 // 固件版本号
-                upgradeName.append(lastVersion.getFirmwareVersion()).append("-");
+                upgradeName.append(lastVersion.getVersion()).append("-");
                 // 固件编译或发布时间
                 Date currentTime = new Date();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
