@@ -16,6 +16,7 @@ public class UserFeedback implements Serializable {
 	 */
 	private static final long serialVersionUID = 2418778052649443865L;
 	private Integer id;
+    private String clientname;
     private String hwid;
     private String udid;
     private String wifimac;

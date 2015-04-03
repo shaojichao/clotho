@@ -15,14 +15,16 @@ import com.runmit.clotho.core.domain.userfeedback.UserFeedback;
  */
 public interface UserFeedbackMapper {
 
-    @Insert("INSERT INTO UserFeedback (`hwid`,`udid`,`wifimac`,`wirelesssmac`,`wiremac`,`os`,`osver`,`device`,`area`,`language`,`imei`,`idfv`,`appkey`,`appver`,`uid`,`devicebrand`,`devicedevice`,`devicemodel`,`devicehardware`,`deviceid`,`deviceserial`,`ro`,`channel`,`dts`,`contact`,`content`) "
-            + "VALUES (#{hwid},#{udid},#{wifimac},#{wirelesssmac},#{wiremac},#{os},#{osver},#{device},#{area},#{language},#{imei},#{idfv},#{appkey},#{appver},#{uid},#{devicebrand},#{devicedevice},#{devicemodel},#{devicehardware},#{deviceid},#{deviceserial},#{ro},#{channel},#{dts},#{contact},#{content})")
+    @Insert("INSERT INTO UserFeedback (`hwid`,`udid`,`clientId`,`wifimac`,`wirelesssmac`,`wiremac`,`os`,`osver`,`device`,`area`,`language`,`imei`,`idfv`,`appkey`,`appver`,`uid`,`devicebrand`,`devicedevice`,`devicemodel`,`devicehardware`,`deviceid`,`deviceserial`,`ro`,`channel`,`dts`,`contact`,`content`) "
+            + "VALUES (#{hwid},#{udid},#{clientId},#{wifimac},#{wirelesssmac},#{wiremac},#{os},#{osver},#{device},#{area},#{language},#{imei},#{idfv},#{appkey},#{appver},#{uid},#{devicebrand},#{devicedevice},#{devicemodel},#{devicehardware},#{deviceid},#{deviceserial},#{ro},#{channel},#{dts},#{contact},#{content})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addUserFeedback(UserFeedback userFeedback);
     
-    @Select("SELECT * FROM UserFeedback ORDER BY id DESC LIMIT #{start},#{limit}")
-    List<UserFeedback> getList(@Param("start")int start,@Param("limit")int limit);
+    @Select("SELECT uf.*,cli.name as clientname FROM UserFeedback uf " +
+            "left join Client cli on uf.clientId = cli.clientId " +
+            "where uf.clientId=#{clientId} ORDER BY uf.id DESC LIMIT #{start},#{limit}" )
+    List<UserFeedback> getList(@Param("clientId") int clientId,@Param("start")int start,@Param("limit")int limit);
     
-    @Select("SELECT count(*) FROM UserFeedback")
-    long getCount();
+    @Select("SELECT count(*) FROM UserFeedback WHERE clientId=#{clientId}")
+    long getCount(@Param("clientId") int clientId);
 }

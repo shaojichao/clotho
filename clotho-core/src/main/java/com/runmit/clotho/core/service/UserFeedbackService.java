@@ -28,12 +28,12 @@ public class UserFeedbackService {
     }
     
     @Transactional(readOnly = true)
-    public List<UserFeedback> getList(int start,int limit){
-    	return userFeedbackMapper.getList(start, limit);
+    public List<UserFeedback> getList(int clientId,int start,int limit){
+    	return userFeedbackMapper.getList(clientId,start, limit);
     }
     
     @Transactional(readOnly = true)
-    public long getCount(){
-    	return userFeedbackMapper.getCount();
+    public long getCount(int clientId){
+    	return userFeedbackMapper.getCount(clientId);
     }
 }

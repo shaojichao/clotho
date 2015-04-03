@@ -39,12 +39,13 @@ public class UserFeedBackController {
 	@RequestMapping(value = "/list.do")
 	public @ResponseBody ExtEntity<UserFeedback> getUserFeedBacks(
 			@RequestParam(value = "start", required = false,defaultValue="0") Integer start,
-            @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit) {
+            @RequestParam(value = "limit", required = false,defaultValue="20") Integer limit,
+            @RequestParam(value = "se_clientId", required = false, defaultValue = "1") Integer clientid) {
 		
 		ExtEntity<UserFeedback> listdata = new ExtEntity<UserFeedback>();
-		List<UserFeedback> list = userFeedbackService.getList(start, limit);
+		List<UserFeedback> list = userFeedbackService.getList(clientid, start, limit);
 		listdata.setRows(list);
-		listdata.setResult(userFeedbackService.getCount());
+		listdata.setResult(userFeedbackService.getCount(clientid));
 		
 		LOGGER.info("getUserFeedBacks");
 		return listdata;

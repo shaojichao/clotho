@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.Range;
 @Data
 @ApiModel(value = "APP评论信息", description = "", discriminator = "")
 public class Comment {
+    @Range(min=1,max=50)
+    private Integer clientId;
     private String hwid;
     @NotEmpty
     private String udid;
@@ -22,6 +24,12 @@ public class Comment {
     private Integer os;
     @NotEmpty
     private String osver;
+    public Integer getClientId() {
+        return clientId;
+    }
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
     public String getHwid() {
 		return hwid;
 	}
