@@ -17,6 +17,7 @@ public class UserFeedback implements Serializable {
 	private static final long serialVersionUID = 2418778052649443865L;
 	private Integer id;
     private String clientname;
+    private Integer clientId;
     private String hwid;
     private String udid;
     private String wifimac;
@@ -41,6 +42,12 @@ public class UserFeedback implements Serializable {
 	public void setHwid(String hwid) {
 		this.hwid = hwid;
 	}
+    public Integer getClientId() {
+        return clientId;
+    }
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
 	public String getUdid() {
 		return udid;
 	}
