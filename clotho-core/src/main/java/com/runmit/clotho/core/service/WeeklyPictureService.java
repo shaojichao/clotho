@@ -33,6 +33,11 @@ public class WeeklyPictureService {
     }
 
     @Transactional(readOnly = true)
+    public WeeklyPicture getPicture(int id){
+        return this.weeklyPictureMapper.getWeeklyPicture(id);
+    }
+
+    @Transactional(readOnly = true)
     public WeeklyPicture getPictureWeekly(){
         List<WeeklyPicture> lst = weeklyPictureMapper.getPictureList();
         WeeklyPicture rtn = null;

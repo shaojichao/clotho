@@ -7,10 +7,12 @@ import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.CountryCodeService;
 import com.runmit.clotho.core.service.WeeklyPictureService;
 import com.runmit.clotho.management.security.SessionUtil;
+import com.runmit.clotho.management.service.CDNService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +32,9 @@ public class WeeklyPictureController {
 	
 	@Autowired
 	private WeeklyPictureService weeklyPictureService;
-	
+    @Autowired
+    private CDNService cdnService;
+
 	@RequestMapping(value = "/allList.do")
 	public @ResponseBody ExtEntity<WeeklyPicture> getWeeklyPictures() {
 		
@@ -42,7 +46,9 @@ public class WeeklyPictureController {
 	}
 	
 	@RequestMapping(value = "/save.do")
-	public @ResponseBody ExtStatusEntity saveWeeklyPicture(WeeklyPicture weeklyPicture,HttpServletRequest request) {
+	public @ResponseBody ExtStatusEntity saveWeeklyPicture(WeeklyPicture weeklyPicture,HttpServletRequest request
+            ,@RequestParam(value = "size", required = false, defaultValue = "0") Long size
+            ,@RequestParam(value = "md5", required = false, defaultValue = "") String md5) {
 		ExtStatusEntity entity = new ExtStatusEntity();
 		
 		if(weeklyPicture.getId()==null||weeklyPicture.getId()==0){
@@ -52,7 +58,23 @@ public class WeeklyPictureController {
 		}
 		try{
 			this.weeklyPictureService.save(weeklyPicture);
-			
+            //file dispatch
+            LOGGER.info("size:{},md5:{}",size,md5);
+            if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
+                int res = -1;
+                int tryTime = 2;
+                for(int i=0;i<tryTime;i++){
+                    res = this.cdnService.dispatchAppPic(weeklyPicture, md5, size);
+                    if(res==0){
+                        break;
+                    }
+                }
+                if(res!=0){
+                    entity.setMsg("cdn分发失败");
+                    entity.setSuccess(false);
+                    return entity;
+                }
+            }
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){

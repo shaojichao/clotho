@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.runmit.clotho.core.domain.picture.WeeklyPicture;
+import com.runmit.clotho.core.service.WeeklyPictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class UpgradeController {
 	private VersionService versionService;
 	@Autowired
 	private CDNService cdnService;
+    @Autowired
+    private WeeklyPictureService weeklyPictureService;
+
 	/**
 	 * version list
 	 * 
@@ -296,13 +301,22 @@ public class UpgradeController {
             Integer status = json.getInteger("status");
     		String filename = json.getString("url");
     		Integer taskId = json.getInteger("taskId");
-    		if(status!=0&&status!=5){
+            String appId = json.getString("appId");
+    		if(status!=0 && status!=5){
     			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
     		}else{
-    			Version version = this.versionService.getbyid(taskId);
-    			version.setPkgurl(filename);
-    			version.setPkgurl(this.cdnService.getGSLBUrl(version));
-    			this.versionService.saveVersion(version);
+                // 每周一图CDN回调
+                if ("0".equals(appId)){
+                    WeeklyPicture weeklyPicture = this.weeklyPictureService.getPicture(taskId);
+                    weeklyPicture.setUrl(filename);
+                    weeklyPicture.setUrl(this.cdnService.getGSLBUrlPic(weeklyPicture));
+                    this.weeklyPictureService.save(weeklyPicture);
+                }else{
+                    Version version = this.versionService.getbyid(taskId);
+                    version.setPkgurl(filename);
+                    version.setPkgurl(this.cdnService.getGSLBUrl(version));
+                    this.versionService.saveVersion(version);
+                }
     		}
         }catch (Exception e) {
         	LOGGER.error("cdn back read error",e);

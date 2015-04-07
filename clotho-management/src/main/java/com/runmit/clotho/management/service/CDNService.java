@@ -1,5 +1,6 @@
 package com.runmit.clotho.management.service;
 
+import com.runmit.clotho.core.domain.picture.WeeklyPicture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,29 @@ public class CDNService {
 		}
 	}
 
+    public int dispatchAppPic(WeeklyPicture weeklyPicture, String md5, long size) {
+        try {
+            String url = cdnUrl + "appFileDispatch";
+            JSONObject json = new JSONObject();
+            json.put("taskId", weeklyPicture.getId());
+            json.put("url", weeklyPicture.getUrl());
+            json.put("appId", "0");
+            json.put("appKey", weeklyPicture.getId());
+            json.put("size", size);
+            json.put("md5", md5);
+            json.put("strategy", 3);
+            json.put("backUrl", backurl);
+            json.put("callbackContext", "clotho file dispatch");
+            String result = this.restTemplate.postForObject(url, json,
+                    String.class);
+            LOGGER.info(result);
+            return 0;
+        } catch (Exception ex) {
+            LOGGER.error("cdn dispatch request error", ex);
+            return -1;
+        }
+    }
+
 	public String getGSLBUrl(Version version) {
 		long ts = System.currentTimeMillis() + (long)3600000 * 24 * 7300;
 		String hwid = version.getId() + "";
@@ -69,4 +93,18 @@ public class CDNService {
 				.append(ts).append("&key=").append(key);
 		return sb.toString();
 	}
+
+    public String getGSLBUrlPic(WeeklyPicture weeklyPicture) {
+        long ts = System.currentTimeMillis() + (long)3600000 * 24 * 7300;
+        String hwid = weeklyPicture.getId() + "";
+        int appid = 0;
+        String appkey = weeklyPicture.getId().toString();
+        String key = DigestUtils.md5DigestAsHex((hwid + ts + weeklyPicture.getUrl() + gslbkey + appid + appkey).getBytes());
+        StringBuffer sb = new StringBuffer();
+        sb.append(gslburl).append(weeklyPicture.getUrl()).append("?appid=")
+                .append(appid).append("&appkey=").append(appkey)
+                .append("&hwid=").append(hwid).append("&kv=1.0&bt=bt&ts=")
+                .append(ts).append("&key=").append(key);
+        return sb.toString();
+    }
 }
