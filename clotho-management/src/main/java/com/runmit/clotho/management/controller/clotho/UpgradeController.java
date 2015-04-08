@@ -300,19 +300,21 @@ public class UpgradeController {
             JSONObject json = JSONObject.parseObject(data.toString());
             Integer status = json.getInteger("status");
     		String filename = json.getString("url");
-    		Integer taskId = json.getInteger("taskId");
-            String appId = json.getString("appId");
+            String taskId = json.getString("taskId");
+            // 每周一图 标识符
+            Integer taskTempId =Integer.valueOf(taskId.replace("weeklyPicture",""));
+
     		if(status!=0 && status!=5){
     			LOGGER.error("cdn dispatch response error",request.getParameter("desc"));
     		}else{
                 // 每周一图CDN回调
-                if ("0".equals(appId)){
-                    WeeklyPicture weeklyPicture = this.weeklyPictureService.getPicture(taskId);
+                if (taskId.endsWith("weeklyPicture")){
+                    WeeklyPicture weeklyPicture = this.weeklyPictureService.getPicture(taskTempId);
                     weeklyPicture.setUrl(filename);
                     weeklyPicture.setUrl(this.cdnService.getGSLBUrlPic(weeklyPicture));
                     this.weeklyPictureService.save(weeklyPicture);
                 }else{
-                    Version version = this.versionService.getbyid(taskId);
+                    Version version = this.versionService.getbyid(taskTempId);
                     version.setPkgurl(filename);
                     version.setPkgurl(this.cdnService.getGSLBUrl(version));
                     this.versionService.saveVersion(version);

@@ -61,7 +61,7 @@ public class CDNService {
         try {
             String url = cdnUrl + "appFileDispatch";
             JSONObject json = new JSONObject();
-            json.put("taskId", weeklyPicture.getId());
+            json.put("taskId", weeklyPicture.getId()+"weeklyPicture");
             json.put("url", weeklyPicture.getUrl());
             json.put("appId", "0");
             json.put("appKey", weeklyPicture.getId());
@@ -75,7 +75,7 @@ public class CDNService {
             LOGGER.info(result);
             return 0;
         } catch (Exception ex) {
-            LOGGER.error("cdn dispatch request error", ex);
+            LOGGER.error("cdn dispatchAppPic request error", ex);
             return -1;
         }
     }
