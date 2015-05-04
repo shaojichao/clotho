@@ -11,18 +11,14 @@ import org.hibernate.validator.constraints.Range;
 @Data
 @ApiModel(value = "APP评论信息", description = "", discriminator = "")
 public class Comment {
-    @Range(min=1,max=50)
     private Integer clientId;
     private String hwid;
-    @NotEmpty
     private String udid;
-    @NotEmpty
     private String wifimac;
     private String wirelesssmac;
     private String wiremac;
     @Range(min=1,max=3)
     private Integer os;
-    @NotEmpty
     private String osver;
     public Integer getClientId() {
         return clientId;
@@ -186,36 +182,22 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	@Range(min=1,max=3)
     private Integer device;
-    @NotEmpty
     private String area;
-    @NotEmpty
     private String language;
-    @NotEmpty
     private String imei;
     private String idfv;
-    @NotEmpty
     private String appkey;
-    @NotEmpty
     private String appver;
     private String uid;
-    @NotEmpty
     private String devicebrand;
-    @NotEmpty
     private String devicedevice;
-    @NotEmpty
     private String devicemodel;
-    @NotEmpty
     private String devicehardware;
-    @NotEmpty
     private String deviceid;
-    @NotEmpty
     private String deviceserial;
     private String ro;
-    @NotEmpty
     private String channel;
-    @Range
     private Long dts;
     private String contact;
     @NotEmpty
