@@ -15,9 +15,18 @@ public class WeeklyPicture extends BaseDomain{
 	 * 
 	 */
 	private static final long serialVersionUID = 182102141800723153L;
-	
+
+    /*首页广告图地址*/
 	private String url;
+    /*备注说明*/
 	private String comment;
+    /*图片大小*/
     private long filesize;
+    /*图片类型：首页广告图:1; 广告大图:2*/
+    private String type;
+    /*图片外链地址*/
+    private String linkout;
+    /*广告大图地址*/
+    private String bigImgUrl;
 
 }

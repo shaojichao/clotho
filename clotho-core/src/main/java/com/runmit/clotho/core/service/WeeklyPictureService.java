@@ -28,8 +28,8 @@ public class WeeklyPictureService {
 	private OpLogService opLogService;
     
     @Transactional(readOnly = true)
-    public List<WeeklyPicture> getList(){
-    	return weeklyPictureMapper.getPictureList();
+    public List<WeeklyPicture> getList(int start, int limit, String type){
+    	return weeklyPictureMapper.getPictureList(start, limit, type);
     }
 
     @Transactional(readOnly = true)
@@ -39,12 +39,7 @@ public class WeeklyPictureService {
 
     @Transactional(readOnly = true)
     public WeeklyPicture getPictureWeekly(){
-        List<WeeklyPicture> lst = weeklyPictureMapper.getPictureList();
-        WeeklyPicture rtn = null;
-        if (!lst.isEmpty()){
-            rtn = lst.get(0);
-        }
-        return rtn;
+        return weeklyPictureMapper.getPictureListRest();
     }
     
     @Transactional(readOnly = false)

@@ -13,4 +13,6 @@ public class RespWeeklyPicture {
     private String url;
     private String comment;
     private long filesize;
+    private String linkout;
+    private String bigImgUrl;
 }

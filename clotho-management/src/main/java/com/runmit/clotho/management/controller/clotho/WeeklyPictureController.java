@@ -36,9 +36,12 @@ public class WeeklyPictureController {
     private CDNService cdnService;
 
 	@RequestMapping(value = "/allList.do")
-	public @ResponseBody ExtEntity<WeeklyPicture> getWeeklyPictures() {
-		
-		List<WeeklyPicture> list = this.weeklyPictureService.getList();
+	public  @ResponseBody ExtEntity<WeeklyPicture> getWeeklyPictures(
+            @RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+            @RequestParam(value = "se_typeId", required = false) String type,
+            HttpServletRequest request) {
+		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, type);
 		ExtEntity<WeeklyPicture> entity = new ExtEntity<WeeklyPicture>();
 		entity.setResult(list.size());
 		entity.setRows(list);
