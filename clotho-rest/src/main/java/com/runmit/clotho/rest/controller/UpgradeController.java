@@ -177,9 +177,8 @@ public class UpgradeController {
                 // 固件版本号
                 upgradeName.append(lastVersion.getVersion()).append("-");
                 // 固件编译或发布时间
-                Date currentTime = new Date();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-                String dateString = formatter.format(currentTime);
+                String dateString = formatter.format(lastVersion.getCreatetime());
                 upgradeName.append(dateString).append(".zip");
                 ur.setUpgrade_name(upgradeName.toString());
                 ur.setLatitude(lastVersion.getLatitude());
