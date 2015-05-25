@@ -17,11 +17,11 @@ public interface ClientMapper {
 
     @Insert("INSERT INTO Client (`name`,`description`,`createby`) "
             + "VALUES (#{name},#{description},#{createby})")
-    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "clientId")
     void addClient(Client client);
     
     @Insert("UPDATE Client set `name`=#{name},`description`=#{description},`updatetime`=now(),`updateby`=#{updateby} where clientId=#{clientId}")
-    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
+    @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "clientId")
     void updateClient(Client client);
     
     @Select("SELECT * FROM Client")
