@@ -17,7 +17,7 @@ import com.runmit.clotho.core.service.CountryCodeService;
  * @date 2015年2月2日
  */
 @RestController
-@RequestMapping(value = "/QR")
+@RequestMapping(value = "/qr")
 public class QRController {
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(QRController.class);
@@ -30,10 +30,16 @@ public class QRController {
      * @return
      */
     @RequestMapping(value = "/test")
-    public void test(HttpServletRequest request){
+    public String qrRedirect(HttpServletRequest request){
     	String ua = request.getHeader("User-Agent");
-    	LOGGER.info("ua======="+ua);
-    	System.out.println(ua);
-    	
+    	if(ua.indexOf("iPhone")>0){
+    		return "redirect:http://192.168.20.127/cloud_file/20150415/1dc0f4b524174914b028061e54c31f31.jpg?reqtype=1&userId=18&key=da850843179fdf9e0a04b28e51b90f31"; 
+    	}else if(ua.indexOf("iPad")>0){
+    		return "redirect:http://www.baidu.com"; 
+    	}else if(ua.indexOf("Android")>0){
+    		return "redirect:http://www.baidu.com"; 
+    	}else{
+    		return "redirect:http://www.baidu.com"; 
+    	}
     }
 }
