@@ -1,6 +1,9 @@
 package com.runmit.clotho.rest.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
@@ -28,18 +31,19 @@ public class QRController {
     /**
      * get country code list
      * @return
+     * @throws Exception 
      */
     @RequestMapping(value = "/test")
-    public String qrRedirect(HttpServletRequest request){
+    public void qrRedirect(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
     	if(ua.indexOf("iPhone")>0){
-    		return "redirect:http://192.168.20.127/cloud_file/20150415/1dc0f4b524174914b028061e54c31f31.jpg?reqtype=1&userId=18&key=da850843179fdf9e0a04b28e51b90f31"; 
+    		response.sendRedirect("http://192.168.20.127/cloud_file/20150415/1dc0f4b524174914b028061e54c31f31.jpg?reqtype=1&userId=18&key=da850843179fdf9e0a04b28e51b90f31"); 
     	}else if(ua.indexOf("iPad")>0){
-    		return "redirect:http://www.baidu.com"; 
+    		response.sendRedirect("http://www.baidu.com"); 
     	}else if(ua.indexOf("Android")>0){
-    		return "redirect:http://www.baidu.com"; 
+    		response.sendRedirect("http://www.baidu.com"); 
     	}else{
-    		return "redirect:http://www.baidu.com"; 
+    		response.sendRedirect("http://www.baidu.com"); 
     	}
     }
 }
