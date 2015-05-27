@@ -15,12 +15,12 @@ import com.runmit.clotho.core.domain.client.Client;
  */
 public interface ClientMapper {
 
-    @Insert("INSERT INTO Client (`name`,`appId`,`description`,`createby`) "
-            + "VALUES (#{name},#{appId},#{description},#{createby})")
+    @Insert("INSERT INTO Client (`name`,`description`,`createby`) "
+            + "VALUES (#{name},#{description},#{createby})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addClient(Client client);
     
-    @Insert("UPDATE Client set `name`=#{name},`appId`=#{appId},`description`=#{description},`updatetime`=now(),`updateby`=#{updateby} where clientId=#{clientId}")
+    @Insert("UPDATE Client set `name`=#{name},`description`=#{description},`updatetime`=now(),`updateby`=#{updateby} where clientId=#{clientId}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void updateClient(Client client);
     
