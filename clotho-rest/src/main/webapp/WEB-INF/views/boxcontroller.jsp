@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>3D Box遥控器</title>
+    <title>3D Box</title>
     <style>
         /*320px布局*/
         html{font-size: 100px; }
