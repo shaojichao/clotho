@@ -33,17 +33,18 @@ public class QRController {
      * @return
      * @throws Exception 
      */
-    @RequestMapping(value = "/test")
-    public void qrRedirect(HttpServletRequest request,HttpServletResponse response) throws Exception{
+    @RequestMapping(value = "/3dboxcontroller")
+    public void boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
+    	String waitImg = "http://medusa.d3dstore.com/app/dtapp/1-52-2-1.1-352219-9dfa883da29f998d58ef4f85f5b54970-1423467309012.jpg?appid=2&appkey=1.1&hwid=16&kv=1.0&bt=bt&ts=2057280121759&key=ffac9640cde44368c13a842daab2bbbe";
     	if(ua.indexOf("iPhone")>0){
-    		response.sendRedirect("http://192.168.20.127/cloud_file/20150415/1dc0f4b524174914b028061e54c31f31.jpg?reqtype=1&userId=18&key=da850843179fdf9e0a04b28e51b90f31"); 
+    		response.sendRedirect("https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8"); 
     	}else if(ua.indexOf("iPad")>0){
-    		response.sendRedirect("http://www.baidu.com"); 
+    		response.sendRedirect("https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8"); 
     	}else if(ua.indexOf("Android")>0){
-    		response.sendRedirect("http://www.baidu.com"); 
+    		response.sendRedirect(waitImg); 
     	}else{
-    		response.sendRedirect("http://www.baidu.com"); 
+    		response.sendRedirect(waitImg); 
     	}
     }
 }
