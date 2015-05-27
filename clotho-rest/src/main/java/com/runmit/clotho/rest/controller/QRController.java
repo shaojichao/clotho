@@ -9,6 +9,7 @@ import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +26,10 @@ public class QRController {
 	private static final Logger LOGGER = LoggerFactory
             .getLogger(QRController.class);
 
-    @Autowired
-    private CountryCodeService codeService;
-    
+	@Value("${qr.3dboxcontroller.ios}")
+	private String qr3dboxcontrollerIOS;
+	@Value("${qr.3dboxcontroller.android}")
+	private String qr3dboxcontrollerANDROID;
     /**
      * get country code list
      * @return
@@ -36,15 +38,14 @@ public class QRController {
     @RequestMapping(value = "/3dboxcontroller")
     public void boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
-    	String waitImg = "http://medusa.d3dstore.com/app/dtapp/1-52-2-1.1-352219-9dfa883da29f998d58ef4f85f5b54970-1423467309012.jpg?appid=2&appkey=1.1&hwid=16&kv=1.0&bt=bt&ts=2057280121759&key=ffac9640cde44368c13a842daab2bbbe";
     	if(ua.indexOf("iPhone")>0){
-    		response.sendRedirect("https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8"); 
+    		response.sendRedirect(qr3dboxcontrollerIOS); 
     	}else if(ua.indexOf("iPad")>0){
-    		response.sendRedirect("https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8"); 
+    		response.sendRedirect(qr3dboxcontrollerIOS); 
     	}else if(ua.indexOf("Android")>0){
-    		response.sendRedirect(waitImg); 
+    		response.sendRedirect(qr3dboxcontrollerANDROID); 
     	}else{
-    		response.sendRedirect(waitImg); 
+    		response.sendRedirect(qr3dboxcontrollerANDROID); 
     	}
     }
 }
