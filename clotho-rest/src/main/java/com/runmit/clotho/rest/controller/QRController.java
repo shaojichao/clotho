@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ import com.runmit.clotho.core.service.CountryCodeService;
  * 
  * @date 2015年2月2日
  */
-@RestController
+@Controller
 @RequestMapping(value = "/qr")
 public class QRController {
 	private static final Logger LOGGER = LoggerFactory
@@ -36,16 +37,20 @@ public class QRController {
      * @throws Exception 
      */
     @RequestMapping(value = "/3dboxcontroller")
-    public void boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
+    public String boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
     	if(ua.indexOf("iPhone")>0){
     		response.sendRedirect(qr3dboxcontrollerIOS); 
+    		return null;
     	}else if(ua.indexOf("iPad")>0){
     		response.sendRedirect(qr3dboxcontrollerIOS); 
+    		return null;
     	}else if(ua.indexOf("Android")>0){
-    		response.sendRedirect(qr3dboxcontrollerANDROID); 
+//    		response.sendRedirect(qr3dboxcontrollerANDROID); 
+    		return "boxcontroller";
     	}else{
-    		response.sendRedirect(qr3dboxcontrollerANDROID); 
+//    		response.sendRedirect(qr3dboxcontrollerIOS); 
+    		return "boxcontroller";
     	}
     }
 }
