@@ -9,5 +9,6 @@
     </head>
     <body>
         <h1>This is clotho services</h1>
+        <h1 style="color:white;">3dstore_monitor</h1>
     </body>
 </html>
