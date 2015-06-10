@@ -155,6 +155,11 @@ public class UpgradeController {
                     ur.setRtmsg("关联版本无法找到基础版本信息");
                     return new ResponseEntity<>(ur, HttpStatus.OK);
                 }
+                if(firmwareVersion.equals(lastVersion.getVersion())){
+                    ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+                    ur.setRtmsg("当前版本无需升级");
+                    return new ResponseEntity<>(ur, HttpStatus.OK);
+                }
                 UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), lang);
                 ur.setIntroduction(memo == null ? "" : memo.getMemo());
                 ur.setRtn(RestConst.RTN_OK);
