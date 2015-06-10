@@ -53,3 +53,7 @@ rest.service.timeout=11000
 rest.service.connectionTimeout=5000
 rest.service.maxTotal=500
 rest.service.defaultMaxPerRoute=500
+
+#2015-06-10
+rest property:
+qr.3dboxcontroller.ios=https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8
