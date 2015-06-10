@@ -18,7 +18,7 @@ public class Client implements Serializable{
 	private static final long serialVersionUID = 6447429102510683302L;
 	private Integer clientId;
 	private String name;
-    private Integer appId;
+    private Integer superProjectId;
 	private String description;
 	private Date createtime;
 	private String createby;
@@ -36,11 +36,11 @@ public class Client implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-    public Integer getAppId() {
-        return appId;
+    public Integer getSuperProjectId() {
+        return superProjectId;
     }
-    public void setAppId(Integer appId) {
-        this.appId = appId;
+    public void setSuperProjectId(Integer superProjectId) {
+        this.superProjectId = superProjectId;
     }
 	public String getDescription() {
 		return description;
