@@ -3,6 +3,8 @@ package com.runmit.clotho.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +28,13 @@ public class CountryCodeService {
 	private OpLogService opLogService;
     
     @Transactional(readOnly = true)
+    @Cacheable(value="clothoCache",key = "#root.targetClass.simpleName")
     public List<CountryCode> getList(){
     	return codeMapper.getList();
     }
     
     @Transactional(readOnly = false)
+    @CacheEvict(value="clothoCache",key = "#root.targetClass.simpleName")
     public void save(CountryCode code){
     	if(code.getId()==null||code.getId()==0){
     		this.codeMapper.saveCountryCode(code);
@@ -43,6 +47,7 @@ public class CountryCodeService {
     }
     
     @Transactional(readOnly = false)
+    @CacheEvict(value="clothoCache",key = "#root.targetClass.simpleName")
     public void delete(int id,String oper){
     	CountryCode temp = this.codeMapper.getCountryCode(id);
     	this.opLogService.saveObj(temp, OpType.DELETE, "countryCode", "clotho", oper);
@@ -50,6 +55,7 @@ public class CountryCodeService {
     }
     
     @Transactional(readOnly = true)
+    @Cacheable(value="clothoCache",key = "#root.targetClass.simpleName")
     public List<CountryCode> getLanguages(){
     	return codeMapper.getLanguages();
     }

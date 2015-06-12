@@ -4,6 +4,8 @@ package com.runmit.clotho.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,7 @@ public class ClientService {
 	private OpLogService opLogService;
   
     @Transactional(readOnly = false)
+    @CacheEvict(value="clothoCache",key = "#root.targetClass.simpleName")
     public void saveClient(Client client) {
     	if(client.getClientId()==null||client.getClientId()==0){
     		clientMapper.addClient(client);
@@ -43,6 +46,7 @@ public class ClientService {
     }
     
     @Transactional(readOnly = true)
+    @Cacheable(value="clothoCache",key = "#root.targetClass.simpleName")
     public List<Client> getList(){
     	return clientMapper.getList();
     }
