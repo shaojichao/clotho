@@ -64,7 +64,7 @@ public class CommentController {
             userFeedback.setHwid(comment.getHwid());
         }
         userFeedback.setUdid(comment.getUdid());
-        userFeedback.setClientId(comment.getClientId());
+        userFeedback.setClientId(comment.getClientId()==null?1:comment.getClientId());
         userFeedback.setWifimac(comment.getWifimac());
         userFeedback.setWirelesssmac(comment.getWirelesssmac());
         userFeedback.setWiremac(comment.getWiremac());
