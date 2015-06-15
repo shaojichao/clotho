@@ -57,3 +57,8 @@ rest.service.defaultMaxPerRoute=500
 #2015-06-10
 rest property:
 qr.3dboxcontroller.ios=https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&mt=8
+
+#2015-06-15
+rest property:
+apistore.baidu.url=http://apis.baidu.com/apistore/weatherservice/cityid?cityid=
+apistore.baidu.key=dbc7dcddec11be599f1a7dada10cb17a
