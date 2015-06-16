@@ -62,3 +62,10 @@ qr.3dboxcontroller.ios=https://itunes.apple.com/us/app/3d-box/id958848828?ls=1&m
 rest property:
 apistore.baidu.url=http://apis.baidu.com/apistore/weatherservice/cityid?cityid=
 apistore.baidu.key=dbc7dcddec11be599f1a7dada10cb17a
+
+#2015-06-16
+hosts
+本地可以配置如下hosts,以便实现mybatis cache
+192.168.20.87	memcached.clotho.d3dstore.com
+线上(连couchbase moxi)
+127.0.0.1	memcached.clotho.d3dstore.com
