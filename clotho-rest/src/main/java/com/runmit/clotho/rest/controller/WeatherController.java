@@ -64,11 +64,12 @@ public class WeatherController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
             String strNow = sdf.format(now);
             // 每小时进行city缓存
-            if (memcachedClient.get("weather_city_"+cityid+"_"+strNow) != null){
-                resp.setData(memcachedClient.get("weather_city_"+cityid+"_"+strNow));
+            WeatherResp weatherRespTemp =  (WeatherResp)memcachedClient.get("weather_city_"+cityid+"_"+strNow);
+            if ( weatherRespTemp != null){
+                resp.setData(weatherRespTemp);
                 resp.setRtn(RestConst.RTN_OK);
                 resp.setRtmsg("success");
-                LOGGER.info("GET "+url+"?cityid="+cityid + "From memcached succeed");
+                LOGGER.info("GET "+url+"?cityid="+cityid + " From memcached succeed");
             }else{
                 // 根据城市代码查天气
                 String rtn = getWeatherService(url+cityid);
@@ -99,14 +100,15 @@ public class WeatherController {
                     weatherResp.setSunset(retData.getString("sunset"));
 
                     resp.setData(weatherResp);
-                    memcachedClient.set("weather_city_"+cityid+"_"+strNow,3600,weatherResp);
+                    memcachedClient.set("weather_city_" + cityid + "_" + strNow, 3600, weatherResp);
+                    memcachedClient.set("weather_city_never_exp_"+cityid,0,weatherResp);
                     resp.setRtn(RestConst.RTN_OK);
                     resp.setRtmsg("success");
                     LOGGER.info("GET "+url+"?cityid="+cityid + " succeed");
                 }else {
-                    resp.setData(null);
-                    resp.setRtn(RestConst.RTN_ERROR);
-                    resp.setRtmsg("failed");
+                    resp.setData(memcachedClient.get("weather_city_never_exp_"+cityid));
+                    resp.setRtn(RestConst.RTN_OK);
+                    resp.setRtmsg("success");
                     LOGGER.info("GET "+url+"?cityid="+cityid + " failed");
                 }
             }
