@@ -25,6 +25,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author hongbin.cao
@@ -57,10 +60,12 @@ public class WeatherController {
     	CommonResp resp = new CommonResp();
         WeatherResp weatherResp = new WeatherResp();
     	try{
-            //memcachedClient.flush();
-            System.out.println("****** "+memcachedClient.get("weather_city_"+cityid));
-            if (memcachedClient.get("weather_city_"+cityid) != null){
-                resp.setData(memcachedClient.get("weather_city_"+cityid));
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+            String strNow = sdf.format(now);
+            // 每小时进行city缓存
+            if (memcachedClient.get("weather_city_"+cityid+"_"+strNow) != null){
+                resp.setData(memcachedClient.get("weather_city_"+cityid+"_"+strNow));
                 resp.setRtn(RestConst.RTN_OK);
                 resp.setRtmsg("success");
                 LOGGER.info("GET "+url+"?cityid="+cityid + "From memcached succeed");
@@ -94,7 +99,7 @@ public class WeatherController {
                     weatherResp.setSunset(retData.getString("sunset"));
 
                     resp.setData(weatherResp);
-                    memcachedClient.set("weather_city_"+cityid,3600,weatherResp);
+                    memcachedClient.set("weather_city_"+cityid+"_"+strNow,3600,weatherResp);
                     resp.setRtn(RestConst.RTN_OK);
                     resp.setRtmsg("success");
                     LOGGER.info("GET "+url+"?cityid="+cityid + " succeed");
