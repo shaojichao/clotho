@@ -85,6 +85,10 @@ public class UpgradeController {
                 ur.setRtn(RestConst.RTN_GETUPGRADE_PLANGETVERSION_NOTEXIST);
                 return new ResponseEntity<>(ur, HttpStatus.OK);
             }
+            if(lastestversion.getVersion().equals(currentversion.getVersion())){
+            	ur.setRtn(RestConst.RTN_GETUPGRADE_VERSION_LASTEST);
+            	return new ResponseEntity<>(ur, HttpStatus.OK);
+            }
             UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), lang);
             ur.setIntroduction(memo==null?"":memo.getMemo());
             ur.setRtn(RestConst.RTN_OK);
