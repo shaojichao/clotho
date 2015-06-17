@@ -152,6 +152,8 @@ public class VersionService {
 			}
 			sb.append(",");
 			plan.setOriginid(sb.toString());
+		}else{
+			plan.setOriginid("");
 		}
 		
 		
