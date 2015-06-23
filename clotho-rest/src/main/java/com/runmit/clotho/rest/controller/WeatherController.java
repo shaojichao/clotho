@@ -106,10 +106,16 @@ public class WeatherController {
                     resp.setRtmsg("success");
                     LOGGER.info("GET "+url+"?cityid="+cityid + " succeed");
                 }else {
-                    resp.setData(memcachedClient.get("weather_city_never_exp_"+cityid));
-                    resp.setRtn(RestConst.RTN_OK);
-                    resp.setRtmsg("success");
-                    LOGGER.info("GET "+url+"?cityid="+cityid + " failed");
+                	WeatherResp weather = (WeatherResp) memcachedClient.get("weather_city_never_exp_"+cityid);
+                	if(null != weather){
+                		resp.setData(weather);
+                        resp.setRtn(RestConst.RTN_OK);
+                        resp.setRtmsg("success");
+                        LOGGER.info("GET "+url+"?cityid="+cityid + " failed");
+                	}else{
+                		resp.setRtn(RestConst.RTN_ERROR);
+                        resp.setRtmsg("not found the city");
+                	}
                 }
             }
     	}catch(Exception ex){
