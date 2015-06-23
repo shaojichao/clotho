@@ -40,8 +40,9 @@ public class WeeklyPictureController {
             @RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
             @RequestParam(value = "se_typeId", required = false) String type,
+            @RequestParam(value = "se_lang", required = false) String lang,
             HttpServletRequest request) {
-		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, type);
+		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, StringUtils.isEmpty(type)?null:type, StringUtils.isEmpty(lang)?null:lang);
 		ExtEntity<WeeklyPicture> entity = new ExtEntity<WeeklyPicture>();
 		entity.setResult(list.size());
 		entity.setRows(list);

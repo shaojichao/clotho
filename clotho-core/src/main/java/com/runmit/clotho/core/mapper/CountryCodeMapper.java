@@ -36,6 +36,6 @@ public interface CountryCodeMapper {
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delete(@Param("id") int id);
 	
-	@Select("select distinct language from CountryCode")
+	@Select("select distinct language,name from CountryCode")
 	List<CountryCode> getLanguages();
 }

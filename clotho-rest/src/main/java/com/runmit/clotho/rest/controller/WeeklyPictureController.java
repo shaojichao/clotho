@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,10 +33,10 @@ public class WeeklyPictureController {
      * @return
      */
     @RequestMapping(value = "/getPictureWeekly")
-    public CommonResp getPictureWeekly(){
+    public CommonResp getPictureWeekly(@RequestParam(value = "lang", required = false, defaultValue = "zh") String lang){
     	CommonResp resp = new CommonResp();
     	try{
-    		WeeklyPicture pictureWeekly = this.weeklyPictureService.getPictureWeekly();
+    		WeeklyPicture pictureWeekly = this.weeklyPictureService.getPictureWeekly(lang);
             RespWeeklyPicture rep = new RespWeeklyPicture();
             /* 属性重组 */
             BeanUtils.copyProperties(pictureWeekly, rep);

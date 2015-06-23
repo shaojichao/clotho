@@ -12,27 +12,28 @@ import java.util.List;
  * @date 2015年4月7日
  */
 public interface WeeklyPictureMapper {
-	@Insert("INSERT INTO WeeklyPicture (`url`,`filesize`,`createby`,`comment`,`type`,`linkout`) "
-			+ "values (#{url},#{filesize},#{createby},#{comment},#{type},#{linkout})")
+	@Insert("INSERT INTO WeeklyPicture (`url`,`filesize`,`createby`,`comment`,`type`,`linkout`,`language`) "
+			+ "values (#{url},#{filesize},#{createby},#{comment},#{type},#{linkout},#{language})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void saveWeeklyPicture(WeeklyPicture weeklyPicture);
 	
-	@Update("update WeeklyPicture set url=#{url},type=#{type},linkout=#{linkout},filesize=#{filesize},comment=#{comment},updateby=#{updateby},updatetime=now() where id=#{id}")
+	@Update("update WeeklyPicture set url=#{url},type=#{type},language=#{language},linkout=#{linkout},filesize=#{filesize},comment=#{comment},updateby=#{updateby},updatetime=now() where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void updateWeeklyPicture(WeeklyPicture weeklyPicture);
 
     @Select("<script>select * from WeeklyPicture " +
-            "WHERE 1=1 " +
+            "WHERE 1 = 1 " +
             "<if test=\"type != null\"> AND type = #{type} </if>" +
+            "<if test=\"language != null\"> AND language = #{language} </if>" +
             "ORDER BY id DESC LIMIT #{start},#{limit} " +
             "</script>" )
 	List<WeeklyPicture> getPictureList(@Param("start") int start, @Param("limit") int limit,
-                                       @Param("type") String type);
+                                       @Param("type") String type, @Param("language") String language);
 
     @Select("SELECT *," +
-            "(SELECT url FROM `WeeklyPicture` WHERE TYPE = 2 ORDER BY id DESC LIMIT 1) AS bigImgUrl " +
-            "FROM `WeeklyPicture`  WHERE TYPE=1 ORDER BY id DESC LIMIT 1")
-    WeeklyPicture getPictureListRest();
+            "(SELECT url FROM `WeeklyPicture` WHERE TYPE = 2 AND language = #{lang} ORDER BY id DESC LIMIT 1) AS bigImgUrl " +
+            "FROM `WeeklyPicture`  WHERE TYPE=1 AND language = #{lang} ORDER BY id DESC LIMIT 1")
+    WeeklyPicture getPictureListRest(@Param("lang") String lang);
 	
 	@Select("select * from WeeklyPicture where id=#{id}")
     WeeklyPicture getWeeklyPicture(@Param("id") int id);
