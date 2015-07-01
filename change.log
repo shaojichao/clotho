@@ -69,3 +69,8 @@ hosts
 192.168.20.87	memcached.clotho.d3dstore.com
 线上(连couchbase moxi)
 127.0.0.1	memcached.clotho.d3dstore.com
+
+#20150701
+version表索引修改
+ALTER TABLE `Version` DROP INDEX `version`;
+ALTER TABLE `Version` ADD UNIQUE (`version`,clientid);
