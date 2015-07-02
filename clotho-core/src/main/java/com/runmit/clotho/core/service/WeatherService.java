@@ -1,16 +1,12 @@
 package com.runmit.clotho.core.service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.runmit.clotho.core.domain.picture.WeeklyPicture;
-import com.runmit.clotho.core.mapper.WeatherMapper;
-import com.runmit.clotho.core.mapper.WeeklyPictureMapper;
-import com.runmit.clotho.log.domain.OpLog.OpType;
-import com.runmit.clotho.log.service.OpLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.runmit.clotho.core.mapper.WeatherMapper;
+import com.runmit.clotho.log.service.OpLogService;
 
 /**
  * @author hongbin.cao
@@ -41,6 +37,9 @@ public class WeatherService {
         return this.weatherMapper.getWeatherWindDirectionCode(cname);
     }
 
-
+    @Transactional(readOnly = true)
+    public String getWeatherAreaEName(int areaid){
+        return this.weatherMapper.getWeatherAreaEName(areaid);
+    }
 
 }

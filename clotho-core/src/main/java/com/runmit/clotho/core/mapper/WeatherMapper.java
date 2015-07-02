@@ -1,9 +1,7 @@
 package com.runmit.clotho.core.mapper;
 
-import com.runmit.clotho.core.domain.picture.WeeklyPicture;
-import org.apache.ibatis.annotations.*;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @author hongbin.cao
@@ -20,4 +18,7 @@ public interface WeatherMapper {
 
     @Select("SELECT w.code FROM WeatherWindDirection w WHERE w.cname=#{cname}")
     String getWeatherWindDirectionCode(@Param("cname") String cname);
+    
+    @Select("SELECT ename FROM WeatherAreaV WHERE areaid=#{areaid}")
+    String getWeatherAreaEName(@Param("areaid") int areaid);
 }

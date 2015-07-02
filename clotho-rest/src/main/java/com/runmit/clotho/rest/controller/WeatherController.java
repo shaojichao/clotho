@@ -1,33 +1,30 @@
 package com.runmit.clotho.rest.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.runmit.clotho.core.domain.picture.WeeklyPicture;
-import com.runmit.clotho.core.service.WeatherService;
-import com.runmit.clotho.core.service.WeeklyPictureService;
-import com.runmit.clotho.rest.common.OkHttpClientSingleton;
-import com.runmit.clotho.rest.common.RestConst;
-import com.runmit.clotho.rest.domain.CommonResp;
-import com.runmit.clotho.rest.domain.RespWeeklyPicture;
-import com.runmit.clotho.rest.domain.WeatherResp;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.annotation.Resource;
+
 import net.spy.memcached.MemcachedClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.alibaba.fastjson.JSONObject;
+import com.runmit.clotho.core.service.WeatherService;
+import com.runmit.clotho.rest.common.OkHttpClientSingleton;
+import com.runmit.clotho.rest.common.RestConst;
+import com.runmit.clotho.rest.domain.CommonResp;
+import com.runmit.clotho.rest.domain.WeatherResp;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 /**
  * @author hongbin.cao
@@ -77,7 +74,11 @@ public class WeatherController {
                 if ("0".equals(rtnJSON.getString("errNum"))){
                     JSONObject retData = rtnJSON.getJSONObject("retData");
                     weatherResp.setCity(retData.getString("city"));
-                    weatherResp.setPinyin(retData.getString("pinyin"));
+                    String pinyin = this.weatherService.getWeatherAreaEName(Integer.valueOf(cityid));
+                    if(null == pinyin){
+                    	pinyin = retData.getString("pinyin");
+                    }
+                    weatherResp.setPinyin(pinyin);
                     weatherResp.setCitycode(retData.getString("citycode"));
                     weatherResp.setDate(retData.getString("date"));
                     weatherResp.setTime(retData.getString("time"));
