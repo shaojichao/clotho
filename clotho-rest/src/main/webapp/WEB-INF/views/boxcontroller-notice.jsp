@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
 <!doctype html>
 <html>
 <head>
@@ -10,7 +7,7 @@
     <style>
         /*320px布局*/
         html{font-size: 100px; }
-        body{font-size: 0.14rem;/*实际相当于14px*/background-color:#2a2e33;}
+        body{font-size: 0.14rem;/*实际相当于14px*/}
         body{
             padding:0;
             margin:0;
@@ -21,13 +18,11 @@
         }
         .img1{
             width:3.2rem;
-            filter: alpha(opacity=80);
-            opacity:0.8;
         }
     </style>
 </head>
 <body>
-<div class="div3"><img class="img1" src="http://medusa.d3dstore.com/app/dtapp/1-218-2-1.0-39713-b67131bf75ee748b9cd26c7dfe4f1454-1437375243687.png?appid=2&appkey=1.0&hwid=14&kv=1.0&bt=bt&ts=2068095279286&key=750ba6428127d4b4be2256eb74db7143" alt="" /></div>
+<div class="div3"><img class="img1" src="http://medusa.d3dstore.com/app/dtapp/1-219-2-1.0-38846-0654af84da858899cf259cd69deaab77-1437377590678.png?appid=2&appkey=1.0&hwid=14&kv=1.0&bt=bt&ts=2068097616211&key=8d7173f7b45faf63b57986b25c670b04" alt="" /></div>
 
 </body>
 <script>

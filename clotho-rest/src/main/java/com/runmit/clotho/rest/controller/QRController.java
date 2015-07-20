@@ -32,7 +32,6 @@ public class QRController {
     @RequestMapping(value = "/3dboxcontroller")
     public String boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
-    	System.out.println(ua);
     	if(ua.indexOf("iPhone")>0){
     		if(ua.indexOf("MicroMessenger")>0){
     			return "boxcontroller-notice";
