@@ -1,20 +1,13 @@
 package com.runmit.clotho.rest.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.runmit.clotho.core.service.CountryCodeService;
 
 /**
  * @author zhipeng.tian
@@ -40,11 +33,19 @@ public class QRController {
     public String boxcontroller(HttpServletRequest request,HttpServletResponse response) throws Exception{
     	String ua = request.getHeader("User-Agent");
     	if(ua.indexOf("iPhone")>0){
-    		response.sendRedirect(qr3dboxcontrollerIOS); 
-    		return null;
+    		if(ua.indexOf("MicroMessenger")>0){
+    			return "boxcontroller-notice";
+    		}else{
+    			response.sendRedirect(qr3dboxcontrollerIOS); 
+    			return null;
+    		}
     	}else if(ua.indexOf("iPad")>0){
-    		response.sendRedirect(qr3dboxcontrollerIOS); 
-    		return null;
+    		if(ua.indexOf("MicroMessenger")>0){
+    			return "boxcontroller-notice";
+    		}else{
+    			response.sendRedirect(qr3dboxcontrollerIOS); 
+    			return null;
+    		}
     	}else if(ua.indexOf("Android")>0){
 //    		response.sendRedirect(qr3dboxcontrollerANDROID); 
     		return "boxcontroller";
