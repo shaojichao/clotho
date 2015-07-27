@@ -1,12 +1,16 @@
 package com.runmit.clotho.management.controller.clotho;
 
-import java.io.BufferedReader;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.alibaba.fastjson.JSONObject;
 import com.runmit.clotho.core.domain.picture.WeeklyPicture;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
+import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
+import com.runmit.clotho.core.domain.upgrade.Version;
+import com.runmit.clotho.core.dto.ExtEntity;
+import com.runmit.clotho.core.dto.ExtStatusEntity;
+import com.runmit.clotho.core.service.VersionService;
 import com.runmit.clotho.core.service.WeeklyPictureService;
+import com.runmit.clotho.management.security.SessionUtil;
+import com.runmit.clotho.management.service.CDNService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
-import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
-import com.runmit.clotho.core.domain.upgrade.Version;
-import com.runmit.clotho.core.dto.ExtEntity;
-import com.runmit.clotho.core.dto.ExtStatusEntity;
-import com.runmit.clotho.core.service.VersionService;
-import com.runmit.clotho.management.security.SessionUtil;
-import com.runmit.clotho.management.service.CDNService;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.util.List;
 
 /**
  * @author zhipeng.tian
@@ -312,11 +310,15 @@ public class UpgradeController {
                     WeeklyPicture weeklyPicture = this.weeklyPictureService.getPicture(taskTempId);
                     weeklyPicture.setUrl(filename);
                     weeklyPicture.setUrl(this.cdnService.getGSLBUrlPic(weeklyPicture));
+                    // cdn dispatch success
+                    weeklyPicture.setDistributestatus(3);
                     this.weeklyPictureService.save(weeklyPicture);
                 }else{
                     Version version = this.versionService.getbyid(taskTempId);
                     version.setPkgurl(filename);
                     version.setPkgurl(this.cdnService.getGSLBUrl(version));
+                    // cdn dispatch success
+                    version.setDistributestatus(3);
                     this.versionService.saveVersion(version);
                 }
     		}
@@ -329,5 +331,48 @@ public class UpgradeController {
 		json.put("desc", "成功");
 		return json;
 	}
-	
+
+    @RequestMapping(value = "/distribute.do")
+    public @ResponseBody ExtStatusEntity distribute(@RequestParam("id")Integer id,HttpServletRequest request) {
+        ExtStatusEntity entity = new ExtStatusEntity();
+        Version version = this.versionService.getbyid(id);
+        Long size = version.getFilesize();
+        String md5 = version.getMd5();
+        try{
+            //file dispatch
+            LOGGER.info("size:{},md5:{}",size,md5);
+            if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
+                int res = -1;
+                int tryTime = 2;
+                for(int i=0;i<tryTime;i++){
+                    res = this.cdnService.dispatchApp(version, md5, size);
+                    if(res==0){
+                        // cdn dispatch distributing
+                        version.setDistributestatus(1);
+                        this.versionService.saveVersion(version);
+                        entity.setMsg("succeed");
+                        entity.setSuccess(true);
+                        break;
+                    }
+                }
+                if(res!=0){
+                    // cdn dispatch failed
+                    version.setDistributestatus(2);
+                    this.versionService.saveVersion(version);
+                    entity.setMsg("cdn分发失败");
+                    entity.setSuccess(false);
+                    return entity;
+                }
+            }
+        }catch(Exception ex){
+            LOGGER.error("distribute Upgrade error",ex);
+            // cdn dispatch failed
+            version.setDistributestatus(2);
+            this.versionService.saveVersion(version);
+            entity.setMsg("cdn分发失败");
+            entity.setSuccess(false);
+        }
+        return entity;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.runmit.clotho.core.mapper;
 
-import com.runmit.clotho.core.domain.CountryCode;
 import com.runmit.clotho.core.domain.picture.WeeklyPicture;
 import org.apache.ibatis.annotations.*;
 
@@ -12,12 +11,12 @@ import java.util.List;
  * @date 2015年4月7日
  */
 public interface WeeklyPictureMapper {
-	@Insert("INSERT INTO WeeklyPicture (`url`,`filesize`,`createby`,`comment`,`type`,`linkout`,`language`) "
-			+ "values (#{url},#{filesize},#{createby},#{comment},#{type},#{linkout},#{language})")
+	@Insert("INSERT INTO WeeklyPicture (`url`,`filesize`,`createby`,`comment`,`type`,`linkout`,`md5`,`distributestatus`,`language`) "
+			+ "values (#{url},#{filesize},#{createby},#{comment},#{type},#{linkout},#{md5},#{distributestatus},#{language})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void saveWeeklyPicture(WeeklyPicture weeklyPicture);
 	
-	@Update("update WeeklyPicture set url=#{url},type=#{type},language=#{language},linkout=#{linkout},filesize=#{filesize},comment=#{comment},updateby=#{updateby},updatetime=now() where id=#{id}")
+	@Update("update WeeklyPicture set distributestatus=#{distributestatus},url=#{url},type=#{type},language=#{language},linkout=#{linkout},filesize=#{filesize},md5=#{md5},comment=#{comment},updateby=#{updateby},updatetime=now() where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void updateWeeklyPicture(WeeklyPicture weeklyPicture);
 
@@ -41,4 +40,5 @@ public interface WeeklyPictureMapper {
 	@Delete("delete from WeeklyPicture where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delete(@Param("id") int id);
+
 }

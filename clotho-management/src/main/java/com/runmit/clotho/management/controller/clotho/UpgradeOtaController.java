@@ -301,6 +301,8 @@ public class UpgradeOtaController {
     			Version version = this.versionService.getbyid(taskId);
     			version.setPkgurl(filename);
     			version.setPkgurl(this.cdnService.getGSLBUrl(version));
+                // cdn dispatch success
+                version.setDistributestatus(3);
     			this.versionService.saveVersion(version);
     		}
         }catch (Exception e) {
@@ -312,5 +314,48 @@ public class UpgradeOtaController {
 		json.put("desc", "成功");
 		return json;
 	}
+
+    @RequestMapping(value = "/distribute.do")
+    public @ResponseBody ExtStatusEntity distribute(@RequestParam("id")Integer id,HttpServletRequest request) {
+        ExtStatusEntity entity = new ExtStatusEntity();
+        Version version = this.versionService.getbyid(id);
+        Long size = version.getFilesize();
+        String md5 = version.getMd5();
+        try{
+            //file dispatch
+            LOGGER.info("size:{},md5:{}",size,md5);
+            if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
+				int res = -1;
+				int tryTime = 2;
+				for(int i=0;i<tryTime;i++){
+					res = this.cdnService.dispatchApp(version, md5, size);
+					if(res==0){
+                        // cdn dispatch distributing
+                        version.setDistributestatus(1);
+                        this.versionService.saveOtaVersion(version);
+                        entity.setMsg("succeed");
+                        entity.setSuccess(true);
+						break;
+					}
+				}
+				if(res!=0){
+				    // cdn dispatch failed
+                    version.setDistributestatus(2);
+                    this.versionService.saveOtaVersion(version);
+					entity.setMsg("cdn分发失败");
+					entity.setSuccess(false);
+					return entity;
+				}
+			}
+        }catch(Exception ex){
+            LOGGER.error("distribute OtaUpgrade error",ex);
+            // cdn dispatch failed
+            version.setDistributestatus(2);
+            this.versionService.saveOtaVersion(version);
+            entity.setMsg("cdn分发失败");
+            entity.setSuccess(false);
+        }
+        return entity;
+    }
 	
 }

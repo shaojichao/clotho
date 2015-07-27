@@ -1,10 +1,8 @@
 package com.runmit.clotho.management.controller.clotho;
 
-import com.runmit.clotho.core.domain.CountryCode;
 import com.runmit.clotho.core.domain.picture.WeeklyPicture;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
-import com.runmit.clotho.core.service.CountryCodeService;
 import com.runmit.clotho.core.service.WeeklyPictureService;
 import com.runmit.clotho.management.security.SessionUtil;
 import com.runmit.clotho.management.service.CDNService;
@@ -70,10 +68,16 @@ public class WeeklyPictureController {
                 for(int i=0;i<tryTime;i++){
                     res = this.cdnService.dispatchAppPic(weeklyPicture, md5, size);
                     if(res==0){
+                        // cdn dispatch distributing
+                        weeklyPicture.setDistributestatus(1);
+                        this.weeklyPictureService.save(weeklyPicture);
                         break;
                     }
                 }
                 if(res!=0){
+                    // cdn dispatch failed
+                    weeklyPicture.setDistributestatus(2);
+                    this.weeklyPictureService.save(weeklyPicture);
                     entity.setMsg("cdn分发失败");
                     entity.setSuccess(false);
                     return entity;
@@ -82,7 +86,7 @@ public class WeeklyPictureController {
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
 		}catch(Exception ex){
-			LOGGER.error("saveWeeklyPicture error",ex);
+			LOGGER.error("save WeeklyPicture error",ex);
 			entity.setMsg("保存失败");
 			entity.setSuccess(false);
 		}
@@ -106,4 +110,46 @@ public class WeeklyPictureController {
 		return entity;
 	}
 
+    @RequestMapping(value = "/distribute.do")
+    public @ResponseBody ExtStatusEntity distribute(@RequestParam("id")Integer id,HttpServletRequest request) {
+        ExtStatusEntity entity = new ExtStatusEntity();
+        WeeklyPicture weeklyPicture = this.weeklyPictureService.getPicture(id);
+        Long size = weeklyPicture.getFilesize();
+        String md5 = weeklyPicture.getMd5();
+        try{
+            //file dispatch
+            LOGGER.info("size:{},md5:{}",size,md5);
+            if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
+                int res = -1;
+                int tryTime = 2;
+                for(int i=0;i<tryTime;i++){
+                    res = this.cdnService.dispatchAppPic(this.weeklyPictureService.getPicture(id), md5, size);
+                    if(res==0){
+                        // cdn dispatch distributing
+                        weeklyPicture.setDistributestatus(1);
+                        this.weeklyPictureService.save(weeklyPicture);
+                        entity.setMsg("succeed");
+                        entity.setSuccess(true);
+                        break;
+                    }
+                }
+                if(res!=0){
+                    // cdn dispatch failed
+                    weeklyPicture.setDistributestatus(2);
+                    this.weeklyPictureService.save(weeklyPicture);
+                    entity.setMsg("cdn分发失败");
+                    entity.setSuccess(false);
+                    return entity;
+                }
+            }
+        }catch(Exception ex){
+            LOGGER.error("distribute WeeklyPicture error",ex);
+            // cdn dispatch failed
+            weeklyPicture.setDistributestatus(2);
+            this.weeklyPictureService.save(weeklyPicture);
+            entity.setMsg("cdn分发失败");
+            entity.setSuccess(false);
+        }
+        return entity;
+    }
 }

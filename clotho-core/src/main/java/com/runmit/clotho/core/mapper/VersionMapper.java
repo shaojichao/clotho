@@ -1,16 +1,11 @@
 package com.runmit.clotho.core.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  *
@@ -85,24 +80,24 @@ public interface VersionMapper {
 	@Options(useCache = true, flushCache = false)
 	Version getLastestbyclientid(@Param("clientid") int clientid);
 
-	@Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`showtype`,`upgradetype`,`createby`) "
-			+ "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{showtype},#{upgradetype},#{createby})")
+	@Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`md5`,`distributestatus`,`showtype`,`upgradetype`,`createby`) "
+			+ "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{md5},#{distributestatus},#{showtype},#{upgradetype},#{createby})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addVersion(Version version);
 
 	@Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},`filesize`=#{filesize},"
-			+ "`clientid`=#{clientid},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
+			+ "`clientid`=#{clientid},`md5`=#{md5},`distributestatus`=#{distributestatus},`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now()"
 			+ " where `id`=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void updateVersion(Version version);
 
-    @Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`showtype`,`upgradetype`,`createby`,`brand`,`model`,`country`,`hardwareVersion`,`latitude`) "
-            + "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{showtype},#{upgradetype},#{createby},#{brand},#{model},#{country},#{hardwareVersion},#{latitude})")
+    @Insert("INSERT INTO Version (`version`,`serialno`,`pkgurl`,`filesize`,`clientid`,`md5`,`distributestatus`,`showtype`,`upgradetype`,`createby`,`brand`,`model`,`country`,`hardwareVersion`,`latitude`) "
+            + "VALUES (#{version},#{serialno},#{pkgurl},#{filesize},#{clientid},#{md5},#{distributestatus},#{showtype},#{upgradetype},#{createby},#{brand},#{model},#{country},#{hardwareVersion},#{latitude})")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addOtaVersion(Version version);
 
     @Insert("UPDATE Version SET `version`=#{version},`serialno`=#{serialno},`pkgurl`=#{pkgurl},`filesize`=#{filesize},"
-            + "`showtype`=#{showtype},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now(),"
+            + "`showtype`=#{showtype},`md5`=#{md5},`distributestatus`=#{distributestatus},`upgradetype`=#{upgradetype},`updateby`=#{updateby},`updatetime`=now(),"
             + "`brand`=#{brand},`model`=#{model},`country`=#{country},`hardwareVersion`=#{hardwareVersion},`latitude`=#{latitude}"
             + " where `id`=#{id}")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")

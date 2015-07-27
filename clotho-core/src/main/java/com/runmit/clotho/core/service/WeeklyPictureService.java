@@ -1,9 +1,7 @@
 package com.runmit.clotho.core.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.runmit.clotho.core.domain.CountryCode;
 import com.runmit.clotho.core.domain.picture.WeeklyPicture;
-import com.runmit.clotho.core.mapper.CountryCodeMapper;
 import com.runmit.clotho.core.mapper.WeeklyPictureMapper;
 import com.runmit.clotho.log.domain.OpLog.OpType;
 import com.runmit.clotho.log.service.OpLogService;

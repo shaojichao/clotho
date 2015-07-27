@@ -28,7 +28,11 @@ public class WeeklyPicture extends BaseDomain{
     private String language;
     /*图片外链地址*/
     private String linkout;
+    /*md5文件签名*/
+    private String md5;
     /*广告大图地址*/
     private String bigImgUrl;
+    /*分发状态：未分发:0 分发中:1 分发失败:2 分发成功:3*/
+    private int distributestatus;
 
 }
