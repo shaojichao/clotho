@@ -91,12 +91,12 @@ public class UpgradeController {
 			version.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try {
-			final int vId = version.getId();
+			
 			if(size!=null&&size!=0){
 				version.setFilesize(size);
 			}
 			this.versionService.saveVersion(version);
-			
+			final int vId = version.getId();
 			//file dispatch
 			LOGGER.info("size:{},md5:{}",size,md5);
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
