@@ -1,6 +1,7 @@
 package com.runmit.clotho.management.controller.clotho;
 
 import com.alibaba.fastjson.JSONObject;
+import com.runmit.clotho.core.domain.picture.WeeklyPicture;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
@@ -85,6 +86,7 @@ public class UpgradeOtaController {
 			version.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try {
+			final int vId = version.getId();
 			if(size!=null&&size!=0){
 				version.setFilesize(size);
 			}
@@ -99,10 +101,24 @@ public class UpgradeOtaController {
 				for(int i=0;i<tryTime;i++){
 					res = this.cdnService.dispatchApp(version, md5, size);
 					if(res==0){
+						Thread t = new Thread() {
+							public void run() {
+								Version versionT = versionService.getbyid(vId);
+								if (versionT.getDistributestatus() == 0) {
+									// cdn dispatch distributing
+									versionT.setDistributestatus(1);
+									versionService.saveOtaVersion(versionT);
+								}
+							}
+						};
+						t.start();
 						break;
 					}
 				}
 				if(res!=0){
+					// cdn dispatch failed
+					version.setDistributestatus(2);
+					this.versionService.saveOtaVersion(version);
 					entity.setMsg("cdn分发失败");
 					entity.setSuccess(false);
 					return entity;
@@ -322,6 +338,7 @@ public class UpgradeOtaController {
         Long size = version.getFilesize();
         String md5 = version.getMd5();
         try{
+			final int vId = version.getId();
             //file dispatch
             LOGGER.info("size:{},md5:{}",size,md5);
             if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
@@ -329,12 +346,18 @@ public class UpgradeOtaController {
 				int tryTime = 2;
 				for(int i=0;i<tryTime;i++){
 					res = this.cdnService.dispatchApp(version, md5, size);
-					if(res==0){
-                        // cdn dispatch distributing
-                        version.setDistributestatus(1);
-                        this.versionService.saveOtaVersion(version);
-                        entity.setMsg("succeed");
-                        entity.setSuccess(true);
+					if (res == 0) {
+						Thread t = new Thread() {
+							public void run() {
+								Version version = versionService.getbyid(vId);
+								if (version.getDistributestatus() == 0) {
+									// cdn dispatch distributing
+									version.setDistributestatus(1);
+									versionService.saveOtaVersion(version);
+								}
+							}
+						};
+						t.start();
 						break;
 					}
 				}

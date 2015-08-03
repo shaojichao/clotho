@@ -48,7 +48,7 @@ public class WeeklyPictureController {
 	}
 	
 	@RequestMapping(value = "/save.do")
-	public @ResponseBody ExtStatusEntity saveWeeklyPicture(WeeklyPicture weeklyPicture,HttpServletRequest request
+	public @ResponseBody ExtStatusEntity saveWeeklyPicture(final WeeklyPicture weeklyPicture,HttpServletRequest request
             ,@RequestParam(value = "size", required = false, defaultValue = "0") Long size
             ,@RequestParam(value = "md5", required = false, defaultValue = "") String md5) {
 		ExtStatusEntity entity = new ExtStatusEntity();
@@ -60,6 +60,7 @@ public class WeeklyPictureController {
 		}
 		try{
 			this.weeklyPictureService.save(weeklyPicture);
+            final int vId = weeklyPicture.getId();
             //file dispatch
             LOGGER.info("size:{},md5:{}",size,md5);
             if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
@@ -67,10 +68,18 @@ public class WeeklyPictureController {
                 int tryTime = 2;
                 for(int i=0;i<tryTime;i++){
                     res = this.cdnService.dispatchAppPic(weeklyPicture, md5, size);
-                    if(res==0){
-                        // cdn dispatch distributing
-                        weeklyPicture.setDistributestatus(1);
-                        this.weeklyPictureService.save(weeklyPicture);
+                    if (res == 0) {
+                        Thread t = new Thread() {
+                            public void run() {
+                                WeeklyPicture weeklyPictureT = weeklyPictureService.getPicture(vId);
+                                if (weeklyPictureT.getDistributestatus() == 0) {
+                                    // cdn dispatch distributing
+                                    weeklyPictureT.setDistributestatus(1);
+                                    weeklyPictureService.save(weeklyPictureT);
+                                }
+                            }
+                        };
+                        t.start();
                         break;
                     }
                 }
@@ -117,6 +126,7 @@ public class WeeklyPictureController {
         Long size = weeklyPicture.getFilesize();
         String md5 = weeklyPicture.getMd5();
         try{
+            final int vId = weeklyPicture.getId();
             //file dispatch
             LOGGER.info("size:{},md5:{}",size,md5);
             if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
@@ -124,12 +134,18 @@ public class WeeklyPictureController {
                 int tryTime = 2;
                 for(int i=0;i<tryTime;i++){
                     res = this.cdnService.dispatchAppPic(this.weeklyPictureService.getPicture(id), md5, size);
-                    if(res==0){
-                        // cdn dispatch distributing
-                        weeklyPicture.setDistributestatus(1);
-                        this.weeklyPictureService.save(weeklyPicture);
-                        entity.setMsg("succeed");
-                        entity.setSuccess(true);
+                    if (res == 0) {
+                        Thread t = new Thread() {
+                            public void run() {
+                                WeeklyPicture weeklyPictureT = weeklyPictureService.getPicture(vId);
+                                if (weeklyPictureT.getDistributestatus() == 0) {
+                                    // cdn dispatch distributing
+                                    weeklyPictureT.setDistributestatus(1);
+                                    weeklyPictureService.save(weeklyPictureT);
+                                }
+                            }
+                        };
+                        t.start();
                         break;
                     }
                 }
