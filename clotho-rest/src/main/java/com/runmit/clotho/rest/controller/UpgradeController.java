@@ -105,6 +105,7 @@ public class UpgradeController {
 			ur.setNew_version(lastestversion.getVersion());
 			ur.setUpgrade_url(lastestversion.getPkgurl());
 			ur.setFilesize(lastestversion.getFilesize());
+			ur.setMd5(lastestversion.getMd5());
 			return new ResponseEntity<>(ur, HttpStatus.OK);
 		}
 	}
@@ -218,6 +219,7 @@ public class UpgradeController {
 				upgradeName.append(dateString).append(".zip");
 				ur.setUpgrade_name(upgradeName.toString());
 				ur.setLatitude(lastVersion.getLatitude());
+				ur.setMd5(lastVersion.getMd5());
 				return new ResponseEntity<>(ur, HttpStatus.OK);
 			}
 		} else {

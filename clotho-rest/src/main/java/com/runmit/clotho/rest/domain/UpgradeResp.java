@@ -34,5 +34,7 @@ public class UpgradeResp extends CommonResp{
 
     @ApiModelProperty(value = "校验码", notes = "", required = false, dataType = "String")
     private String latitude;
+    
+    private String md5;
 
 }
