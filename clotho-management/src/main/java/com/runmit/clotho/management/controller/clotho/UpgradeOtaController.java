@@ -86,13 +86,13 @@ public class UpgradeOtaController {
 			version.setUpdateby(SessionUtil.getLoginAdminName(request));
 		}
 		try {
-			final int vId = version.getId();
+			
 			if(size!=null&&size!=0){
 				version.setFilesize(size);
 			}
             version.setClientid(20);
 			this.versionService.saveOtaVersion(version);
-			
+			final int vId = version.getId();
 			//file dispatch
 			LOGGER.info("size:{},md5:{}",size,md5);
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
