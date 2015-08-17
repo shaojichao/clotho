@@ -94,9 +94,9 @@ public class UpgradeController {
 			}
 			UpgradePlanMemo memo = this.versionService.getUpgradePlanMemo(
 					upgradePlan.getId(), lang);
-			if (null == memo && !"zh".equalsIgnoreCase(lang)) {
+			if (null == memo && !"en".equalsIgnoreCase(lang)) {
 				memo = this.versionService.getUpgradePlanMemo(
-						upgradePlan.getId(), "zh");
+						upgradePlan.getId(), "en");
 			}
 			ur.setIntroduction(memo == null ? "" : memo.getMemo());
 			ur.setRtn(RestConst.RTN_OK);
