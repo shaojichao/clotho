@@ -48,14 +48,24 @@ public class MenuController {
 		List<Menu> list = this.menuService.getMenuListByAdminid(adminid,0);
 		
 		//二级联动
-		for(Menu menu:list){
+		/*for(Menu menu:list){
 			if(!menu.getLeaf()){
 				menu.setChildren(this.menuService.getMenuListByAdminid(adminid,menu.getId()));
 			}
-		}
+		}*/
+		setMenuChildren(list,adminid);
 		
 		LOGGER.info("getMenus");
 		return list;
+	}
+	
+	private void setMenuChildren(List<Menu> list,int adminid){
+		for(Menu menu:list){
+			if(!menu.getLeaf()){
+				menu.setChildren(this.menuService.getMenuListByAdminid(adminid,menu.getId()));
+				setMenuChildren(menu.getChildren(),adminid);
+			}
+		}
 	}
 	
 	@RequestMapping(value = "/getMenuByRole.do")	
@@ -66,7 +76,7 @@ public class MenuController {
 		List<Menu> list = this.menuService.getMenuListByRole(0,roleid);
 		List<MenuDTO> dtos = new ArrayList<MenuDTO>();
 		//二级联动
-		for(Menu menu:list){
+		/*for(Menu menu:list){
 			MenuDTO dto = new MenuDTO();
 			if(menu.getRoleid()!=null){
 				dto.setChecked(true);
@@ -92,10 +102,41 @@ public class MenuController {
 				dto.setChildren(dtosc);
 			}
 			dtos.add(dto);
-		}
-		
+		}*/
+		setMenuDTOChildren(list,dtos,roleid);
 		LOGGER.info("getMenuDTOs");
 		return dtos;
+	}
+	
+	private void setMenuDTOChildren(List<Menu> list,List<MenuDTO> dtos,int roleid){
+		for(Menu menu:list){
+			MenuDTO dto = new MenuDTO();
+			if(menu.getRoleid()!=null){
+				dto.setChecked(true);
+			}
+			dto.setExpanded(true);
+			dto.setId(menu.getId());
+			dto.setText(menu.getText());
+			dto.setLeaf(menu.getLeaf());
+			if(!menu.getLeaf()){
+				List<Menu> children = this.menuService.getMenuListByRole(menu.getId(),roleid);
+				List<MenuDTO> dtosc = new ArrayList<MenuDTO>();
+				setMenuDTOChildren(children,dtosc,roleid);
+//				for(Menu child:children){
+//					MenuDTO chdto = new MenuDTO();
+//					if(child.getRoleid()!=null){
+//						chdto.setChecked(true);
+//					}
+//					chdto.setExpanded(false);
+//					chdto.setId(child.getId());
+//					chdto.setText(child.getText());
+//					chdto.setLeaf(child.getLeaf());
+//					dtosc.add(chdto);
+//				}
+				dto.setChildren(dtosc);
+			}
+			dtos.add(dto);
+		}
 	}
 	
 	@RequestMapping(value = "/rootlist.do")
