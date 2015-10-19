@@ -33,6 +33,9 @@ public interface MenuMapper {
     @Select("SELECT Menu.* FROM Menu where parentid=#{parentID} and status='ACTIVE' order by orderNum")
     List<Menu> getList(@Param("parentID")int parentID);
     
+    @Select("SELECT Menu.* FROM Menu where leaf=0 and status='ACTIVE' order by orderNum")
+    List<Menu> getParentList();
+    
     @Select("SELECT a.*,b.text as parentName FROM Menu a left join Menu b on a.parentid=b.id order by a.parentID,a.orderNum,a.id")
     List<Menu> getAllMenu();
     

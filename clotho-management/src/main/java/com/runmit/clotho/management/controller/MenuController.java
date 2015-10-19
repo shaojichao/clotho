@@ -141,7 +141,7 @@ public class MenuController {
 	
 	@RequestMapping(value = "/rootlist.do")
 	public @ResponseBody ExtEntity<Menu> getMenus() {
-		List<Menu> list = this.menuService.getMenuList(0);
+		List<Menu> list = this.menuService.getParentList();
 		Menu e = new Menu();
 		e.setId(0);
 		e.setText("无");

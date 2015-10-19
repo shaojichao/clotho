@@ -51,6 +51,11 @@ public class MenuService {
     }
     
     @Transactional(readOnly = true)
+    public List<Menu> getParentList() {
+    	return menuMapper.getParentList();
+    }
+    
+    @Transactional(readOnly = true)
     public List<Menu> getMenuListByAdminid(int adminid,int parentID){
     	return menuMapper.getListByAdminid(adminid,parentID);
     }
