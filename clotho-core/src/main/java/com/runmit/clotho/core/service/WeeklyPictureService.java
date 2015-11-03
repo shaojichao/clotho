@@ -40,6 +40,11 @@ public class WeeklyPictureService {
         return weeklyPictureMapper.getPictureListRest(lang);
     }
     
+    @Transactional(readOnly = true)
+    public List<WeeklyPicture> getWeeklyPictureByType(int type,String lang){
+    	return weeklyPictureMapper.getWeeklyPictureByType(type,lang);
+    }
+    
     @Transactional(readOnly = false)
     public void save(WeeklyPicture weeklyPicture){
     	if(weeklyPicture.getId()==null||weeklyPicture.getId()==0){

@@ -40,7 +40,7 @@ public class WeeklyPictureController {
             @RequestParam(value = "se_typeId", required = false) String type,
             @RequestParam(value = "se_lang", required = false) String lang,
             HttpServletRequest request) {
-		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, StringUtils.isEmpty(type)?null:type, StringUtils.isEmpty(lang)?null:lang);
+		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, StringUtils.isEmpty(type)?"1":type, StringUtils.isEmpty(lang)?null:lang);
 		ExtEntity<WeeklyPicture> entity = new ExtEntity<WeeklyPicture>();
 		entity.setResult(list.size());
 		entity.setRows(list);
@@ -168,4 +168,17 @@ public class WeeklyPictureController {
         }
         return entity;
     }
+    
+    @RequestMapping(value = "/controllerList.do")
+	public  @ResponseBody ExtEntity<WeeklyPicture> getControllerPictures(
+            @RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+            @RequestParam(value = "se_lang", required = false) String lang,
+            HttpServletRequest request) {
+		List<WeeklyPicture> list = this.weeklyPictureService.getList(start, limit, "3", StringUtils.isEmpty(lang)?null:lang);
+		ExtEntity<WeeklyPicture> entity = new ExtEntity<WeeklyPicture>();
+		entity.setResult(list.size());
+		entity.setRows(list);
+		return entity;
+	}
 }

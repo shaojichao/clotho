@@ -37,6 +37,9 @@ public interface WeeklyPictureMapper {
 	@Select("select * from WeeklyPicture where id=#{id}")
     WeeklyPicture getWeeklyPicture(@Param("id") int id);
 	
+	@Select("select * from WeeklyPicture where type=#{type} and language = #{language} ORDER BY id DESC")
+	List<WeeklyPicture> getWeeklyPictureByType(@Param("type") int type, @Param("language") String language);
+	
 	@Delete("delete from WeeklyPicture where id=#{id}")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void delete(@Param("id") int id);
