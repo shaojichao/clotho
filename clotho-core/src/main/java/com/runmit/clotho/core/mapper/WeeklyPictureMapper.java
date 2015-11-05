@@ -23,6 +23,7 @@ public interface WeeklyPictureMapper {
     @Select("<script>select * from WeeklyPicture " +
             "WHERE 1 = 1 " +
             "<if test=\"type != null\"> AND type = #{type} </if>" +
+            "<if test=\"type == null\"> AND type != 3 </if>" +
             "<if test=\"language != null\"> AND language = #{language} </if>" +
             "ORDER BY id DESC LIMIT #{start},#{limit} " +
             "</script>" )
