@@ -29,6 +29,11 @@ public class WeeklyPictureService {
     public List<WeeklyPicture> getList(int start, int limit, String type, String lang){
     	return weeklyPictureMapper.getPictureList(start, limit, type, lang);
     }
+    
+    @Transactional(readOnly = true)
+    public long getCount(String type, String lang){
+    	return weeklyPictureMapper.getCount(type, lang);
+    }
 
     @Transactional(readOnly = true)
     public WeeklyPicture getPicture(int id){

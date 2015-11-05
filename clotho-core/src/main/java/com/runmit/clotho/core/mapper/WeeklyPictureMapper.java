@@ -28,6 +28,13 @@ public interface WeeklyPictureMapper {
             "</script>" )
 	List<WeeklyPicture> getPictureList(@Param("start") int start, @Param("limit") int limit,
                                        @Param("type") String type, @Param("language") String language);
+    
+    @Select("<script>select count(id) from WeeklyPicture " +
+            "WHERE 1 = 1 " +
+            "<if test=\"type != null\"> AND type = #{type} </if>" +
+            "<if test=\"language != null\"> AND language = #{language} </if>" +
+            "</script>" )
+	long getCount(@Param("type") String type, @Param("language") String language);
 
     @Select("SELECT *," +
             "(SELECT url FROM `WeeklyPicture` WHERE TYPE = 2 AND language = #{lang} ORDER BY id DESC LIMIT 1) AS bigImgUrl " +

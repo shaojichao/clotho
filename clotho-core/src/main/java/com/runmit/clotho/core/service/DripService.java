@@ -35,6 +35,11 @@ public class DripService {
 	public List<DripRecord> getList(int start, int limit) {
 		return this.dripMapper.getList(start, limit);
 	}
+	
+	@Transactional(readOnly = true)
+	public long getCount() {
+		return this.dripMapper.getCount();
+	}
 
 	@Transactional(readOnly = true)
 	public long getCountByUid(int uid, Date beginTime, Date endTime) {

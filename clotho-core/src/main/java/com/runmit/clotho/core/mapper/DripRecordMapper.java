@@ -26,6 +26,9 @@ public interface DripRecordMapper {
 	@Select("SELECT * FROM DripRecord ORDER BY id DESC LIMIT #{start},#{limit}")
 	List<DripRecord> getList(@Param("start") int start,
 			@Param("limit") int limit);
+	
+	@Select("SELECT count(id) FROM DripRecord")
+	long getCount();
 
 	@Select("SELECT * FROM DripRecord where uid=#{uid} ORDER BY id DESC LIMIT 1")
 	DripRecord getLast(@Param("uid") int uid);

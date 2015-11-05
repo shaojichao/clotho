@@ -1,6 +1,5 @@
 package com.runmit.clotho.rest.controller;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
