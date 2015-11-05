@@ -18,7 +18,7 @@ import com.runmit.clotho.core.domain.drip.DripRecord;
 @CacheNamespace(implementation = org.mybatis.caches.memcached.MemcachedCache.class)
 public interface DripRecordMapper {
 
-	@Insert("INSERT INTO DripRecord (`uid`,`acount`,`amount`,`code`) "
+	@Insert("INSERT INTO DripRecord (`uid`,`account`,`amount`,`code`) "
 			+ "VALUES (#{uid},#{acount},#{amount},#{code})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addDripRecord(DripRecord record);

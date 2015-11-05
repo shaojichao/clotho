@@ -1,11 +1,13 @@
 package com.runmit.clotho.rest.controller;
 
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,8 @@ public class DirpController {
 
 	@Value("${drip.uc.check}")
 	private String ucCheckUrl;
+	@Value("${drip.uc.check.key}")
+	private String ucKey;
 	@Value("${drip.pay.present}")
 	private String payPresentUrl;
 	@Value("${drip.rule.day}")
@@ -50,7 +54,7 @@ public class DirpController {
 	private int daysCount;
 	@Value("${drip.present.amount}")
 	private int amount;
-	
+
 	@Autowired
 	private DripService dripService;
 
@@ -61,7 +65,8 @@ public class DirpController {
 	}
 
 	@RequestMapping(value = "/active")
-	public @ResponseBody CommonResp active(@RequestParam("acount") String acount,
+	public @ResponseBody CommonResp active(
+			@RequestParam("account") String account,
 			@RequestParam("code") String code) {
 		CommonResp resp = new CommonResp();
 		try {
@@ -72,18 +77,42 @@ public class DirpController {
 				resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
 				resp.setRtmsg("激活码不存在");
 			} else {
-				
-				int uid = 382;
+				int uid = 0;
+				int accountType = account.contains("@") ? 1 : 2;
+				long ts = System.currentTimeMillis();
+				String sign = DigestUtils.md5Hex(URLEncoder.encode(account,"utf-8")+"_" + accountType + "_" + ts
+						+ "_"+ucKey);
+				OkHttpClient ucclient = OkHttpClientSingleton.getInstance();
+				Request ucrequest = new Request.Builder()
+						.url(this.ucCheckUrl + "?account=" + account + "&ts="
+								+ ts + "&accountType=" + accountType + "&sign="
+								+ sign).get()
+						.addHeader("Content-Type", "application/json")
+						.addHeader("language", "zh_CN")
+						.addHeader("superProjectId", "5")
+						.addHeader("clientId", "5").build();
+				Response ucresponse = ucclient.newCall(ucrequest).execute();
+				JSONObject jsonObject = JSONObject.parseObject(ucresponse.body().string());
+				if (!jsonObject.containsKey("rtn")) {
+					uid = jsonObject.getIntValue("userid");
+				} else {
+					resp.setRtn(RestConst.RTN_DRIP_USER_NOTEXIST);
+					resp.setRtmsg("账号不存在");
+					return resp;
+				}
+
 				DripRecord last = dripService.getLast(uid);
-				if(null != last){
-					long count = dripService.getCountByUid(uid, last.getCreatetime(), DateUtils.addDays(last.getCreatetime(), ruleDay));
-					if(count>=daysCount){
+				if (null != last) {
+					long count = dripService.getCountByUid(uid,
+							last.getCreatetime(),
+							DateUtils.addDays(last.getCreatetime(), ruleDay));
+					if (count >= daysCount) {
 						resp.setRtn(RestConst.RTN_DRIP_USER_INVALID);
 						resp.setRtmsg("超过次数限制");
 						return resp;
 					}
 				}
-				
+
 				JSONObject params = new JSONObject();
 				params.put("uid", uid);
 				params.put("amount", amount);
@@ -92,7 +121,7 @@ public class DirpController {
 				params.put("clientId", 5);
 				params.put("presentType", 4);
 				params.put("operator", "clotho-rest");
-				
+
 				OkHttpClient client = OkHttpClientSingleton.getInstance();
 				Request request = new Request.Builder()
 						.url(payPresentUrl)
@@ -101,13 +130,14 @@ public class DirpController {
 								params.toJSONString())).build();
 				Response response = client.newCall(request).execute();
 				JSONObject result = JSON.parseObject(response.body().string());
-				if(result.getIntValue("rtn")!=0){
-					LOGGER.error("drip active pay present {}", result.getString("errMsg"));
+				if (result.getIntValue("rtn") != 0) {
+					LOGGER.error("drip active pay present {}",
+							result.getString("errMsg"));
 					resp.setRtn(RestConst.RTN_ERROR);
 					resp.setRtmsg("激活失败");
-				}else{
+				} else {
 					DripRecord record = new DripRecord();
-					record.setAcount(acount);
+					record.setAccount(account);
 					record.setUid(uid);
 					record.setCode(code);
 					record.setAmount(amount);
@@ -115,7 +145,7 @@ public class DirpController {
 					resp.setRtn(RestConst.RTN_OK);
 					resp.setRtmsg("激活成功");
 				}
-				
+
 			}
 
 		} catch (Exception e) {

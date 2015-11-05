@@ -19,7 +19,7 @@ public class DripRecord implements Serializable{
 	private static final long serialVersionUID = 338094758030889031L;
 	private long id;
 	private int uid;
-	private String acount;
+	private String account;
 	private int amount;
 	private String code;
 	private Date createtime;
