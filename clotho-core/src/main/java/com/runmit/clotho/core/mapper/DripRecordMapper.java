@@ -19,7 +19,7 @@ import com.runmit.clotho.core.domain.drip.DripRecord;
 public interface DripRecordMapper {
 
 	@Insert("INSERT INTO DripRecord (`uid`,`account`,`amount`,`code`) "
-			+ "VALUES (#{uid},#{acount},#{amount},#{code})")
+			+ "VALUES (#{uid},#{account},#{amount},#{code})")
 	@Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
 	void addDripRecord(DripRecord record);
 
