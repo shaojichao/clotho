@@ -93,13 +93,14 @@ public class ActivationCodeController {
         	statuscell.setCellValue("是否有效");
             List<ActivationCode>  list = codeService.getListById(exid, exnum,status);
             for(int i=0;i<list.size();i++){
+            	ActivationCode code = list.get(i);
             	row = sheet.createRow(i+1);
             	cell = row.createCell(0);
-            	cell.setCellValue(list.get(i).getCode());
+            	cell.setCellValue(code.getCode());
             	date = row.createCell(1);
-            	date.setCellValue(DateUtils.getDateTime(list.get(i).getDateEnd()));
+            	date.setCellValue(DateUtils.getDateTime(code.getDateEnd()));
             	statuscell = row.createCell(2);
-            	statuscell.setCellValue(list.get(i).getStatus()==0?"无效":"有效");
+            	statuscell.setCellValue(code.getStatus()==0?"无效":"有效");
             }
     		workBook.setSheetName(0, "激活码");  
     		response.reset();  
