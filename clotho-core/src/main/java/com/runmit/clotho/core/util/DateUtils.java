@@ -1,6 +1,5 @@
 package com.runmit.clotho.core.util;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,6 +30,10 @@ public class DateUtils {
 	
 	public static Date parseDateTime(String date) throws Exception{
 		return org.apache.commons.lang.time.DateUtils.parseDate(date, new String[]{"yyyy-MM-dd HH:mm:ss"});
+	}
+	
+	public static Date parseDate(String date) throws Exception{
+		return org.apache.commons.lang.time.DateUtils.parseDate(date, new String[]{"yyyy-MM-dd"});
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.runmit.clotho.rest.controller;
 
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.runmit.clotho.core.domain.drip.ActivationCode;
 import com.runmit.clotho.core.domain.drip.DripRecord;
+import com.runmit.clotho.core.service.ActivationCodeService;
 import com.runmit.clotho.core.service.DripService;
+import com.runmit.clotho.core.util.DateUtils;
 import com.runmit.clotho.rest.common.OkHttpClientSingleton;
 import com.runmit.clotho.rest.common.RestConst;
 import com.runmit.clotho.rest.domain.CommonResp;
@@ -48,8 +51,8 @@ public class DirpController {
 	private String ucKey;
 	@Value("${drip.pay.present}")
 	private String payPresentUrl;
-	@Value("${drip.rule.day}")
-	private int ruleDay;
+	@Value("${drip.rule.date.end}")
+	private String ruleDateEnd;
 	@Value("${drip.rule.days.count}")
 	private int daysCount;
 	@Value("${drip.present.amount}")
@@ -57,10 +60,16 @@ public class DirpController {
 
 	@Autowired
 	private DripService dripService;
+	@Autowired
+	private ActivationCodeService codeService;
 
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		Date now  = new Date();
+		if(now.after(DateUtils.parseDateTime(ruleDateEnd))){
+			return "invalid";
+		}
 		return "drip";
 	}
 
@@ -70,13 +79,42 @@ public class DirpController {
 			@RequestParam("code") String code) {
 		CommonResp resp = new CommonResp();
 		try {
-			Pattern pattern = Pattern.compile("[0-9a-zA-Z]{12}");
-			Matcher matcher = pattern.matcher(code);
-			boolean b = matcher.matches();
-			if (!b) {
-				resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
-				resp.setRtmsg("激活码不存在");
-			} else {
+			Date now  = new Date();
+			if(now.after(DateUtils.parseDateTime(ruleDateEnd))){
+				resp.setRtn("6");
+				resp.setRtmsg("活动已过期");
+				return resp;
+			}
+			int length = code.length();
+			if(length == 12){
+				Pattern pattern = Pattern.compile("[0-9a-zA-Z]{12}");
+				Matcher matcher = pattern.matcher(code);
+				boolean b = matcher.matches();
+				if (!b) {
+					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
+					resp.setRtmsg("激活码不存在");
+					return resp;
+				}
+			}else{
+				Pattern pattern = Pattern.compile("[0-9a-zA-Z]{8}");
+				Matcher matcher = pattern.matcher(code);
+				boolean b = matcher.matches();
+				if (!b) {
+					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
+					resp.setRtmsg("激活码不存在");
+					return resp;
+				}
+				ActivationCode acode = codeService.getActivationCode(code);
+				if(acode.getStatus()==0){
+					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
+					resp.setRtmsg("激活码已被使用");
+					return resp;
+				}else if(!acode.getDateEnd().after(new Date())){
+					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
+					resp.setRtmsg("激活码已过期");
+					return resp;
+				}
+			}
 				int uid = 0;
 				int accountType = account.contains("@") ? 1 : 2;
 				long ts = System.currentTimeMillis();
@@ -105,7 +143,7 @@ public class DirpController {
 				if (null != last) {
 					long count = dripService.getCountByUid(uid,
 							last.getCreatetime(),
-							DateUtils.addDays(last.getCreatetime(), ruleDay));
+							DateUtils.parseDateTime(ruleDateEnd));
 					if (count >= daysCount) {
 						resp.setRtn(RestConst.RTN_DRIP_USER_INVALID);
 						resp.setRtmsg("超过次数限制");
@@ -136,6 +174,9 @@ public class DirpController {
 					resp.setRtn(RestConst.RTN_ERROR);
 					resp.setRtmsg("激活失败");
 				} else {
+					if(length==8){
+						codeService.update(code);
+					}
 					DripRecord record = new DripRecord();
 					record.setAccount(account);
 					record.setUid(uid);
@@ -146,7 +187,6 @@ public class DirpController {
 					resp.setRtmsg("激活成功");
 				}
 
-			}
 
 		} catch (Exception e) {
 			LOGGER.error("drip active error", e);
