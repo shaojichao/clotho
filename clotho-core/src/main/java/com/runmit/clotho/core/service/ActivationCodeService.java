@@ -29,6 +29,7 @@ public class ActivationCodeService {
 		return this.codeMapper.getActivationCode(code);
 	}
 
+	@Transactional(readOnly = false)
 	public void update(String code) {
 		this.codeMapper.update(code);
 	}
