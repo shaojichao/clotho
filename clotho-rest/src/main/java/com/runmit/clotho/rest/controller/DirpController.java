@@ -66,8 +66,8 @@ public class DirpController {
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		Date now  = new Date();
-		if(now.after(DateUtils.parseDateTime(ruleDateEnd))){
+		Date now = new Date();
+		if (now.after(DateUtils.parseDateTime(ruleDateEnd))) {
 			return "invalid";
 		}
 		return "drip";
@@ -79,14 +79,14 @@ public class DirpController {
 			@RequestParam("code") String code) {
 		CommonResp resp = new CommonResp();
 		try {
-			Date now  = new Date();
-			if(now.after(DateUtils.parseDateTime(ruleDateEnd))){
+			Date now = new Date();
+			if (now.after(DateUtils.parseDateTime(ruleDateEnd))) {
 				resp.setRtn("6");
 				resp.setRtmsg("活动已过期");
 				return resp;
 			}
 			int length = code.length();
-			if(length == 12){
+			if (length == 12) {
 				Pattern pattern = Pattern.compile("[0-9a-zA-Z]{12}");
 				Matcher matcher = pattern.matcher(code);
 				boolean b = matcher.matches();
@@ -95,7 +95,7 @@ public class DirpController {
 					resp.setRtmsg("激活码不存在");
 					return resp;
 				}
-			}else{
+			} else {
 				Pattern pattern = Pattern.compile("[0-9a-zA-Z]{8}");
 				Matcher matcher = pattern.matcher(code);
 				boolean b = matcher.matches();
@@ -105,93 +105,97 @@ public class DirpController {
 					return resp;
 				}
 				ActivationCode acode = codeService.getActivationCode(code);
-				if(null == acode){
+				if (null == acode) {
 					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
 					resp.setRtmsg("激活码不存在");
 					return resp;
 				}
-				if(acode.getStatus()==0){
+				if (acode.getStatus() == 0) {
 					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
 					resp.setRtmsg("激活码已被使用");
 					return resp;
-				}else if(!acode.getDateEnd().after(new Date())){
+				} else if (!acode.getDateEnd().after(new Date())) {
 					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
 					resp.setRtmsg("激活码已过期");
 					return resp;
 				}
 			}
-				int uid = 0;
-				int accountType = account.contains("@") ? 1 : 2;
-				long ts = System.currentTimeMillis();
-				String sign = DigestUtils.md5Hex(URLEncoder.encode(account,"utf-8")+"_" + accountType + "_" + ts
-						+ "_"+ucKey);
-				OkHttpClient ucclient = OkHttpClientSingleton.getInstance();
-				Request ucrequest = new Request.Builder()
-						.url(this.ucCheckUrl + "?account=" + account + "&ts="
-								+ ts + "&accountType=" + accountType + "&sign="
-								+ sign).get()
-						.addHeader("Content-Type", "application/json")
-						.addHeader("language", "zh_CN")
-						.addHeader("superProjectId", "5")
-						.addHeader("clientId", "5").build();
-				Response ucresponse = ucclient.newCall(ucrequest).execute();
-				JSONObject jsonObject = JSONObject.parseObject(ucresponse.body().string());
-				if (!jsonObject.containsKey("rtn")) {
-					uid = jsonObject.getIntValue("userid");
-				} else {
-					resp.setRtn(RestConst.RTN_DRIP_USER_NOTEXIST);
-					resp.setRtmsg("账号不存在");
+			int uid = 0;
+			int accountType = account.contains("@") ? 1 : 2;
+			long ts = System.currentTimeMillis();
+			StringBuilder sbsign = new StringBuilder();
+			sbsign.append(URLEncoder.encode(account, "utf-8")).append("_")
+					.append(accountType).append("_").append(ts).append("_")
+					.append(ucKey);
+			String sign = DigestUtils.md5Hex(sbsign.toString());
+			OkHttpClient ucclient = OkHttpClientSingleton.getInstance();
+			StringBuilder sburl = new StringBuilder();
+			sburl.append("this.ucCheckUrl?account=").append(account)
+					.append("&ts=").append(ts).append("&accountType=")
+					.append(accountType).append("&sign=").append(sign);
+			Request ucrequest = new Request.Builder().url(sburl.toString())
+					.get().addHeader("Content-Type", "application/json")
+					.addHeader("language", "zh_CN")
+					.addHeader("superProjectId", "5")
+					.addHeader("clientId", "5").build();
+			Response ucresponse = ucclient.newCall(ucrequest).execute();
+			JSONObject jsonObject = JSONObject.parseObject(ucresponse.body()
+					.string());
+			if (!jsonObject.containsKey("rtn")) {
+				uid = jsonObject.getIntValue("userid");
+			} else {
+				resp.setRtn(RestConst.RTN_DRIP_USER_NOTEXIST);
+				resp.setRtmsg("账号不存在");
+				return resp;
+			}
+
+			DripRecord last = dripService.getLast(uid);
+			if (null != last) {
+				long count = dripService.getCountByUid(uid,
+						last.getCreatetime(),
+						DateUtils.parseDateTime(ruleDateEnd));
+				if (count >= daysCount) {
+					resp.setRtn(RestConst.RTN_DRIP_USER_INVALID);
+					resp.setRtmsg("超过次数限制");
 					return resp;
 				}
+			}
 
-				DripRecord last = dripService.getLast(uid);
-				if (null != last) {
-					long count = dripService.getCountByUid(uid,
-							last.getCreatetime(),
-							DateUtils.parseDateTime(ruleDateEnd));
-					if (count >= daysCount) {
-						resp.setRtn(RestConst.RTN_DRIP_USER_INVALID);
-						resp.setRtmsg("超过次数限制");
-						return resp;
-					}
+			JSONObject params = new JSONObject();
+			params.put("uid", uid);
+			params.put("amount", amount);
+			params.put("currencyId", 6);
+			params.put("countryCode", "");
+			params.put("clientId", 5);
+			params.put("presentType", 4);
+			params.put("operator", "clotho-rest");
+
+			OkHttpClient client = OkHttpClientSingleton.getInstance();
+			Request request = new Request.Builder()
+					.url(payPresentUrl)
+					.post(RequestBody.create(
+							MediaType.parse("application/json"),
+							params.toJSONString())).build();
+			Response response = client.newCall(request).execute();
+			JSONObject result = JSON.parseObject(response.body().string());
+			if (result.getIntValue("rtn") != 0) {
+				LOGGER.error("drip active pay present {}",
+						result.getString("errMsg"));
+				resp.setRtn(RestConst.RTN_ERROR);
+				resp.setRtmsg("激活失败");
+			} else {
+				if (length == 8) {
+					codeService.update(code);
 				}
-
-				JSONObject params = new JSONObject();
-				params.put("uid", uid);
-				params.put("amount", amount);
-				params.put("currencyId", 6);
-				params.put("countryCode", "");
-				params.put("clientId", 5);
-				params.put("presentType", 4);
-				params.put("operator", "clotho-rest");
-
-				OkHttpClient client = OkHttpClientSingleton.getInstance();
-				Request request = new Request.Builder()
-						.url(payPresentUrl)
-						.post(RequestBody.create(
-								MediaType.parse("application/json"),
-								params.toJSONString())).build();
-				Response response = client.newCall(request).execute();
-				JSONObject result = JSON.parseObject(response.body().string());
-				if (result.getIntValue("rtn") != 0) {
-					LOGGER.error("drip active pay present {}",
-							result.getString("errMsg"));
-					resp.setRtn(RestConst.RTN_ERROR);
-					resp.setRtmsg("激活失败");
-				} else {
-					if(length==8){
-						codeService.update(code);
-					}
-					DripRecord record = new DripRecord();
-					record.setAccount(account);
-					record.setUid(uid);
-					record.setCode(code);
-					record.setAmount(amount);
-					dripService.saveDripRecord(record);
-					resp.setRtn(RestConst.RTN_OK);
-					resp.setRtmsg("激活成功");
-				}
-
+				DripRecord record = new DripRecord();
+				record.setAccount(account);
+				record.setUid(uid);
+				record.setCode(code);
+				record.setAmount(amount);
+				dripService.saveDripRecord(record);
+				resp.setRtn(RestConst.RTN_OK);
+				resp.setRtmsg("激活成功");
+			}
 
 		} catch (Exception e) {
 			LOGGER.error("drip active error", e);
