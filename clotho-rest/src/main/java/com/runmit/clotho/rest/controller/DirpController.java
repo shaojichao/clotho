@@ -105,6 +105,11 @@ public class DirpController {
 					return resp;
 				}
 				ActivationCode acode = codeService.getActivationCode(code);
+				if(null == acode){
+					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
+					resp.setRtmsg("激活码不存在");
+					return resp;
+				}
 				if(acode.getStatus()==0){
 					resp.setRtn(RestConst.RTN_DRIP_CODE_ILLEGAL);
 					resp.setRtmsg("激活码已被使用");
