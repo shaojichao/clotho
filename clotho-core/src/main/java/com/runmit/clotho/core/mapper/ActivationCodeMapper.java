@@ -22,7 +22,7 @@ public interface ActivationCodeMapper {
 	@Select("select * from ActivationCode where code=#{code}")
 	ActivationCode getActivationCode(@Param("code") String code);
 
-	@Update("update ActivationCode set status=0 where code={code}")
+	@Update("update ActivationCode set status=0 where code=#{code}")
 	void update(@Param("code") String code);
 
 	@Select("select count(code) from ActivationCode")
