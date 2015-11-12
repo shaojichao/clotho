@@ -63,14 +63,18 @@ public class DirpController {
 	@Autowired
 	private ActivationCodeService codeService;
 
-	@RequestMapping(value = "/index")
-	public String index(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/checkdate")
+	public @ResponseBody CommonResp index(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		CommonResp resp = new CommonResp();
 		Date now = new Date();
 		if (now.after(DateUtils.parseDateTime(ruleDateEnd))) {
-			return "invalid";
+			resp.setRtn("-1");
+			resp.setRtmsg("活动已过期");
+		}else{
+			resp.setRtn("0");
 		}
-		return "drip";
+		return resp;
 	}
 
 	@RequestMapping(value = "/active")
