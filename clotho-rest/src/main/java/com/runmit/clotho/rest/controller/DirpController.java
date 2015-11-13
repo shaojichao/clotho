@@ -69,7 +69,7 @@ public class DirpController {
 		CommonResp resp = new CommonResp();
 		Date now = new Date();
 		if (now.after(DateUtils.parseDateTime(ruleDateEnd))) {
-			resp.setRtn("-1");
+			resp.setRtn("6");
 			resp.setRtmsg("活动已过期");
 		}else{
 			resp.setRtn("0");
@@ -134,7 +134,7 @@ public class DirpController {
 			String sign = DigestUtils.md5Hex(sbsign.toString());
 			OkHttpClient ucclient = OkHttpClientSingleton.getInstance();
 			StringBuilder sburl = new StringBuilder();
-			sburl.append("this.ucCheckUrl?account=").append(account)
+			sburl.append(this.ucCheckUrl+"?account=").append(account)
 					.append("&ts=").append(ts).append("&accountType=")
 					.append(accountType).append("&sign=").append(sign);
 			Request ucrequest = new Request.Builder().url(sburl.toString())
