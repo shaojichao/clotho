@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import com.runmit.clotho.rest.domain.WeathersResp;
 import net.spy.memcached.MemcachedClient;
 
 import org.slf4j.Logger;
@@ -35,10 +36,12 @@ import com.squareup.okhttp.Response;
 @RequestMapping(value = "/weather")
 public class WeatherController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WeatherController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeatherController.class);
 
     @Value("${apistore.baidu.url}")
     private String url;
+    @Value("${apistore.baidu.recentweathers.url}")
+    private String recentweathersUrl;
     @Value("${apistore.baidu.key}")
     private String key;
     @Resource
@@ -54,9 +57,9 @@ public class WeatherController {
      */
     @RequestMapping(value = "/getWeatherForecast")
     public CommonResp getWeatherForecast(@RequestParam("cityid") String cityid){
-    	CommonResp resp = new CommonResp();
+        CommonResp resp = new CommonResp();
         WeatherResp weatherResp = new WeatherResp();
-    	try{
+        try{
             Date now = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
             String strNow = sdf.format(now);
@@ -76,7 +79,7 @@ public class WeatherController {
                     weatherResp.setCity(retData.getString("city"));
                     String pinyin = this.weatherService.getWeatherAreaEName(Integer.valueOf(cityid));
                     if(null == pinyin){
-                    	pinyin = retData.getString("pinyin");
+                        pinyin = retData.getString("pinyin");
                     }
                     weatherResp.setPinyin(pinyin);
                     weatherResp.setCitycode(retData.getString("citycode"));
@@ -107,24 +110,24 @@ public class WeatherController {
                     resp.setRtmsg("success");
                     LOGGER.info("GET "+url+"?cityid="+cityid + " succeed");
                 }else {
-                	WeatherResp weather = (WeatherResp) memcachedClient.get("weather_city_never_exp_"+cityid);
-                	if(null != weather){
-                		resp.setData(weather);
+                    WeatherResp weather = (WeatherResp) memcachedClient.get("weather_city_never_exp_"+cityid);
+                    if(null != weather){
+                        resp.setData(weather);
                         resp.setRtn(RestConst.RTN_OK);
                         resp.setRtmsg("success");
                         LOGGER.info("GET "+url+"?cityid="+cityid + " failed");
-                	}else{
-                		resp.setRtn(RestConst.RTN_ERROR);
+                    }else{
+                        resp.setRtn(RestConst.RTN_ERROR);
                         resp.setRtmsg("not found the city");
-                	}
+                    }
                 }
             }
-    	}catch(Exception ex){
-    		LOGGER.error("getWeatherForecast error", ex);
-    		resp.setRtn(RestConst.RTN_ERROR);
+        }catch(Exception ex){
+            LOGGER.error("getWeatherForecast error", ex);
+            resp.setRtn(RestConst.RTN_ERROR);
             resp.setRtmsg("failed");
-    	}
-    	return resp;
+        }
+        return resp;
     }
 
     private String getWeatherService(String url) throws IOException {
@@ -133,6 +136,81 @@ public class WeatherController {
         Request request = new Request.Builder().url(url).header("apikey",key).build();
         Response response = client.newCall(request).execute();
         return response.body().string();
+    }
+
+    public static void main(String[] args){
+        System.out.println(111111);
+
+        String url = "http://apis.baidu.com/apistore/weatherservice/recentweathers?cityid=101010100";
+        String key = "dbc7dcddec11be599f1a7dada10cb17a";
+
+        OkHttpClient client = OkHttpClientSingleton.getInstance();
+        Request request = new Request.Builder().url(url).header("apikey",key).build();
+        try {
+            Response response = client.newCall(request).execute();
+            String result = response.body().string();
+//            System.out.println( "result:"+result );
+            JSONObject jo = JSONObject.parseObject(result);
+
+
+//            System.out.println( jo );
+            if( null!=jo ){
+                JSONObject retData = jo.getJSONObject("retData");
+                System.out.println(retData);
+                WeathersResp weathersResp = JSONObject.toJavaObject(retData, WeathersResp.class);
+                System.out.println( weathersResp.getCity() );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param cityid
+     *
+     * @return resp getRecentweathers
+     */
+    @RequestMapping(value = "/getWeatherForecast")
+    public CommonResp getRecentweathers(@RequestParam("cityid") String cityid){
+        CommonResp resp = new CommonResp();
+        try{
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+            String strNow = sdf.format(now);
+            // 每小时进行city缓存
+            WeathersResp weathersResp =  (WeathersResp)memcachedClient.get("recentweathers_city_"+cityid+"_"+strNow);
+            if ( weathersResp != null){
+                resp.setData(weathersResp);
+                resp.setRtn(RestConst.RTN_OK);
+                resp.setRtmsg("success");
+                LOGGER.info("GET recentweathers_city_ "+recentweathersUrl+"?cityid="+cityid + " From memcached succeed");
+            }else{
+                // 根据城市代码查询天气，带历史7天的数据
+                String rtn = getWeatherService(recentweathersUrl+cityid);
+                JSONObject jo = JSONObject.parseObject(rtn);
+                if( null!=jo ){
+                    JSONObject retData = jo.getJSONObject("retData");
+                    System.out.println(retData);
+                    weathersResp = JSONObject.toJavaObject(retData, WeathersResp.class);
+                    System.out.println( weathersResp.getCity() );
+
+                    resp.setData(weathersResp);
+                    memcachedClient.set("recentweathers_city_" + cityid + "_" + strNow, 3600, weathersResp);
+//                    memcachedClient.set("weather_city_never_exp_"+cityid,0,weatherResp);
+                    resp.setRtn(RestConst.RTN_OK);
+                    resp.setRtmsg("success");
+                    LOGGER.info("memcache set success weathersResp"+recentweathersUrl+"?cityid="+cityid + " succeed");
+                }
+
+            }
+        }catch(Exception ex){
+            LOGGER.error("getWeatherForecast error", ex);
+            resp.setRtn(RestConst.RTN_ERROR);
+            resp.setRtmsg("failed");
+        }
+
+        return resp;
     }
 
 }
