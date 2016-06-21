@@ -171,7 +171,7 @@ public class WeatherController {
      *
      * @return resp getRecentweathers
      */
-    @RequestMapping(value = "/getRecentweathers")
+    @RequestMapping(value = "/getWeatherForecast")
     public CommonResp getRecentweathers(@RequestParam("cityid") String cityid){
         CommonResp resp = new CommonResp();
         try{
