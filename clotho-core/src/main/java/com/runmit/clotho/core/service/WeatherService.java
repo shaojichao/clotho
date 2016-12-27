@@ -42,4 +42,9 @@ public class WeatherService {
         return this.weatherMapper.getWeatherAreaEName(areaid);
     }
 
+    @Transactional(readOnly = true)
+    public String getWeatherPinyin(int areaid){
+        return this.weatherMapper.getWeatherPinyin(areaid);
+    }
+
 }
