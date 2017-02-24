@@ -14,7 +14,7 @@ import com.runmit.clotho.core.domain.client.Client;
  *
  * @author zhipeng.tian
  */
-@CacheNamespace(implementation = org.mybatis.caches.memcached.MemcachedCache.class)
+//@CacheNamespace(implementation = org.mybatis.caches.memcached.MemcachedCache.class)
 public interface ClientMapper {
 
     @Insert("INSERT INTO Client (`name`,`superProjectId`,`description`,`createby`) "
