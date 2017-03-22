@@ -1,2 +1,3 @@
 1.mybatis cache 设置:memcached.clotho.d3dstore.com指定该域名到缓存服务器(配置hosts);
+Test
 
