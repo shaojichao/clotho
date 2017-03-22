@@ -21,4 +21,9 @@ public interface WeatherMapper {
     
     @Select("SELECT ename FROM WeatherAreaV WHERE areaid=#{areaid}")
     String getWeatherAreaEName(@Param("areaid") int areaid);
+
+    @Select("SELECT ename FROM WeatherAreaF WHERE areaid=#{areaid}")
+    String getWeatherPinyin(@Param("areaid") int areaid);
+
+
 }

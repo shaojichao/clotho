@@ -74,3 +74,8 @@ hosts
 version表索引修改
 ALTER TABLE `Version` DROP INDEX `version`;
 ALTER TABLE `Version` ADD UNIQUE (`version`,clientid);
+
+#2016-04-05
+rest property:
+apistore.baidu.recentweathers.url=http://apis.baidu.com/apistore/weatherservice/recentweathers?cityid=
+
