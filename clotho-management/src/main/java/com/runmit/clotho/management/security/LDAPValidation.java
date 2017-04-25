@@ -40,7 +40,7 @@ public class LDAPValidation {
 		String searchFilter = "(uid="+uid+")";*/
 		String loginDN = "superd\\"+uid;
 //		String searchBase = "OU=Runmit,OU=Users & Workstations,DC=SuperD,DC=com,DC=cn";
-		String searchBase = "OU=Users & Workstations,DC=SuperD,DC=com,DC=cn";
+		String searchBase = "OU=Users And Workstations,DC=SuperD,DC=com,DC=cn";
 		String searchFilter = "(sAMAccountName="+uid+")";
 
 		int ldapPort = LDAPConnection.DEFAULT_PORT;
