@@ -72,7 +72,7 @@ public class LoginController {
             @RequestParam("name") String uid, @RequestParam("password") String password) {
         ExtStatusEntity resp = new ExtStatusEntity();
         Admin admin;
-        if(usercenterSwitch && -1 != uid.indexOf("iv".toLowerCase()) && -1 != uid.indexOf(".") && !uid.contains(".com")) {
+        if(!usercenterSwitch || (usercenterSwitch && (-1 != uid.indexOf("iv".toLowerCase()) || (-1 != uid.indexOf(".") && !uid.contains(".com"))))) {
             admin = ldap.validAdmin(uid, password);
         } else {
             admin = this.verifyLoginByUC(uid, password);
