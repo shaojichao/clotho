@@ -20,10 +20,13 @@ public class InfoVersion implements Serializable{
     //版本号
     private String versionNo;
 
-    private Integer createby;
+    private Integer createBy;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createtime;
-    private Integer updateby;
+    private Date createTime;
+
+    private Integer updateBy;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updatetime;
+    private Date updateTime;
 }
