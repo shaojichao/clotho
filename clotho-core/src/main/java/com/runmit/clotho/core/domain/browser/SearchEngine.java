@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.runmit.clotho.core.domain.BaseDomain;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
  * @date 2017-06-01
  */
 @Data
-public class SearchEngine extends BaseDomain{
+public class SearchEngine implements Serializable{
     private Integer id;
     //引擎名称
     private String name;
