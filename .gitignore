@@ -2,3 +2,6 @@
 /clotho-core/target/
 /clotho-log/target/
 /clotho-rest/target/
+
+*.iml
+.idea/
