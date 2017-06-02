@@ -35,4 +35,17 @@ public class UploadController {
 		this.uploadService.uploadFile(file, response);
 		LOGGER.info("upload file");
     }
+
+	/**
+	 * 上传icon
+	 * @param file
+	 * @param response
+	 * @param request
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/uploadIcon")
+	public void uploadIcon(@RequestParam(value = "pkg") MultipartFile file,HttpServletResponse response, HttpServletRequest request) throws Exception {
+		this.uploadService.uploadIcon(file,response);
+	}
+
 }

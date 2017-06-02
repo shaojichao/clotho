@@ -34,4 +34,15 @@ public class SessionUtil {
 		HttpSession session = request.getSession();
 		session.setAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE, admin);
 	}
+
+	/**
+	 * 获取登陆员ID
+	 * @param request
+	 * @return
+	 */
+	public static int getLoginAdminId(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Admin admin = (Admin)session.getAttribute(SecurityConstant.ADMIN_SESSION_ATTRIBUTE);
+		return admin.getId();
+	}
 }

@@ -27,13 +27,16 @@ public class SearchEngine implements Serializable{
     //默认状态:1 默认搜索 0非默认搜索
     private int status;
 
-    private Integer createBy;
+    private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
-    private Integer updateBy;
+    private String updateBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+
+    //默认状态名
+    private String statusName;
 }

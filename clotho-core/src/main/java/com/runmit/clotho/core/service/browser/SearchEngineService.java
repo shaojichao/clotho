@@ -39,5 +39,32 @@ public class SearchEngineService{
 		return engineMapper.getCounts();
 	}
 
+	/**
+	 * 保存搜索引擎信息
+	 * @param engine
+	 */
+	@Transactional(readOnly = false)
+	public void saveEngineInfo(SearchEngine engine) throws Exception{
+		if(engine.getId() == null){
+			engineMapper.addSearchEngine(engine);
+		}else{
+			engineMapper.updateSearchEngine(engine);
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public List<SearchEngine> getDefaultEngine(int status){
+		return engineMapper.getDefaultEngine(status);
+	}
+
+	/**
+	 * 根据ID删除搜索引擎信息
+	 * @param id
+	 * @throws Exception
+	 */
+	@Transactional(readOnly = false)
+	public int delEngine(int id) throws Exception{
+		return engineMapper.deleteById(id);
+	}
 
 }

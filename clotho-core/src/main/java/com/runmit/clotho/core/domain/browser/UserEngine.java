@@ -21,12 +21,12 @@ public class UserEngine implements Serializable{
     //引擎ID
     private Integer engineId;
 
-    private Integer createBy;
+    private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
-    private Integer updateBy;
+    private String updateBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
