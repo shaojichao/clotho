@@ -23,6 +23,13 @@ public class PhoneModelService {
     @Autowired
     private PhoneModelMapper phoneModelMapper;
 
+    /**
+     * 分页查出机型信息
+     * @param model
+     * @param limit
+     * @param page
+     * @return
+     */
     @Transactional(readOnly = true)
     public Page<PhoneModel> getPhoneModelList(String model, int limit, int page) {
         int startPosition = 0;
@@ -37,5 +44,28 @@ public class PhoneModelService {
         return new Page<>(phoneModelList, total);
 
     }
-    
+
+    /**
+     * 新增或修改机型信息
+     * @param phoneModel
+     */
+    @Transactional(readOnly = false)
+    public void savePhoneModel(PhoneModel phoneModel){
+        if(phoneModel.getId()==null||phoneModel.getId()==0){
+            phoneModelMapper.addPhoneModel(phoneModel);
+        }else{
+            phoneModelMapper.updatePhoneModel(phoneModel);
+        }
+    }
+
+    /**
+     *  通过id删除机型信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Transactional(readOnly = false)
+    public int deletePhone(Integer id) throws Exception{
+        return phoneModelMapper.deletePhoneModelById(id);
+    }
 }

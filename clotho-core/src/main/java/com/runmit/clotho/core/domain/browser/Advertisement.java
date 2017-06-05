@@ -7,30 +7,34 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 机型分辨率对象
+ * 开屏广告对象
  * @author sjc
- * @date 2017-05-31-15:27
+ * @date 2017-06-01-15:27
  */
 @Data
-public class PhoneModel implements Serializable{
+public class Advertisement implements Serializable{
 
     private Integer id;
+    /**
+     *机型id
+     */
+    private String modeId;
     /**
      *机型名称
      */
     private String model;
     /**
-     * 分辨率宽度
+     * 广告缩略图
      */
-    private Integer width;
+    private String adURL;
     /**
-     * 分辨率高度
+     * 状态
      */
-    private Integer height;
+    private Integer status;
     /**
-     * 分辨率
+     * 版本号
      */
-    private String resolution;
+    private String version;
     //创建者
     private String createBy;
     //创建时间
