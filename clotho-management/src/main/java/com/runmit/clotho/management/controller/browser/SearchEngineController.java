@@ -1,9 +1,12 @@
 package com.runmit.clotho.management.controller.browser;
 
 import com.runmit.clotho.core.domain.StatusEnum;
+import com.runmit.clotho.core.domain.VersionConstant;
+import com.runmit.clotho.core.domain.browser.InfoVersion;
 import com.runmit.clotho.core.domain.browser.SearchEngine;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
+import com.runmit.clotho.core.service.browser.InfoVersionService;
 import com.runmit.clotho.core.service.browser.SearchEngineService;
 import com.runmit.clotho.management.security.SessionUtil;
 import org.slf4j.Logger;
@@ -24,6 +27,8 @@ public class SearchEngineController{
 
 	@Autowired
 	private SearchEngineService engineService;
+	@Autowired
+	private InfoVersionService versionService;
 
 	/**
 	 * 搜索引擎列表查询
@@ -95,7 +100,7 @@ public class SearchEngineController{
 	@RequestMapping(value = "/clotho/engine/delEngine.do")
 	public ExtStatusEntity delEngine(@RequestParam("id") int id,HttpServletRequest request){
 		ExtStatusEntity entity = new ExtStatusEntity();
-		try {
+		try{
 			int rel=engineService.delEngine(id);
 			if(rel > 0){
 				entity.setMsg("succeed");
@@ -104,12 +109,59 @@ public class SearchEngineController{
 				entity.setMsg("删除失败!");
 				entity.setSuccess(false);
 			}
-		} catch (Exception ex) {
+		}catch(Exception ex){
 			LOGGER.error("--------- SearchEngineController.delEngine error", ex);
 			entity.setMsg("删除失败!");
 			entity.setSuccess(false);
 		}
 		LOGGER.info("delEngine");
+		return entity;
+	}
+
+	/**
+	 * 查询版本号
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/clotho/engine/getVersionNum.do")
+	public ExtStatusEntity getVersionNum(HttpServletRequest request){
+		ExtStatusEntity entity = new ExtStatusEntity();
+		try{
+			InfoVersion version = versionService.getVersionNum(VersionConstant.ENGINE_KEY);
+			if(version != null){
+				entity.setMsg(version.getVersionNo());
+			}else{
+				entity.setMsg("");
+			}
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			LOGGER.error("--------- SearchEngineController.getVersionNum error", ex);
+			entity.setMsg("获取版本号失败!");
+			entity.setSuccess(false);
+		}
+		LOGGER.info("getVersionNum");
+		return entity;
+	}
+
+	/**
+	 * 生成版本号
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/clotho/engine/generateVersionNum.do")
+	public ExtStatusEntity generateVersionNum(HttpServletRequest request){
+		ExtStatusEntity entity = new ExtStatusEntity();
+		try{
+			String operator = SessionUtil.getLoginAdminName(request);
+			String versionNum = versionService.generateVersionNum(VersionConstant.ENGINE_KEY, operator);
+			entity.setMsg(versionNum);
+			entity.setSuccess(true);
+		}catch(Exception ex){
+			LOGGER.error("--------- SearchEngineController.generateVersionNum error", ex);
+			entity.setMsg("生成版本号失败!稍后重试!");
+			entity.setSuccess(false);
+		}
+		LOGGER.info("generateVersionNum");
 		return entity;
 	}
 
