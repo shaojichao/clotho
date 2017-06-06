@@ -26,10 +26,8 @@ import java.util.List;
 @Controller
 @Component
 @RequestMapping(value = "/ad")
-public class AdvertisementController {
-
+public class AdvertisementController{
     private static final Logger LOGGER = LoggerFactory.getLogger(AdvertisementController.class);
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Autowired
     private AdvertisementService adService;
 
@@ -66,36 +64,6 @@ public class AdvertisementController {
         }
         return entity;
     }
-//
-//    /**
-//     * 新增或修改当前机型信息
-//     * @param phoneModel 机型对象
-//     * @param request
-//     * @return
-//     */
-//    @RequestMapping(value = "/savePhoneModel.do", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ExtStatusEntity savePhoneModel(PhoneModel phoneModel, HttpServletRequest request) {
-//        ExtStatusEntity entity = new ExtStatusEntity();
-//
-//        if(phoneModel.getId()==null||phoneModel.getId()==0){
-//            phoneModel.setCreateBy(SessionUtil.getLoginAdminName(request));
-//            phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
-//        }else{
-//            phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
-//        }
-//        try{
-//            phoneModelService.savePhoneModel(phoneModel);
-//            entity.setMsg("succeed");
-//            entity.setSuccess(true);
-//        }catch(Exception ex){
-//            LOGGER.error("savePhoneModel error",ex);
-//            entity.setMsg("保存失败");
-//            entity.setSuccess(false);
-//        }
-//        LOGGER.info("savePhoneModel");
-//        return entity;
-//    }
 
     /**
      * 查出所有开屏广告信息
