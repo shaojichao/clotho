@@ -30,8 +30,12 @@ public class AdvertisementService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Advertisement> getList(int start, int limit){
-        return adMapper.getAdList(start, limit);
+    public List<Advertisement> getList(String downloadUrl,int start, int limit){
+        List<Advertisement> list = adMapper.getAdList(start, limit);
+        for (Advertisement ad: list){
+            ad.setImgUploadUrl(downloadUrl);
+        }
+        return list;
     }
 
     /**
