@@ -1,7 +1,6 @@
 package com.runmit.clotho.core.service.browser;
 
 
-import com.runmit.clotho.core.domain.Page;
 import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.mapper.browser.PhoneModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,24 +24,22 @@ public class PhoneModelService {
 
     /**
      * 分页查出机型信息
-     * @param model
+     * @param start
      * @param limit
-     * @param page
      * @return
      */
     @Transactional(readOnly = true)
-    public Page<PhoneModel> getPhoneModelList(String model, int limit, int page) {
-        int startPosition = 0;
-        if (1 < page) {
-            startPosition = (page - 1) * page;
-        }
-        List<PhoneModel> phoneModelList = phoneModelMapper.getPhoneModelList(model, startPosition, limit);
-        for(PhoneModel phoneModel: phoneModelList){
-            phoneModel.setResolution(phoneModel.getHeight() + "*" + phoneModel.getWidth());
-        }
-        int total = phoneModelMapper.getPhoneModelCount(model);
-        return new Page<>(phoneModelList, total);
+    public List<PhoneModel> getPhoneModelList(String model, int start, int limit){
+        return phoneModelMapper.getPhoneModelList(model, start, limit);
+    }
 
+    /**
+     * 查找机型信息总条数
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public long getCount(String model){
+        return phoneModelMapper.getPhoneModelCount(model);
     }
 
     /**
