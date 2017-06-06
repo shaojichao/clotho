@@ -31,7 +31,7 @@ public class AdvertisementController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdvertisementController.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Autowired
-    private AdvertisementService advertisementService;
+    private AdvertisementService adService;
 
     /**
      * 修改开屏广告状态
@@ -52,7 +52,7 @@ public class AdvertisementController {
             }else if(status == 1){
                 ad.setStatus(2);
             }
-            advertisementService.updateAdvertisement(ad);
+            adService.updateAdInfo(ad);
             entity.setSuccess(true);
             if(status == 0){
                 entity.setMsg("上架成功!");
@@ -109,9 +109,9 @@ public class AdvertisementController {
             @RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
         ExtEntity<Advertisement> datas = new ExtEntity<Advertisement>();
-        List<Advertisement> list = advertisementService.getAdvertisementList(start, limit);
+        List<Advertisement> list = adService.getList(start, limit);
         datas.setRows(list);
-        datas.setResult(advertisementService.getAdvertisementCount());
+        datas.setResult(adService.getCount());
         LOGGER.info("----------- getEngineList");
         return datas;
     }
