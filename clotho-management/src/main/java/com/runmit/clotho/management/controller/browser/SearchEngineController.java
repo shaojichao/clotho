@@ -20,7 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
+/**
+ * 搜索引擎Controller
+ * @author lgz
+ * @version 1.0
+ * @date 2017-06-06
+ */
 @RestController
 public class SearchEngineController{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SearchEngineController.class);
@@ -45,10 +50,16 @@ public class SearchEngineController{
 		List<SearchEngine> list = engineService.getList(start, limit);
 		datas.setRows(list);
 		datas.setResult(engineService.getCount());
-		LOGGER.info("----------- getEngineList");
+		LOGGER.info("----------- SearchEngineController.getEngineList");
 		return datas;
 	}
 
+	/**
+	 * 添加或修改搜索引擎信息
+	 * @param engine 搜索引擎信息对象
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/clotho/engine/saveEngine.do", method = RequestMethod.POST)
 	public ExtStatusEntity saveEngine(SearchEngine engine,HttpServletRequest request){
 		ExtStatusEntity entity = new ExtStatusEntity();
@@ -88,12 +99,13 @@ public class SearchEngineController{
 			entity.setMsg("保存失败!");
 			entity.setSuccess(false);
 		}
+		LOGGER.info("saveEngine");
 		return entity;
 	}
 
 	/**
 	 * 删除搜索引擎信息
-	 * @param id
+	 * @param id 搜索引擎ID
 	 * @param request
 	 * @return
 	 */

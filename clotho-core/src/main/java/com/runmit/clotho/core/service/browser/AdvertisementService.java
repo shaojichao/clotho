@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author sjc
- * @date 2017-06-01-10:39
+ * 开屏广告Service
+ * @author lgz
+ * @version 1.0
+ * @date 2017-06-06
  */
 @Service
 @Transactional

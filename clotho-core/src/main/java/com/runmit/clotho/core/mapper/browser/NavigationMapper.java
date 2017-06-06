@@ -6,7 +6,10 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * 导航栏mapper
+ * 导航栏Mapper
+ * @author lgz
+ * @version 1.0
+ * @date 2017-06-06
  */
 public interface NavigationMapper{
 
@@ -24,9 +27,6 @@ public interface NavigationMapper{
 
     /**
      * 根据ID修改导航栏信息排序字段
-     * @author lgz
-     * @version 1.0
-     * @date 2017-06-01
      * @param id
      */
     @Update("UPDATE Navigation SET position =#{id} WHERE id=#{id}")
@@ -48,7 +48,7 @@ public interface NavigationMapper{
      */
     @Delete("DELETE FROM Navigation WHERE id=#{id}")
     @Options(flushCache = true)
-    void deleteById(@Param("id") Integer id);
+    int deleteById(@Param("id") Integer id);
 
     /**
      * 根据ID查找导航栏信息
@@ -60,21 +60,22 @@ public interface NavigationMapper{
     Navigation selectById(@Param("id") Integer id);
 
     /**
-     * 查找所有导航栏信息集合
+     * 分页查找所有导航栏信息集合
      * @return
      */
     @Select({"<script>",
             "SELECT * FROM Navigation ",
             "<if test='name != null '>",
-            " where name like CONCAT('%',#{name},'%'))",
+            " where name like CONCAT('%',#{name},'%')) ",
             "</if>",
-            " ORDER BY position DESC",
+            "ORDER BY position DESC",
+            "LIMIT #{start},#{limit} ",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    List<Navigation> getList();
+    List<Navigation> getList(@Param("name") String name,@Param("start") int start, @Param("limit") int limit);
 
     /**
-     * 查找所有导航栏信息总条数
+     * 分页查找所有导航栏信息总条数
      * @return
      */
     @Select({"<script>",
@@ -84,5 +85,5 @@ public interface NavigationMapper{
             "</if>",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    int getCounts();
+    int getCounts(@Param("name") String name);
 }

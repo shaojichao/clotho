@@ -10,7 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+/**
+ * 搜索引擎Service
+ * @author lgz
+ * @version 1.0
+ * @date 2017-06-06
+ */
 @Service
 @Transactional
 public class SearchEngineService{
