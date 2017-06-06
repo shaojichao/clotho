@@ -29,17 +29,18 @@ public interface AdvertisementMapper{
     @Update({"<script>",
             "UPDATE Ad set updateTime=now(),updateBy=#{updateBy}",
             "<if test='modeId != null '>",
-            " ,modeId=#{modeId}",
+            " ,modeId=#{modeId} ",
             "</if>",
             "<if test='adURL != null '>",
-            " ,adURL=#{adURL}",
+            " ,adURL=#{adURL} ",
             "</if>",
             "<if test='status != null '>",
-            " ,status=#{status}",
+            " ,status=#{status} ",
             "</if>",
             "<if test='version != null '>",
-            " ,version=#{version}",
+            " ,version=#{version} ",
             "</if>",
+            "where id=#{id}",
             "</script>"})
     @Options(flushCache = true)
     void updateAdvertisement(Advertisement ad);
