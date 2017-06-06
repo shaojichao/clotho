@@ -8,19 +8,20 @@ import java.util.Date;
 
 /**
  * 开屏广告对象
+ *
  * @author sjc
  * @date 2017-06-01-15:27
  */
 @Data
-public class Advertisement implements Serializable{
+public class Advertisement implements Serializable {
 
     private Integer id;
     /**
-     *机型id
+     * 机型id
      */
     private String modeId;
     /**
-     *机型名称
+     * 机型名称
      */
     private String model;
     /**

@@ -20,68 +20,55 @@ import java.util.List;
 public class AdvertisementService {
 
     @Autowired
-    private AdvertisementMapper advertisementMapper;
+    private AdvertisementMapper adMapper;
+
 
     /**
-     * 分页查出开屏广告信息
+     * 分页查找开屏广告信息集合
      * @param start
      * @param limit
      * @return
      */
-//    @Transactional(readOnly = true)
-//    public Page<Advertisement> getAdvertisementList(int limit, int page) {
-//        int startPosition = 0;
-//        if (1 < page) {
-//            startPosition = (page - 1) * page;
-//        }
-//        List<Advertisement> phoneModelList = advertisementMapper.getAdvertisementList(startPosition, limit);
-//        int total = advertisementMapper.getAdvertisementCount();
-//        return new Page<>(phoneModelList, total);
-//
-//    }
     @Transactional(readOnly = true)
-    public List<Advertisement> getAdvertisementList(int start, int limit){
-        return advertisementMapper.getAdvertisementList(start, limit);
+    public List<Advertisement> getList(int start, int limit){
+        return adMapper.getAdList(start, limit);
     }
 
     /**
-     * 查找搜索引擎信息总条数
+     * 查找开屏广告信息总条数
      * @return
      */
     @Transactional(readOnly = true)
-    public long getAdvertisementCount(){
-        return advertisementMapper.getAdvertisementCount();
+    public long getCount(){
+        return adMapper.getAdCounts();
     }
 
     /**
-     * 更新广告状态
-     * @param ad
+     * 添加开屏广告信息
+     * @param ad 开屏广告信息对象
      */
-    public void updateAdvertisement(Advertisement ad) {
-        advertisementMapper.updateAdvertisement(ad);
+    @Transactional(readOnly = false)
+    public void addAdInfo(Advertisement ad) throws Exception{
+        adMapper.addAdvertisement(ad);
     }
 
     /**
-     * 新增或修改机型信息
-     * @param phoneModel
+     * 修改开屏广告信息
+     * @param ad 开屏广告信息对象
      */
-//    @Transactional(readOnly = false)
-//    public void savePhoneModel(PhoneModel phoneModel){
-//        if(phoneModel.getId()==null||phoneModel.getId()==0){
-//            phoneModelMapper.addPhoneModel(phoneModel);
-//        }else{
-//            phoneModelMapper.updatePhoneModel(phoneModel);
-//        }
-//    }
-//
-//    /**
-//     *  通过id删除机型信息
-//     * @param id
-//     * @return
-//     * @throws Exception
-//     */
-//    @Transactional(readOnly = false)
-//    public int deletePhone(Integer id) throws Exception{
-//        return phoneModelMapper.deletePhoneModelById(id);
-//    }
+    @Transactional(readOnly = false)
+    public void updateAdInfo(Advertisement ad) throws Exception{
+        adMapper.updateAdvertisement(ad);
+    }
+
+    /**
+     * 根据ID删除开屏广告信息
+     * @param id 开屏广告id
+     * @throws Exception
+     */
+    @Transactional(readOnly = false)
+    public int delAdInfo(int id) throws Exception{
+        return adMapper.deleteById(id);
+    }
+
 }

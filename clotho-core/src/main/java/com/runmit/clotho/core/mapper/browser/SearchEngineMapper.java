@@ -1,13 +1,15 @@
 package com.runmit.clotho.core.mapper.browser;
 
-import com.runmit.clotho.core.domain.StatusEnum;
 import com.runmit.clotho.core.domain.browser.SearchEngine;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 /**
- * 搜索引擎mapper
+ * 搜索引擎 Mapper
+ * @author lgz
+ * @version 1.0
+ * @date 2017-06-06
  */
 public interface SearchEngineMapper{
 
@@ -34,22 +36,6 @@ public interface SearchEngineMapper{
     void updateSearchEngine(SearchEngine engine);
 
     /**
-     * 查找所有搜索引擎信息集合
-     * @return
-     */
-    @Select({"<script>",
-            "SELECT *,(CASE ",
-            "WHEN status='0' THEN '否' ",
-            "WHEN status = '1' THEN '是' ",
-            "ELSE '未定义' END) statusName",
-            "from SearchEngine ",
-            "ORDER BY updateTime DESC",
-            "LIMIT #{start},#{limit} ",
-            "</script>"})
-    @Options(useCache = true, flushCache = false)
-    List<SearchEngine> getList(@Param("start") int start, @Param("limit") int limit);
-
-    /**
      * 根据ID删除搜索引擎信息
      * @param id 引擎ID
      */
@@ -73,6 +59,22 @@ public interface SearchEngineMapper{
     @Select("SELECT * FROM SearchEngine WHERE status=#{status}")
     @Options(useCache = true, flushCache = false)
     List<SearchEngine> getDefaultEngine(@Param("status") int status);
+
+    /**
+     * 分页查找所有搜索引擎信息集合
+     * @return
+     */
+    @Select({"<script>",
+            "SELECT *,(CASE ",
+            "WHEN status='0' THEN '否' ",
+            "WHEN status = '1' THEN '是' ",
+            "ELSE '未定义' END) statusName",
+            "from SearchEngine ",
+            "ORDER BY updateTime DESC",
+            "LIMIT #{start},#{limit} ",
+            "</script>"})
+    @Options(useCache = true, flushCache = false)
+    List<SearchEngine> getList(@Param("start") int start, @Param("limit") int limit);
 
     /**
      * 查找所有搜索引擎信息总条数
