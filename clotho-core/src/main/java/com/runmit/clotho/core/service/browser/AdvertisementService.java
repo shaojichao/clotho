@@ -83,8 +83,8 @@ public class AdvertisementService{
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Advertisement> getAdListByModeId(int modeId){
-        return adMapper.getAdListByModeId(modeId);
+    public List<Advertisement> getAdListByModeId(int modeId,String version){
+        return adMapper.getAdListByModeId(modeId,version);
     }
 
 }

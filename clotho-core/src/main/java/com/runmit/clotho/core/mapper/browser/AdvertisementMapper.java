@@ -86,8 +86,14 @@ public interface AdvertisementMapper{
      * @param modeId 机型ID
      * @return
      */
-    @Select("SELECT * FROM Ad WHERE modeId=#{modeId}")
+    @Select({"<script>",
+            "SELECT * FROM Ad ",
+            "WHERE modeId=#{modeId} ",
+            "<if test='version != null '>",
+            "AND version=#{version} ",
+            "</if>",
+            "</script>"})
     @Options(useCache = true, flushCache = false)
-    List<Advertisement> getAdListByModeId(@Param("modeId") int modeId);
+    List<Advertisement> getAdListByModeId(@Param("modeId") int modeId,@Param("version") String version);
 
 }
