@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 @Component
-public class PhoneModelService {
+public class PhoneModelService{
 
     @Autowired
     private PhoneModelMapper phoneModelMapper;
@@ -65,4 +65,17 @@ public class PhoneModelService {
     public int deletePhone(Integer id) throws Exception{
         return phoneModelMapper.deletePhoneModelById(id);
     }
+
+    /**
+     * 根据id查找机型信息对象
+     * @param id 机型ID
+     * @return 返回机型信息对象
+     * @author lgz
+     * @date 2017-06-07
+     */
+    @Transactional(readOnly = true)
+    public PhoneModel getModelById(int id) throws Exception{
+        return phoneModelMapper.getModelById(id);
+    }
+
 }

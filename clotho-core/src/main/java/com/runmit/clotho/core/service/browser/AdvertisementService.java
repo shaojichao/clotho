@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @Transactional
 @Component
-public class AdvertisementService {
+public class AdvertisementService{
 
     @Autowired
     private AdvertisementMapper adMapper;
@@ -75,6 +75,16 @@ public class AdvertisementService {
     @Transactional(readOnly = false)
     public int delAdInfo(int id) throws Exception{
         return adMapper.deleteById(id);
+    }
+
+    /**
+     * 根据机型ID查找开屏广告信息集合
+     * @param modeId 机型ID
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<Advertisement> getAdListByModeId(int modeId){
+        return adMapper.getAdListByModeId(modeId);
     }
 
 }

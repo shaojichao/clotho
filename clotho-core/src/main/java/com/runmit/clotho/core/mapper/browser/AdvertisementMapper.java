@@ -81,4 +81,13 @@ public interface AdvertisementMapper{
     @Options(useCache = true, flushCache = false)
     int getAdCounts();
 
+    /**
+     * 根据机型ID查找开屏广告信息集合
+     * @param modeId 机型ID
+     * @return
+     */
+    @Select("SELECT * FROM Ad WHERE modeId=#{modeId}")
+    @Options(useCache = true, flushCache = false)
+    List<Advertisement> getAdListByModeId(@Param("modeId") int modeId);
+
 }

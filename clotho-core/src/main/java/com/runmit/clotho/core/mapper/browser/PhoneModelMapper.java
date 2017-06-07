@@ -71,4 +71,15 @@ public interface PhoneModelMapper {
     @Options(flushCache = true)
     int deletePhoneModelById(@Param("id") Integer id);
 
+    /**
+     * 根据id查找机型信息对象
+     * @param id 机型ID
+     * @return 返回机型信息对象
+     * @author lgz
+     * @date 2017-06-07
+     */
+    @Select("SELECT * FROM PhoneModel WHERE id=#{id}")
+    @Options(useCache = true, flushCache = false)
+    PhoneModel getModelById(@Param("id") Integer id);
+
 }
