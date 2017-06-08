@@ -4,6 +4,7 @@ package com.runmit.clotho.core.service.browser;
 import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.mapper.browser.PhoneModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,51 +16,30 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class PhoneModelService {
+@Component
+public class PhoneModelService{
 
     @Autowired
     private PhoneModelMapper phoneModelMapper;
 
     /**
-     * 通过机型名称分页查出机型信息
+     * 分页查出机型信息
      * @param start
      * @param limit
      * @return
      */
     @Transactional(readOnly = true)
-    public List<PhoneModel> getPhoneModelPage(String model, int start, int limit){
-        List<PhoneModel> phoneModelList = phoneModelMapper.getPhoneModelPage(model, start, limit);
-        for(PhoneModel phoneModel: phoneModelList){
-            phoneModel.setResolution(phoneModel.getHeight() + "*" + phoneModel.getWidth());
-        }
-        return phoneModelList;
+    public List<PhoneModel> getPhoneModelList(String model, int start, int limit){
+        return phoneModelMapper.getPhoneModelList(model, start, limit);
     }
 
     /**
-     * 查出所有机型信息
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public List<PhoneModel> getPhoneModelList(){
-        return phoneModelMapper.getPhoneModelList();
-    }
-
-    /**
-     * 通过机型名称查找机型信息条数
+     * 查找机型信息总条数
      * @return
      */
     @Transactional(readOnly = true)
     public long getCount(String model){
         return phoneModelMapper.getPhoneModelCount(model);
-    }
-
-    /**
-     * 查出机型总条数
-     * @return
-     */
-    @Transactional(readOnly = true)
-    public long getCount(){
-        return phoneModelMapper.getPhoneModelCount(null);
     }
 
     /**
@@ -85,4 +65,17 @@ public class PhoneModelService {
     public int deletePhone(Integer id) throws Exception{
         return phoneModelMapper.deletePhoneModelById(id);
     }
+
+    /**
+     * 根据id查找机型信息对象
+     * @param id 机型ID
+     * @return 返回机型信息对象
+     * @author lgz
+     * @date 2017-06-07
+     */
+    @Transactional(readOnly = true)
+    public PhoneModel getModelById(int id) throws Exception{
+        return phoneModelMapper.getModelById(id);
+    }
+
 }

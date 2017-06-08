@@ -9,7 +9,8 @@ public class RestConst {
 	 * 接口通用返回值类型的说明
 	 */
 	public final static String RTN_OK = "0";// 成功返回值
-	public final static String RTN_ERROR = "500";// 成功返回值
+	public final static String RTN_ERROR = "500";// 异常返回值
+	public final static String RTN_FAILED = "1";// 失败返回值
 
 	public final static String RTN_PARAMLOST = "51";// 参数缺失
 	public final static String RTN_URINOTEXISTS = "52";// 服务器无对应URI

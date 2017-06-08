@@ -27,7 +27,7 @@ public interface PhoneModelMapper {
             "LIMIT #{page},#{limit} ",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    List<PhoneModel> getPhoneModelPage(@Param("model") String model, @Param("page") int page, @Param("limit") int limit);
+    List<PhoneModel> getPhoneModelList(@Param("model") String model, @Param("page") int page, @Param("limit") int limit);
 
     /**
      * 查出机型的条数
@@ -72,10 +72,14 @@ public interface PhoneModelMapper {
     int deletePhoneModelById(@Param("id") Integer id);
 
     /**
-     * 查出所有机型信息
-     * @return
+     * 根据id查找机型信息对象
+     * @param id 机型ID
+     * @return 返回机型信息对象
+     * @author lgz
+     * @date 2017-06-07
      */
-    @Select("SELECT * FROM PhoneModel ")
+    @Select("SELECT * FROM PhoneModel WHERE id=#{id}")
     @Options(useCache = true, flushCache = false)
-    List<PhoneModel> getPhoneModelList();
+    PhoneModel getModelById(@Param("id") Integer id);
+
 }
