@@ -19,6 +19,10 @@ public class Navigation implements Serializable{
     private String name;
     //类型：0 url 1 app
     private int type;
+    //小程序
+    private String appId;
+    //URL
+    private String appUrl;
     //名称或小程序URL
     private String appIdOrUrl;
     //导航栏图标
@@ -35,4 +39,8 @@ public class Navigation implements Serializable{
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+    /**
+     * 图片域地址
+     */
+    private String imgUploadUrl;
 }

@@ -31,8 +31,12 @@ public class SearchEngineService{
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<SearchEngine> getList(int start, int limit){
-		return engineMapper.getList(start, limit);
+	public List<SearchEngine> getList(String downloadUrl, int start, int limit){
+		List<SearchEngine> list = engineMapper.getList(start, limit);
+		for(SearchEngine se: list){
+			se.setImgUploadUrl(downloadUrl);
+		}
+		return list;
 	}
 
 	/**

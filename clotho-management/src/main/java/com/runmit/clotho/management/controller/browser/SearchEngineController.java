@@ -12,6 +12,7 @@ import com.runmit.clotho.management.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,8 @@ import java.util.List;
 public class SearchEngineController{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SearchEngineController.class);
 
+	@Value("${file.download.url}")
+	private String downloadUrl;
 	@Autowired
 	private SearchEngineService engineService;
 	@Autowired
@@ -47,7 +50,7 @@ public class SearchEngineController{
 			@RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
 		ExtEntity<SearchEngine> datas = new ExtEntity<SearchEngine>();
 
-		List<SearchEngine> list = engineService.getList(start, limit);
+		List<SearchEngine> list = engineService.getList(downloadUrl, start, limit);
 		datas.setRows(list);
 		datas.setResult(engineService.getCount());
 		LOGGER.info("----------- SearchEngineController.getEngineList");
@@ -176,5 +179,4 @@ public class SearchEngineController{
 		LOGGER.info("generateVersionNum");
 		return entity;
 	}
-
 }

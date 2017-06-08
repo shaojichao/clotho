@@ -31,8 +31,17 @@ public class NavigationService{
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<Navigation> getList(String name, int start, int limit){
-		return navMapper.getList(name,start, limit);
+	public List<Navigation> getList(String downloadUrl, String name, int start, int limit){
+		List<Navigation> list = navMapper.getList(name,start, limit);
+		for(Navigation nav: list){
+			nav.setImgUploadUrl(downloadUrl);
+			if(nav.getType() == 0){
+				nav.setAppUrl(nav.getAppIdOrUrl());
+			}else{
+				nav.setAppId(nav.getAppIdOrUrl());
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -50,8 +59,14 @@ public class NavigationService{
 	 */
 	@Transactional(readOnly = false)
 	public void saveNavigationInfo(Navigation nav) throws Exception{
+		if(nav.getType() == 0){
+			nav.setAppIdOrUrl(nav.getAppUrl());
+		}else{
+			nav.setAppIdOrUrl(nav.getAppId());
+		}
 		if(nav.getId() == null){
 			navMapper.addNavigation(nav);
+			navMapper.updateSort(nav.getId());
 		}else{
 			navMapper.updateNavigation(nav);
 		}

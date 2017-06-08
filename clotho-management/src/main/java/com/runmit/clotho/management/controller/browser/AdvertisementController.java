@@ -1,9 +1,11 @@
 package com.runmit.clotho.management.controller.browser;
 
 import com.runmit.clotho.core.domain.browser.Advertisement;
+import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
 import com.runmit.clotho.core.service.browser.AdvertisementService;
+import com.runmit.clotho.core.service.browser.PhoneModelService;
 import com.runmit.clotho.core.util.DateUtils;
 import com.runmit.clotho.management.security.SessionUtil;
 import org.slf4j.Logger;
@@ -32,6 +34,8 @@ public class AdvertisementController{
 
     @Autowired
     private AdvertisementService adService;
+    @Autowired
+    private PhoneModelService phoneModelService;
 
     /**
      * 修改开屏广告状态
@@ -104,6 +108,12 @@ public class AdvertisementController{
         return entity;
     }
 
+    /**
+     * 生成版本号
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/generateVersionCode.do")
     public ExtStatusEntity generateVersionCode(@RequestParam("id") Integer id,HttpServletRequest request){
         ExtStatusEntity entity = new ExtStatusEntity();
@@ -112,6 +122,7 @@ public class AdvertisementController{
             String versionCode= DateUtils.generateVersionNum();
             ad.setId(id);
             ad.setVersion(versionCode);
+            ad.setUpdateBy(SessionUtil.getLoginAdminName(request));
             adService.updateAdInfo(ad);
             entity.setMsg(versionCode);
             entity.setSuccess(true);
@@ -123,4 +134,17 @@ public class AdvertisementController{
         return entity;
     }
 
+    /**
+     * 查出所有机型信息
+     * @return
+     */
+    @RequestMapping(value = "/phoneList.do", method = RequestMethod.GET)
+    public ExtEntity<PhoneModel> getPhoneModelList(){
+        ExtEntity<PhoneModel> datas = new ExtEntity<PhoneModel>();
+        List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelList();
+        datas.setRows(phoneModelList);
+        datas.setResult(phoneModelService.getCount(null));
+        LOGGER.info("----------- getPhoneModelList");
+        return datas;
+    }
 }
