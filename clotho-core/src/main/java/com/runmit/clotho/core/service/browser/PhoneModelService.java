@@ -29,8 +29,8 @@ public class PhoneModelService{
      * @return
      */
     @Transactional(readOnly = true)
-    public List<PhoneModel> getPhoneModelList(String model, int start, int limit){
-        return phoneModelMapper.getPhoneModelList(model, start, limit);
+    public List<PhoneModel> getPhoneModelPage(String model, int start, int limit){
+        return phoneModelMapper.getPhoneModelPage(model, start, limit);
     }
 
     /**
@@ -78,4 +78,8 @@ public class PhoneModelService{
         return phoneModelMapper.getModelById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<PhoneModel> getPhoneModelList(){
+        return phoneModelMapper.getPhoneModelList();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface PhoneModelMapper {
 
     /**
-     * 分页查出所有机型信息/根据机型名称查出对应信息
+     * 根据机型名称分页查询机型信息
      * @param model 机型名称
      * @param page
      * @param limit
@@ -27,7 +27,15 @@ public interface PhoneModelMapper {
             "LIMIT #{page},#{limit} ",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    List<PhoneModel> getPhoneModelList(@Param("model") String model, @Param("page") int page, @Param("limit") int limit);
+    List<PhoneModel> getPhoneModelPage(@Param("model") String model, @Param("page") int page, @Param("limit") int limit);
+
+    /**
+     * 查出所有机型信息
+     * @return
+     */
+    @Select("SELECT * FROM PhoneModel ")
+    @Options(useCache = true, flushCache = false)
+    List<PhoneModel> getPhoneModelList();
 
     /**
      * 查出机型的条数
