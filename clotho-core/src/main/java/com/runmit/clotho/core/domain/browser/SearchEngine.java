@@ -1,7 +1,6 @@
 package com.runmit.clotho.core.domain.browser;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.runmit.clotho.core.domain.BaseDomain;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -39,4 +38,8 @@ public class SearchEngine implements Serializable{
 
     //默认状态名
     private String statusName;
+    /**
+     * 图片域地址
+     */
+    private String imgUploadUrl;
 }

@@ -83,7 +83,7 @@ public class PhoneModelController {
         return entity;
     }
     /**
-     * 通过条件查询机型信息
+     * 通过机型名字分页查询机型信息
      * @param model 机型名字
      * @param start
      * @param limit
@@ -95,7 +95,7 @@ public class PhoneModelController {
             @RequestParam(required = false, defaultValue = "20") int start,
             @RequestParam(required = false, defaultValue = "0") int limit){
         ExtEntity<PhoneModel> datas = new ExtEntity<PhoneModel>();
-        List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelList(model, start, limit);
+        List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelPage(model, start, limit);
         datas.setRows(phoneModelList);
         datas.setResult(phoneModelService.getCount(model));
         LOGGER.info("----------- getPhoneModelList");

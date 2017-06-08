@@ -4,7 +4,6 @@ package com.runmit.clotho.core.service.browser;
 import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.mapper.browser.PhoneModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,30 +15,51 @@ import java.util.List;
  */
 @Service
 @Transactional
-@Component
 public class PhoneModelService {
 
     @Autowired
     private PhoneModelMapper phoneModelMapper;
 
     /**
-     * 分页查出机型信息
+     * 通过机型名称分页查出机型信息
      * @param start
      * @param limit
      * @return
      */
     @Transactional(readOnly = true)
-    public List<PhoneModel> getPhoneModelList(String model, int start, int limit){
-        return phoneModelMapper.getPhoneModelList(model, start, limit);
+    public List<PhoneModel> getPhoneModelPage(String model, int start, int limit){
+        List<PhoneModel> phoneModelList = phoneModelMapper.getPhoneModelPage(model, start, limit);
+        for(PhoneModel phoneModel: phoneModelList){
+            phoneModel.setResolution(phoneModel.getHeight() + "*" + phoneModel.getWidth());
+        }
+        return phoneModelList;
     }
 
     /**
-     * 查找机型信息总条数
+     * 查出所有机型信息
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<PhoneModel> getPhoneModelList(){
+        return phoneModelMapper.getPhoneModelList();
+    }
+
+    /**
+     * 通过机型名称查找机型信息条数
      * @return
      */
     @Transactional(readOnly = true)
     public long getCount(String model){
         return phoneModelMapper.getPhoneModelCount(model);
+    }
+
+    /**
+     * 查出机型总条数
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public long getCount(){
+        return phoneModelMapper.getPhoneModelCount(null);
     }
 
     /**
