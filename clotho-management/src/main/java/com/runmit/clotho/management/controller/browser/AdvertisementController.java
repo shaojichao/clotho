@@ -143,7 +143,7 @@ public class AdvertisementController{
         ExtEntity<PhoneModel> datas = new ExtEntity<PhoneModel>();
         List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelList();
         datas.setRows(phoneModelList);
-        datas.setResult(phoneModelService.getCount());
+        datas.setResult(phoneModelService.getCount(null));
         LOGGER.info("----------- getPhoneModelList");
         return datas;
     }
