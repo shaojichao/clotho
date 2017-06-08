@@ -4,6 +4,7 @@ package com.runmit.clotho.core.service.browser;
 import com.runmit.clotho.core.domain.browser.Advertisement;
 import com.runmit.clotho.core.mapper.browser.AdvertisementMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class AdvertisementService{
     @Autowired
     private AdvertisementMapper adMapper;
 
+    @Value("${file.download.url}")
+    private String downloadUrl;
 
     /**
      * 分页查找开屏广告信息集合
@@ -32,7 +35,7 @@ public class AdvertisementService{
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Advertisement> getList(String downloadUrl,int start, int limit){
+    public List<Advertisement> getList(int start, int limit){
         List<Advertisement> list = adMapper.getAdList(start, limit);
         for (Advertisement ad: list){
             ad.setImgUploadUrl(downloadUrl);

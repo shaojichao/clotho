@@ -31,8 +31,6 @@ import java.util.List;
 public class SearchEngineController{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SearchEngineController.class);
 
-	@Value("${file.download.url}")
-	private String downloadUrl;
 	@Autowired
 	private SearchEngineService engineService;
 	@Autowired
@@ -50,7 +48,7 @@ public class SearchEngineController{
 			@RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
 		ExtEntity<SearchEngine> datas = new ExtEntity<SearchEngine>();
 
-		List<SearchEngine> list = engineService.getList(downloadUrl, start, limit);
+		List<SearchEngine> list = engineService.getList(start, limit);
 		datas.setRows(list);
 		datas.setResult(engineService.getCount());
 		LOGGER.info("----------- SearchEngineController.getEngineList");

@@ -11,7 +11,6 @@ import com.runmit.clotho.management.security.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +29,6 @@ import java.util.List;
 public class NavigationController{
 	private static final Logger LOGGER = LoggerFactory.getLogger(NavigationController.class);
 
-	@Value("${file.download.url}")
-	private String downloadUrl;
 	@Autowired
 	private NavigationService navService;
 	@Autowired
@@ -51,7 +48,7 @@ public class NavigationController{
 			@RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
 		ExtEntity<Navigation> datas = new ExtEntity<Navigation>();
 
-		List<Navigation> list = navService.getList(downloadUrl, name,start, limit);
+		List<Navigation> list = navService.getList(name,start, limit);
 		datas.setRows(list);
 		datas.setResult(navService.getCount(name));
 		LOGGER.info("----------- NavigationController.navigationList");

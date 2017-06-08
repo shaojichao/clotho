@@ -5,6 +5,7 @@ import com.runmit.clotho.core.mapper.browser.NavigationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ import java.util.List;
 public class NavigationService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(NavigationService.class);
 
+	@Value("${file.download.url}")
+	private String downloadUrl;
+
 	@Autowired
 	private NavigationMapper navMapper;
 
@@ -31,7 +35,7 @@ public class NavigationService{
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<Navigation> getList(String downloadUrl, String name, int start, int limit){
+	public List<Navigation> getList(String name, int start, int limit){
 		List<Navigation> list = navMapper.getList(name,start, limit);
 		for(Navigation nav: list){
 			nav.setImgUploadUrl(downloadUrl);

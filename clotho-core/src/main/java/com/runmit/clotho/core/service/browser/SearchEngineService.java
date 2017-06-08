@@ -5,6 +5,7 @@ import com.runmit.clotho.core.mapper.browser.SearchEngineMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ import java.util.List;
 public class SearchEngineService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SearchEngineService.class);
 
+	@Value("${file.download.url}")
+	private String downloadUrl;
+
 	@Autowired
 	private SearchEngineMapper engineMapper;
 
@@ -31,7 +35,7 @@ public class SearchEngineService{
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<SearchEngine> getList(String downloadUrl, int start, int limit){
+	public List<SearchEngine> getList(int start, int limit){
 		List<SearchEngine> list = engineMapper.getList(start, limit);
 		for(SearchEngine se: list){
 			se.setImgUploadUrl(downloadUrl);

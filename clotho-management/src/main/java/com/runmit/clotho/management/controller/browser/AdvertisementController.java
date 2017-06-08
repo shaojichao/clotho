@@ -29,9 +29,6 @@ import java.util.List;
 public class AdvertisementController{
     private static final Logger LOGGER = LoggerFactory.getLogger(AdvertisementController.class);
 
-    @Value("${file.download.url}")
-    private String downloadUrl;
-
     @Autowired
     private AdvertisementService adService;
     @Autowired
@@ -77,7 +74,7 @@ public class AdvertisementController{
             @RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
         ExtEntity<Advertisement> datas = new ExtEntity<Advertisement>();
-        List<Advertisement> list = adService.getList(downloadUrl, start, limit);
+        List<Advertisement> list = adService.getList(start, limit);
         datas.setRows(list);
         datas.setResult(adService.getCount());
         LOGGER.info("----------- getadList");
@@ -143,8 +140,6 @@ public class AdvertisementController{
         ExtEntity<PhoneModel> datas = new ExtEntity<PhoneModel>();
         List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelList();
         datas.setRows(phoneModelList);
-        datas.setResult(phoneModelService.getCount(null));
-        LOGGER.info("----------- getPhoneModelList");
         return datas;
     }
 }

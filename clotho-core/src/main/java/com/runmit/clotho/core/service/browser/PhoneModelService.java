@@ -30,7 +30,11 @@ public class PhoneModelService{
      */
     @Transactional(readOnly = true)
     public List<PhoneModel> getPhoneModelPage(String model, int start, int limit){
-        return phoneModelMapper.getPhoneModelPage(model, start, limit);
+        List<PhoneModel> phoneModelList = phoneModelMapper.getPhoneModelPage(model, start, limit);
+        for(PhoneModel phoneModel: phoneModelList){
+            phoneModel.setResolution(phoneModel.getHeight() + "*" + phoneModel.getWidth());
+        }
+        return phoneModelList;
     }
 
     /**
@@ -78,6 +82,10 @@ public class PhoneModelService{
         return phoneModelMapper.getModelById(id);
     }
 
+    /**
+     * 获取所有机型信息
+     * @return
+     */
     @Transactional(readOnly = true)
     public List<PhoneModel> getPhoneModelList(){
         return phoneModelMapper.getPhoneModelList();
