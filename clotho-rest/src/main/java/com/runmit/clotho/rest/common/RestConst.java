@@ -10,7 +10,6 @@ public class RestConst {
 	 */
 	public final static String RTN_OK = "0";// 成功返回值
 	public final static String RTN_ERROR = "500";// 异常返回值
-	public final static String RTN_FAILED = "1";// 失败返回值
 
 	public final static String RTN_PARAMLOST = "51";// 参数缺失
 	public final static String RTN_URINOTEXISTS = "52";// 服务器无对应URI
@@ -34,4 +33,9 @@ public class RestConst {
 	public final static String RTN_DRIP_CODE_NOTEXIST = "2";
 	public final static String RTN_DRIP_USER_NOTEXIST = "3";
 	public final static String RTN_DRIP_USER_INVALID = "4";
+
+	/************************* 浏览器后台常量值 ******************************/
+	public final static String RTN_FAILED = "1";//失败返回值
+
+	public final static String RTN_FAILED_REPEAT = "该用户已设置过默认搜索引擎,不能重复设置!";//重复设置值提示信息
 }
