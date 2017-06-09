@@ -1,5 +1,6 @@
 package com.runmit.clotho.management.controller.browser;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.runmit.clotho.core.domain.VersionConstant;
 import com.runmit.clotho.core.domain.browser.InfoVersion;
 import com.runmit.clotho.core.domain.browser.Navigation;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -45,9 +47,11 @@ public class NavigationController{
 	public ExtEntity<Navigation> navigationList(
 			@RequestParam(required = false) String name,
 			@RequestParam(value = "start", required = false, defaultValue = "0") Integer start,
-			@RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit){
+			@RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) throws UnsupportedEncodingException {
 		ExtEntity<Navigation> datas = new ExtEntity<Navigation>();
-
+		if(StringUtils.isNotEmpty(name)){
+			name = new String(name.getBytes("ISO-8859-1"),"UTF-8");
+		}
 		List<Navigation> list = navService.getList(name,start, limit);
 		datas.setRows(list);
 		datas.setResult(navService.getCount(name));

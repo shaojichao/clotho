@@ -3,6 +3,8 @@ package com.runmit.clotho.core.service.browser;
 
 import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.mapper.browser.PhoneModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.List;
 @Component
 public class PhoneModelService{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PhoneModelService.class);
     @Autowired
     private PhoneModelMapper phoneModelMapper;
 
@@ -54,6 +57,7 @@ public class PhoneModelService{
     public void savePhoneModel(PhoneModel phoneModel){
         if(phoneModel.getId()==null||phoneModel.getId()==0){
             phoneModelMapper.addPhoneModel(phoneModel);
+            LOGGER.info("=================" + phoneModel.getId());
         }else{
             phoneModelMapper.updatePhoneModel(phoneModel);
         }

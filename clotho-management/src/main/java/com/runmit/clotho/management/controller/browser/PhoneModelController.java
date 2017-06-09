@@ -1,5 +1,6 @@
 package com.runmit.clotho.management.controller.browser;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.runmit.clotho.core.domain.browser.PhoneModel;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -93,8 +95,11 @@ public class PhoneModelController {
     public ExtEntity<PhoneModel> getPhoneModelList(
             @RequestParam(required = false) String model,
             @RequestParam(required = false, defaultValue = "20") int start,
-            @RequestParam(required = false, defaultValue = "0") int limit){
+            @RequestParam(required = false, defaultValue = "0") int limit) throws UnsupportedEncodingException {
         ExtEntity<PhoneModel> datas = new ExtEntity<PhoneModel>();
+        if(StringUtils.isNotEmpty(model)){
+            model = new String(model.getBytes("ISO-8859-1"),"UTF-8");
+        }
         List<PhoneModel> phoneModelList = phoneModelService.getPhoneModelPage(model, start, limit);
         datas.setRows(phoneModelList);
         datas.setResult(phoneModelService.getCount(model));

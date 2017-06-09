@@ -63,6 +63,7 @@ public interface AdvertisementMapper{
             "SELECT a.*,p.model ",
             "FROM Ad a ",
             "LEFT JOIN PhoneModel p ON p.id=a.modeId ",
+            "WHERE status IN(0,1) ",
             "ORDER BY updateTime DESC ",
             "LIMIT #{start},#{limit} ",
             "</script>"})
