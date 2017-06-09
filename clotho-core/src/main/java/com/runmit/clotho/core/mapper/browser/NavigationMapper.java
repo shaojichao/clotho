@@ -66,7 +66,7 @@ public interface NavigationMapper{
     @Select({"<script>",
             "SELECT * FROM Navigation ",
             "<if test='name != null '>",
-            " where name like CONCAT('%',#{name},'%')) ",
+            " where name like CONCAT('%',#{name},'%') ",
             "</if>",
             "ORDER BY position DESC",
             "LIMIT #{start},#{limit} ",
