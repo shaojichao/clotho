@@ -40,4 +40,38 @@ public interface UserEngineMapper{
     @Options(useCache = true, flushCache = false)
     List<UserEngine> getUserDefaultEngine(@Param("userId") int userId);
 
+    /**
+     * 分页查找用户搜索引擎信息集合
+     * @return
+     */
+    @Select({"<script>",
+            "SELECT * FROM UserEngine WHERE 1=1 ",
+            "<if test='account != null '>",
+            " and account =#{account} ",
+            "</if>",
+            "<if test='engineId != null '>",
+            " and engineId =#{engineId} ",
+            "</if>",
+            "ORDER BY updateTime DESC",
+            "LIMIT #{start},#{limit} ",
+            "</script>"})
+    @Options(useCache = true, flushCache = false)
+    List<UserEngine> getList(@Param("account") String account,@Param("engineId") Integer engineId,@Param("start") int start, @Param("limit") int limit);
+
+    /**
+     * 分页查找用户搜索引擎信息总条数
+     * @return
+     */
+    @Select({"<script>",
+            "SELECT count(1) FROM UserEngine WHERE 1=1 ",
+            "<if test='account != null '>",
+            " and account =#{account} ",
+            "</if>",
+            "<if test='engineId != null '>",
+            " and engineId =#{engineId} ",
+            "</if>",
+            "</script>"})
+    @Options(useCache = true, flushCache = false)
+    int getCounts(@Param("name") String name);
+
 }

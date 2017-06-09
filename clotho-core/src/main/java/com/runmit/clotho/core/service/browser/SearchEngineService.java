@@ -80,4 +80,14 @@ public class SearchEngineService{
 		return engineMapper.deleteById(id);
 	}
 
+	/**
+	 * 根据ID查找搜索引擎信息
+	 * @param id 引擎ID
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public SearchEngine selectById(int id) throws Exception{
+		return engineMapper.selectById(id);
+	}
+
 }
