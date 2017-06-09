@@ -81,7 +81,7 @@ public interface NavigationMapper{
     @Select({"<script>",
             "SELECT count(1) FROM Navigation ",
             "<if test='name != null '>",
-            " where name like CONCAT('%',#{name},'%'))",
+            " where name like CONCAT('%',#{name},'%')",
             "</if>",
             "</script>"})
     @Options(useCache = true, flushCache = false)
