@@ -100,7 +100,6 @@ public class UploadService {
 			// 将文件名进行改变，以防止覆盖
 			String fileName = UUID.randomUUID().toString().replace("-", "") + str.substring(str.lastIndexOf("."));
 			String tempPath = DateUtils.getDateString(new Date(), "yyyyMMdd")+"/";
-			String visPathdir =  "img/" + tempPath;// 构建获取图片url的目录
 			String savePath = uploadPath + tempPath;// 构建图片保存的目录
 			try {
 				// 创建文件目录
@@ -114,7 +113,7 @@ public class UploadService {
 				// 将上传的文件信息保存到相应的文件目录里
 				fops.write(file.getBytes());
 				fops.close();
-				pixel_original_url = visPathdir + fileName;
+				pixel_original_url = tempPath + fileName;
 
 			} catch (Exception ex) {
 				LOGGER.error("Upload files in folder {} failure", file.getOriginalFilename(), ex);
