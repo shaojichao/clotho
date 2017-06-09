@@ -26,6 +26,9 @@ public class UserEngine implements Serializable{
     //引擎ID
     private Integer engineId;
 
+    //引擎名称
+    private String engineName;
+
     private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

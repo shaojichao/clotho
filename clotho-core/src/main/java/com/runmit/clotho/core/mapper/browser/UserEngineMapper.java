@@ -27,9 +27,9 @@ public interface UserEngineMapper{
      * 修改用户默认搜索引擎
      * @param userEngine 用户默认搜索引擎信息对象
      */
-    @Update("UPDATE UserEngine set engineId=#{engineId},updateBy=#{updateBy},updateTime=#{updateTime} where userId=#{userId}")
+    @Update("UPDATE UserEngine set engineId=#{engineId},updateBy=#{updateBy},updateTime=now() where id=#{id}")
     @Options(flushCache = true)
-    void updateUserEngine(UserEngine userEngine);
+    int updateUserEngine(UserEngine userEngine);
 
     /**
      * 根据userId查找用户默认搜索引擎信息
@@ -45,14 +45,17 @@ public interface UserEngineMapper{
      * @return
      */
     @Select({"<script>",
-            "SELECT * FROM UserEngine WHERE 1=1 ",
+            "SELECT a.*,b.name engineName ",
+            "FROM UserEngine a ",
+            "LEFT JOIN SearchEngine b on b.id=a.engineId ",
+            "WHERE 1=1 ",
             "<if test='account != null '>",
-            " and account =#{account} ",
+            " and a.account =#{account} ",
             "</if>",
             "<if test='engineId != null '>",
-            " and engineId =#{engineId} ",
+            " and a.engineId =#{engineId} ",
             "</if>",
-            "ORDER BY updateTime DESC",
+            "ORDER BY a.updateTime DESC",
             "LIMIT #{start},#{limit} ",
             "</script>"})
     @Options(useCache = true, flushCache = false)
@@ -63,15 +66,18 @@ public interface UserEngineMapper{
      * @return
      */
     @Select({"<script>",
-            "SELECT count(1) FROM UserEngine WHERE 1=1 ",
+            "SELECT count(1) ",
+            "FROM UserEngine a ",
+            "LEFT JOIN SearchEngine b on b.id=a.engineId ",
+            "WHERE 1=1 ",
             "<if test='account != null '>",
-            " and account =#{account} ",
+            " and a.account =#{account} ",
             "</if>",
             "<if test='engineId != null '>",
-            " and engineId =#{engineId} ",
+            " and a.engineId =#{engineId} ",
             "</if>",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    int getCounts(@Param("name") String name);
+    int getCounts(@Param("account") String account,@Param("engineId") Integer engineId);
 
 }

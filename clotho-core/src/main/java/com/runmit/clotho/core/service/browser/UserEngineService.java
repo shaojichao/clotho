@@ -24,14 +24,44 @@ public class UserEngineService{
 	@Autowired
 	private UserEngineMapper userEngineMapper;
 
+	/**
+	 * 分页查找用户搜索引擎信息集合
+	 * @param account 用户账号
+	 * @param engineId 搜索引擎ID
+	 * @param start 开始页
+	 * @param limit 每页大小
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<UserEngine> getList(String account,Integer engineId,int start, int limit){
+		return userEngineMapper.getList(account,engineId,start, limit);
+	}
 
 	/**
-	 * 保存用户默认搜索引擎信息
+	 * 分页查找用户搜索引擎信息总条数
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public long getCount(String account,Integer engineId){
+		return userEngineMapper.getCounts(account,engineId);
+	}
+
+	/**
+	 * 添加用户默认搜索引擎信息
 	 * @param userEngine 用户默认搜索引擎对象
 	 */
 	@Transactional(readOnly = false)
 	public int saveUserEngineInfo(UserEngine userEngine) throws Exception{
 		return userEngineMapper.addUserEngine(userEngine);
+	}
+
+	/**
+	 * 修改用户默认搜索引擎信息
+	 * @param userEngine 用户默认搜索引擎对象
+	 */
+	@Transactional(readOnly = false)
+	public int modifyUserEngineInfo(UserEngine userEngine) throws Exception{
+		return userEngineMapper.updateUserEngine(userEngine);
 	}
 
 	/**
