@@ -16,8 +16,13 @@ import java.util.Date;
 @Data
 public class UserEngine implements Serializable{
     private Integer id;
+
     //用户ID
     private Integer userId;
+
+    //用户账号
+    private String account;
+
     //引擎ID
     private Integer engineId;
 

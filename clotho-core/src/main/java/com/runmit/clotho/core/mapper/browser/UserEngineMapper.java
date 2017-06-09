@@ -18,8 +18,8 @@ public interface UserEngineMapper{
      * @param userEngine 用户默认搜索引擎信息对象
      */
     @Insert("INSERT INTO UserEngine("
-            + "userId,engineId,createBy,createTime,updateBy,updateTime) values "
-            + "(#{userId},#{engineId},#{createBy},now(),#{updateBy},now())")
+            + "userId,account,engineId,createBy,createTime,updateBy,updateTime) values "
+            + "(#{userId},#{account},#{engineId},#{createBy},now(),#{updateBy},now())")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     int addUserEngine(UserEngine userEngine);
 

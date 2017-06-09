@@ -178,6 +178,13 @@ public class BrowserController{
                 resp.setRtmsg("引擎ID不能为空");
                 return resp;
             }
+            //检查搜索引擎是否存在
+            SearchEngine engine = engineService.selectById(engineId);
+            if(engine == null){
+                resp.setRtn(RestConst.RTN_FAILED);
+                resp.setRtmsg("引擎ID为【"+engineId+"】的引擎信息不存在!");
+                return resp;
+            }
             //用户鉴权
             UserCheckedDTO userCheckedDTO = userCheck(token, clientId);
             if(userCheckedDTO == null || userCheckedDTO.getRtn() != 0){
@@ -198,6 +205,7 @@ public class BrowserController{
             //添加用户默认搜索引擎
             UserEngine po=new UserEngine();
             po.setUserId(userInfo.getUserid());
+            po.setAccount(userInfo.getAccount());
             po.setEngineId(engineId);
             po.setCreateBy(userInfo.getName());
             po.setUpdateBy(userInfo.getName());
