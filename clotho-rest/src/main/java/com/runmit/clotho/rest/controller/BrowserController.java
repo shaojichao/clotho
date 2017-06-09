@@ -1,5 +1,6 @@
 package com.runmit.clotho.rest.controller;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.runmit.clotho.core.domain.VersionConstant;
 import com.runmit.clotho.core.domain.browser.*;
@@ -68,13 +69,35 @@ public class BrowserController{
                 resp.setRtmsg("ID为【"+id+"】的机型不存在!");
                 return resp;
             }
-            List<Advertisement> adList = adService.getAdListByModeId(id,version);
-            AdvertisementResp adResp=new AdvertisementResp();
-            adResp.setId(id);
-            adResp.setModel(model.getModel());
-            adResp.setAdList(adList);
+            if(StringUtils.isEmpty(version)){
+                resp.setRtn(RestConst.RTN_FAILED);
+                resp.setRtmsg("版本号不能为空!");
+                return resp;
+            }
+            //检查输入版本号是否合法(纯数字)
+            boolean isNum = version.matches("[0-9]+");
+            if(!isNum){
+                resp.setRtn(RestConst.RTN_FAILED);
+                resp.setRtmsg("输入的版本号包含非法数字!");
+                return resp;
+            }
 
-            resp.setData(adResp);
+            AdvertisementResp adResp=new AdvertisementResp();
+            //查找当前机型开屏广告的版本号
+            List<Advertisement> adList = adService.getAdListByModeId(id,null);
+            if(adList.size() > 0){
+                //当前版本
+                BigDecimal inputVersion=new BigDecimal(version);
+                //最新版本
+                BigDecimal latestVersion=new BigDecimal(adList.get(0).getVersion());
+
+                if(latestVersion.compareTo(inputVersion) > 0){
+                    adResp.setId(id);
+                    adResp.setModel(model.getModel());
+                    adResp.setAdList(adList);
+                    resp.setData(adResp);
+                }
+            }
             resp.setRtn(RestConst.RTN_OK);
             resp.setRtmsg("success");
         }catch(Exception e){
@@ -113,13 +136,13 @@ public class BrowserController{
                 resp.setRtmsg("暂无版本信息!");
                 return resp;
             }
-            //当前版本号
-            BigDecimal currNo=new BigDecimal(version.getVersionNo());
+            //最新版本号
+            BigDecimal latestVersion=new BigDecimal(version.getVersionNo());
             //输入的版本号
             BigDecimal inputNo=new BigDecimal(versionNo);
             //检查输入版本号是否低于当前版本号
             SearchEngineResp engineResp=new SearchEngineResp();
-            if(currNo.compareTo(inputNo) > 0){
+            if(latestVersion.compareTo(inputNo) > 0){
                 List<SearchEngine> engineList = engineService.getList(start, limit);
                 long total = engineService.getCount();
                 engineResp.setVersionNo(version.getVersionNo());
@@ -251,13 +274,13 @@ public class BrowserController{
                 resp.setRtmsg("暂无版本信息!");
                 return resp;
             }
-            //当前版本号
-            BigDecimal currNo=new BigDecimal(version.getVersionNo());
+            //最新版本号
+            BigDecimal latestVersion=new BigDecimal(version.getVersionNo());
             //输入的版本号
             BigDecimal inputNo=new BigDecimal(versionNo);
             //检查输入版本号是否低于当前版本号
             NavigationResp navResp=new NavigationResp();
-            if(currNo.compareTo(inputNo) > 0){
+            if(latestVersion.compareTo(inputNo) > 0){
                 List<Navigation> list = navigationService.getList(null, start, limit);
                 long total = navigationService.getCount(null);
                 navResp.setVersionNo(version.getVersionNo());
