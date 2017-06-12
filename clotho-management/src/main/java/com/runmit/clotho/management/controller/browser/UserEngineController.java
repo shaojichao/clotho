@@ -1,8 +1,10 @@
 package com.runmit.clotho.management.controller.browser;
 
+import com.runmit.clotho.core.domain.browser.SearchEngine;
 import com.runmit.clotho.core.domain.browser.UserEngine;
 import com.runmit.clotho.core.dto.ExtEntity;
 import com.runmit.clotho.core.dto.ExtStatusEntity;
+import com.runmit.clotho.core.service.browser.SearchEngineService;
 import com.runmit.clotho.core.service.browser.UserEngineService;
 import com.runmit.clotho.management.security.SessionUtil;
 import org.slf4j.Logger;
@@ -28,6 +30,17 @@ public class UserEngineController{
 
 	@Autowired
 	private UserEngineService userEngineService;
+	@Autowired
+	private SearchEngineService engineService;
+
+	/**
+	 * 搜索引擎下拉框查询
+	 * @return
+	 */
+	@RequestMapping(value = "/clotho/userEngine/selectEngineList.do")
+	public List<SearchEngine> selectEngineList(){
+		return engineService.selectAll();
+	}
 
 	/**
 	 * 用户搜索引擎列表查询
