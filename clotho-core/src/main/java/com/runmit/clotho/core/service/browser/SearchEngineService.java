@@ -90,4 +90,13 @@ public class SearchEngineService{
 		return engineMapper.selectById(id);
 	}
 
+	/**
+	 * 查找所有搜索引擎信息
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public List<SearchEngine> selectAll(){
+		return engineMapper.selectAll();
+	}
+
 }

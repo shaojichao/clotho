@@ -61,6 +61,14 @@ public interface SearchEngineMapper{
     List<SearchEngine> getDefaultEngine(@Param("status") int status);
 
     /**
+     * 查找所有搜索引擎信息
+     * @return
+     */
+    @Select("SELECT * FROM SearchEngine")
+    @Options(useCache = true, flushCache = false)
+    List<SearchEngine> selectAll();
+
+    /**
      * 分页查找所有搜索引擎信息集合
      * @return
      */
