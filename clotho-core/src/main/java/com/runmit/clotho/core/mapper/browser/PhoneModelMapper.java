@@ -80,6 +80,18 @@ public interface PhoneModelMapper {
     int deletePhoneModelById(@Param("id") Integer id);
 
     /**
+     * 根据分辨率查找机型分辨率信息对象
+     * @param width 分辨率宽
+     * @param height 分辨率高
+     * @return 返回机型分辨率信息对象
+     * @author lgz
+     * @date 2017-06-29
+     */
+    @Select("SELECT * FROM PhoneModel WHERE width=#{width} AND height=#{height}")
+    @Options(useCache = true, flushCache = false)
+    PhoneModel getModelByResolution(@Param("width") Integer width,@Param("height") Integer height);
+
+    /**
      * 根据id查找机型信息对象
      * @param id 机型ID
      * @return 返回机型信息对象

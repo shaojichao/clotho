@@ -75,6 +75,20 @@ public class PhoneModelService{
     }
 
     /**
+     * 根据分辨率查找机型分辨率信息对象
+     * @param width 分辨率宽
+     * @param height 分辨率高
+     * @return 返回机型分辨率信息对象
+     * @author lgz
+     * @date 2017-06-29
+     */
+    @Transactional(readOnly = true)
+    public PhoneModel getModelByResolution(Integer width,Integer height) throws Exception{
+        return phoneModelMapper.getModelByResolution(width,height);
+    }
+
+
+    /**
      * 根据id查找机型信息对象
      * @param id 机型ID
      * @return 返回机型信息对象

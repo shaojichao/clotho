@@ -65,14 +65,21 @@ public class PhoneModelController {
     @RequestMapping(value = "/savePhoneModel.do", method = RequestMethod.POST)
     public ExtStatusEntity savePhoneModel(PhoneModel phoneModel, HttpServletRequest request) {
         ExtStatusEntity entity = new ExtStatusEntity();
-
-        if(phoneModel.getId()==null||phoneModel.getId()==0){
-            phoneModel.setCreateBy(SessionUtil.getLoginAdminName(request));
-            phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
-        }else{
-            phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
-        }
         try{
+            //检查分辨率是否已存在
+            PhoneModel po = phoneModelService.getModelByResolution(phoneModel.getWidth(), phoneModel.getHeight());
+            if(po != null){
+                LOGGER.info("---------- 分辨率为【"+phoneModel.getWidth()+"*"+phoneModel.getHeight()+"】的机型信息已存在!");
+                entity.setMsg("【"+phoneModel.getWidth()+"*"+phoneModel.getHeight()+"】的分辨率信息已存在");
+                entity.setSuccess(false);
+                return entity;
+            }
+            if(phoneModel.getId() == null){
+                phoneModel.setCreateBy(SessionUtil.getLoginAdminName(request));
+                phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
+            }else{
+                phoneModel.setUpdateBy(SessionUtil.getLoginAdminName(request));
+            }
             phoneModelService.savePhoneModel(phoneModel);
             entity.setMsg("succeed");
             entity.setSuccess(true);
