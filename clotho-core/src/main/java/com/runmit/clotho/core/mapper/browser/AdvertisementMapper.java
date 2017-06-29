@@ -44,10 +44,10 @@ public interface AdvertisementMapper{
             " ,version=#{version} ",
             "</if>",
             "<if test='status == 1 '>",
-            " ,upShelvesTm=#{upShelvesTm} ",
+            " ,upShelvesTm=now() ",
             "</if>",
             "<if test='status == 2 '>",
-            " ,downShelvesTm=#{downShelvesTm} ",
+            " ,downShelvesTm=now() ",
             "</if>",
             "where id=#{id}",
             "</script>"})
