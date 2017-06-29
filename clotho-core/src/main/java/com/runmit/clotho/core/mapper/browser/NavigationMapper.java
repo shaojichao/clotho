@@ -37,7 +37,7 @@ public interface NavigationMapper{
      * 修改导航栏
      * @param nav 导航栏信息对象
      */
-    @Update("UPDATE Navigation set type=#{type},name=#{name},icon=#{icon},appIdOrUrl=#{appIdOrUrl}," +
+    @Update("UPDATE Navigation set type=#{type},name=#{name},icon=#{icon},position=#{position},appIdOrUrl=#{appIdOrUrl}," +
             "updateTime=now(),updateBy=#{updateBy} where id=#{id}")
     @Options(flushCache = true)
     void updateNavigation(Navigation nav);
