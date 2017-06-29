@@ -13,31 +13,38 @@ import java.util.Date;
  */
 @Data
 public class PhoneModel implements Serializable{
-
     private Integer id;
+
     /**
      *机型名称
      */
     private String model;
+
     /**
      * 分辨率宽度
      */
     private Integer width;
+
     /**
      * 分辨率高度
      */
     private Integer height;
+
     /**
      * 分辨率
      */
     private String resolution;
+
     //创建者
     private String createBy;
+
     //创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
     //修改者
     private String updateBy;
+
     //修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;

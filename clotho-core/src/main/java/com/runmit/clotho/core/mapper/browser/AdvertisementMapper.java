@@ -17,8 +17,8 @@ public interface AdvertisementMapper{
      * 新增开屏广告信息
      * @param ad 开屏广告信息对象
      */
-    @Insert("INSERT INTO Ad(modeId,adURL,status,version,createBy,createTime,updateBy,updateTime) " +
-            "VALUES(#{modeId},#{adURL},#{status},#{version},#{createBy},now(),#{updateBy},now())")
+    @Insert("INSERT INTO Ad(modeId,adURL,adLink,status,version,createBy,createTime,updateBy,updateTime) " +
+            "VALUES(#{modeId},#{adURL},#{adLink},#{status},#{version},#{createBy},now(),#{updateBy},now())")
     @Options(flushCache = true, useGeneratedKeys = true, keyProperty = "id")
     void addAdvertisement(Advertisement ad);
 
@@ -34,11 +34,20 @@ public interface AdvertisementMapper{
             "<if test='adURL != null '>",
             " ,adURL=#{adURL} ",
             "</if>",
+            "<if test='adLink != null '>",
+            " ,adLink=#{adLink} ",
+            "</if>",
             "<if test='status != null '>",
             " ,status=#{status} ",
             "</if>",
             "<if test='version != null '>",
             " ,version=#{version} ",
+            "</if>",
+            "<if test='status == 1 '>",
+            " ,upShelvesTm=#{upShelvesTm} ",
+            "</if>",
+            "<if test='status == 2 '>",
+            " ,downShelvesTm=#{downShelvesTm} ",
             "</if>",
             "where id=#{id}",
             "</script>"})
@@ -60,7 +69,7 @@ public interface AdvertisementMapper{
      * @return
      */
     @Select({"<script>",
-            "SELECT a.*,p.model ",
+            "SELECT a.*,CONCAT(p.width,'*',p.height) resolution ",
             "FROM Ad a ",
             "LEFT JOIN PhoneModel p ON p.id=a.modeId ",
             "ORDER BY updateTime DESC ",
