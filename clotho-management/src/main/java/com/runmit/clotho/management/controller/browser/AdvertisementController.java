@@ -47,13 +47,22 @@ public class AdvertisementController{
             ad.setUpdateBy(SessionUtil.getLoginAdminName(request));
             ad.setId(id);
             ad.setStatus(status);
-            adService.updateAdInfo(ad);
-            entity.setSuccess(true);
             if(status == 1){
-                entity.setMsg("上架成功!");
+                //检查同一机型下是否已存在已上架的开屏广告信息
+                Advertisement po = adService.getById(id);
+                Advertisement dto = adService.getInfoByModeId(po.getModeId());
+                if(dto != null){
+                    entity.setMsg("当前机型已存在上架的广告图,上架失败!");
+                    entity.setSuccess(false);
+                    return entity;
+                }else{
+                    entity.setMsg("上架成功!");
+                }
             }else if(status == 2){
                 entity.setMsg("下架成功!");
             }
+            adService.updateAdInfo(ad);
+            entity.setSuccess(true);
         } catch (Exception ex) {
             LOGGER.error("updateAdStatus error", ex);
             entity.setSuccess(false);
@@ -81,7 +90,7 @@ public class AdvertisementController{
     }
 
     /**
-     * 保存广告
+     * 新增开屏广告信息
      * @param advertisement
      * @param request
      * @return

@@ -81,6 +81,23 @@ public class AdvertisementService{
     }
 
     /**
+     * 根据ID查找开屏广告信息
+     * @param id  ID
+     * @return
+     */
+    public Advertisement getById(int id){
+        return adMapper.getById(id);
+    }
+    /**
+     * 根据机型ID查找已上架状态的开屏广告信息集合
+     * @param modeId 机型ID
+     * @return
+     */
+    public Advertisement getInfoByModeId(Integer modeId){
+        return adMapper.getInfoByModeId(modeId);
+    }
+
+    /**
      * 根据机型ID查找开屏广告信息集合
      * @param modeId 机型ID
      * @return

@@ -19,7 +19,7 @@ public class Advertisement implements Serializable {
     /**
      * 机型id
      */
-    private String modeId;
+    private Integer modeId;
 
     /**
      * 机型名称

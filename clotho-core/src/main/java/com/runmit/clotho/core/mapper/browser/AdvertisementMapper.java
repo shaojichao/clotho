@@ -91,6 +91,27 @@ public interface AdvertisementMapper{
     int getAdCounts();
 
     /**
+     * 根据ID查找开屏广告信息
+     * @param id 主键
+     * @return
+     */
+    @Select("SELECT * FROM Ad WHERE id=#{id} ")
+    @Options(useCache = true, flushCache = false)
+    Advertisement getById(@Param("id") int id);
+
+    /**
+     * 根据机型ID查找已上架状态的开屏广告信息集合
+     * @param modeId 机型ID
+     * @return
+     */
+    @Select({"<script>",
+            "SELECT * FROM Ad ",
+            "WHERE version=1 AND modeId=#{modeId} ",
+            "</script>"})
+    @Options(useCache = true, flushCache = false)
+    Advertisement getInfoByModeId(@Param("modeId") Integer modeId);
+
+    /**
      * 根据机型ID查找开屏广告信息集合
      * @param modeId 机型ID
      * @return
