@@ -87,7 +87,7 @@ public class PhoneModelService{
     }
 
     /**
-     * 获取所有机型信息
+     * 获取所有机型对应的分辨率信息
      * @return
      */
     @Transactional(readOnly = true)

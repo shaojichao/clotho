@@ -30,10 +30,10 @@ public interface PhoneModelMapper {
     List<PhoneModel> getPhoneModelPage(@Param("model") String model, @Param("page") int page, @Param("limit") int limit);
 
     /**
-     * 查出所有机型信息
+     * 查出所有机型对应的分辨率信息
      * @return
      */
-    @Select("SELECT * FROM PhoneModel ")
+    @Select("SELECT id,CONCAT(width,'*',height) resolution FROM PhoneModel")
     @Options(useCache = true, flushCache = false)
     List<PhoneModel> getPhoneModelList();
 
