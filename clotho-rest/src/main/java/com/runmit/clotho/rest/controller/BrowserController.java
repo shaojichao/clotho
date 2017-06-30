@@ -53,51 +53,42 @@ public class BrowserController{
     @Value("${user.center.check.api.address}")
     private String checkUrl;
 
+    @Value("${file.download.url}")
+    private String prefixUrl;
+
 	/**
-     *1、根据机型ID获取开屏广告信息列表
-     * @param id 机型ID
-     * @param version 版本号
+     *1、根据分辨率获取开屏广告信息列表
+     * @param width 分辨率宽
+     * @param height 分辨率高
      * @return
      */
-    @RequestMapping(value = "/ad/getAdList/{id}",method = RequestMethod.GET)
-    public CommonResp getAdList(@PathVariable int id, @RequestParam(required = false) String version){
+    @RequestMapping(value = "/ad/getAdList",method = RequestMethod.GET)
+    public CommonResp getAdList(@RequestParam(value="width",required=true) Integer width,
+                                @RequestParam(value="height",required=true) Integer height){
         CommonResp resp = new CommonResp();
         try{
-            PhoneModel model = modelService.getModelById(id);
+            //检查分辨率是否存在
+            PhoneModel model = modelService.getModelByResolution(width,height);
             if(model == null){
                 resp.setRtn(RestConst.RTN_FAILED);
-                resp.setRtmsg("ID为【"+id+"】的机型不存在!");
-                return resp;
-            }
-            if(StringUtils.isEmpty(version)){
-                resp.setRtn(RestConst.RTN_FAILED);
-                resp.setRtmsg("版本号不能为空!");
-                return resp;
-            }
-            //检查输入版本号是否合法(纯数字)
-            boolean isNum = version.matches("[0-9]+");
-            if(!isNum){
-                resp.setRtn(RestConst.RTN_FAILED);
-                resp.setRtmsg("输入的版本号包含非法数字!");
+                resp.setRtmsg("分辨率为【"+width+"*"+height+"】的信息不存在!");
                 return resp;
             }
 
-            AdvertisementResp adResp=new AdvertisementResp();
-            //查找当前机型开屏广告的版本号
-            List<Advertisement> adList = adService.getAdListByModeId(id,null);
-            if(adList.size() > 0){
-                //当前版本
-                BigDecimal inputVersion=new BigDecimal(version);
-                //最新版本
-                BigDecimal latestVersion=new BigDecimal(adList.get(0).getVersion());
-
-                if(latestVersion.compareTo(inputVersion) > 0){
-                    adResp.setId(id);
-                    adResp.setModel(model.getModel());
-                    adResp.setAdList(adList);
-                    resp.setData(adResp);
+            //查找当前分辨率下的开屏广告
+            List<Advertisement> adList = adService.getAdListByResolution(width,height);
+            for(Advertisement po:adList){
+                if(StringUtils.isNotEmpty(po.getAdURL())){
+                    StringBuffer sbf=new StringBuffer();
+                    sbf.append(prefixUrl).append(po.getAdURL());
+                    po.setAdURL(sbf.toString());
                 }
             }
+            AdvertisementResp adResp=new AdvertisementResp();
+            adResp.setWidth(width);
+            adResp.setHeight(height);
+            adResp.setAdList(adList);
+            resp.setData(adResp);
             resp.setRtn(RestConst.RTN_OK);
             resp.setRtmsg("success");
         }catch(Exception e){

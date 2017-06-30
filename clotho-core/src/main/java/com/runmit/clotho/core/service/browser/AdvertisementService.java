@@ -98,13 +98,14 @@ public class AdvertisementService{
     }
 
     /**
-     * 根据机型ID查找开屏广告信息集合
-     * @param modeId 机型ID
+     * 根据分辨率查找开屏广告信息集合
+     * @param width 分辨率宽
+     * @param height 分辨率高
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Advertisement> getAdListByModeId(int modeId,String version){
-        return adMapper.getAdListByModeId(modeId,version);
+    public List<Advertisement> getAdListByResolution(int width,int height){
+        return adMapper.getAdListByResolution(width,height);
     }
 
 }

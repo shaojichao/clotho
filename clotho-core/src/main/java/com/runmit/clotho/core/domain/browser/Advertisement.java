@@ -80,6 +80,16 @@ public class Advertisement implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date downShelvesTm;
 
+    /********* 表关联字段 **********/
+    /**
+     * 分辨率宽
+     */
+    private int width;
+    /**
+     * 分辨率高
+     */
+    private int height;
+
     /**
      * 图片分辨率
      */

@@ -11,10 +11,10 @@ import java.util.List;
  */
 @Data
 public class AdvertisementResp implements Serializable{
-    //机型ID
-    private int id;
-    //机型名称
-    private String model;
+    //分辨率宽
+    private int width;
+    //分辨率高
+    private int height;
 
     //开屏广告信息列表
     private List<Advertisement> adList;

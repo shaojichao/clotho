@@ -112,18 +112,18 @@ public interface AdvertisementMapper{
     Advertisement getInfoByModeId(@Param("modeId") Integer modeId);
 
     /**
-     * 根据机型ID查找开屏广告信息集合
-     * @param modeId 机型ID
+     * 根据分辨率查找开屏广告信息集合
+     * @param width 分辨率宽
+     * @param height 分辨率高
      * @return
      */
     @Select({"<script>",
-            "SELECT * FROM Ad ",
-            "WHERE modeId=#{modeId} ",
-            "<if test='version != null '>",
-            "AND version=#{version} ",
-            "</if>",
+            "SELECT p.width,p.height,a.* ",
+            "FROM PhoneModel p ",
+            "LEFT JOIN Ad a on a.modeId=p.id ",
+            "WHERE p.width=#{width} AND p.height=#{height} ",
             "</script>"})
     @Options(useCache = true, flushCache = false)
-    List<Advertisement> getAdListByModeId(@Param("modeId") int modeId,@Param("version") String version);
+    List<Advertisement> getAdListByResolution(@Param("width") int width,@Param("height") int height);
 
 }
