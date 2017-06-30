@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,18 +54,17 @@ public class BrowserController{
     @Value("${user.center.check.api.address}")
     private String checkUrl;
 
-    @Value("${file.download.url}")
-    private String prefixUrl;
-
 	/**
      *1、根据分辨率获取开屏广告信息列表
      * @param width 分辨率宽
      * @param height 分辨率高
+     * @param version 版本号
      * @return
      */
     @RequestMapping(value = "/ad/getAdList",method = RequestMethod.GET)
     public CommonResp getAdList(@RequestParam(value="width",required=true) Integer width,
-                                @RequestParam(value="height",required=true) Integer height){
+                                @RequestParam(value="height",required=true) Integer height,
+                                @RequestParam(required = false) String version){
         CommonResp resp = new CommonResp();
         try{
             //检查分辨率是否存在
@@ -75,19 +75,40 @@ public class BrowserController{
                 return resp;
             }
 
-            //查找当前分辨率下的开屏广告
-            List<Advertisement> adList = adService.getAdListByResolution(width,height);
-            for(Advertisement po:adList){
-                if(StringUtils.isNotEmpty(po.getAdURL())){
-                    StringBuffer sbf=new StringBuffer();
-                    sbf.append(prefixUrl).append(po.getAdURL());
-                    po.setAdURL(sbf.toString());
-                }
+            if(StringUtils.isEmpty(version)){
+                resp.setRtn(RestConst.RTN_FAILED);
+                resp.setRtmsg("版本号不能为空!");
+                return resp;
             }
+            //检查输入版本号是否合法(纯数字)
+            boolean isNum = version.matches("[0-9]+");
+            if(!isNum){
+                resp.setRtn(RestConst.RTN_FAILED);
+                resp.setRtmsg("输入的版本号包含非法数字!");
+                return resp;
+            }
+
             AdvertisementResp adResp=new AdvertisementResp();
             adResp.setWidth(width);
             adResp.setHeight(height);
-            adResp.setAdList(adList);
+
+            //查找当前分辨率下的开屏广告
+            List<Advertisement> adList = adService.getAdListByResolution(width,height);
+            List<Advertisement> retList=new ArrayList<Advertisement>();
+            if(adList.size() > 0){
+                //当前版本
+                BigDecimal inputVersion=new BigDecimal(version);
+                for(Advertisement po:adList){
+                    if(StringUtils.isNotEmpty(po.getVersion())){
+                        //最新版本
+                        BigDecimal latestVersion=new BigDecimal(po.getVersion());
+                        if(latestVersion.compareTo(inputVersion) > 0){
+                            retList.add(po);
+                        }
+                    }
+                }
+            }
+            adResp.setAdList(retList);
             resp.setData(adResp);
             resp.setRtn(RestConst.RTN_OK);
             resp.setRtmsg("success");
