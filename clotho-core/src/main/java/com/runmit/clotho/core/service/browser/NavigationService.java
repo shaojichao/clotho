@@ -70,7 +70,7 @@ public class NavigationService{
 		}
 		if(nav.getId() == null){
 			navMapper.addNavigation(nav);
-			navMapper.updateSort(nav.getId());
+			//navMapper.updateSort(nav.getId());
 		}else{
 			navMapper.updateNavigation(nav);
 		}
