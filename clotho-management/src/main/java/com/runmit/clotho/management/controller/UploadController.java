@@ -43,7 +43,7 @@ public class UploadController {
 	 * @param request
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/uploadIcon")
+	@RequestMapping(value = "/uploadIcon.do")
 	public void uploadIcon(@RequestParam(value = "pkg") MultipartFile file,HttpServletResponse response, HttpServletRequest request) throws Exception {
 		this.uploadService.uploadIcon(file,response);
 	}
