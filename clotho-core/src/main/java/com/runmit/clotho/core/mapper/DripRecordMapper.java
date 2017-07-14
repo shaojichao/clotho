@@ -15,7 +15,7 @@ import com.runmit.clotho.core.domain.drip.DripRecord;
  *
  * @author zhipeng.tian
  */
-@CacheNamespace(implementation = org.mybatis.caches.memcached.MemcachedCache.class)
+//@CacheNamespace(implementation = org.mybatis.caches.memcached.MemcachedCache.class)
 public interface DripRecordMapper {
 
 	@Insert("INSERT INTO DripRecord (`uid`,`account`,`amount`,`code`) "
