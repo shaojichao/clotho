@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @ApiModel(value = "升级请求", description = "", discriminator = "")
 public class Upgrade {
-public String getVersion() {
+	public String getVersion() {
 		return version;
 	}
 
