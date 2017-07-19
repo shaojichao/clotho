@@ -24,8 +24,7 @@ public interface VersionMapper {
 
     @Select("SELECT * FROM UpgradePlan where (originid='' or originid LIKE CONCAT('%,',(SELECT serialno FROM Version WHERE version=#{version} AND clientId=#{clientId}),',%')) and clientId=#{clientId} order by upgradeid desc limit 1 ")
     @Options(useCache = true, flushCache = false)
-    UpgradePlan getUpgradePlanbyversion(@Param("version") String version,
-                                        @Param("clientId") int clientId);
+    UpgradePlan getUpgradePlanbyversion(@Param("version") String version,@Param("clientId") int clientId);
 
 	@Select("SELECT * FROM UpgradePlan where id=#{id}")
 	UpgradePlan getUpgradePlabById(@Param("id") int id);
@@ -57,8 +56,7 @@ public interface VersionMapper {
 
 	@Select("SELECT * FROM Version WHERE version=#{version} and clientid=#{clientid}")
 	@Options(useCache = true, flushCache = false)
-	Version getbyversion(@Param("version") String version,
-			@Param("clientid") int clientid);
+	Version getbyversion(@Param("version") String version,@Param("clientid") int clientid);
 
     @Select("<script>SELECT * FROM Version " +
             "WHERE 1=1 " +
