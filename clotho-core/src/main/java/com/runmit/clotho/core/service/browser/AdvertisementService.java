@@ -105,7 +105,13 @@ public class AdvertisementService{
      */
     @Transactional(readOnly = true)
     public List<Advertisement> getAdListByResolution(int width,int height){
-        return adMapper.getAdListByResolution(width,height);
+        List<Advertisement> list = adMapper.getAdListByResolution(width, height);
+        for (Advertisement ad: list){
+            StringBuffer sb=new StringBuffer(downloadUrl);
+            sb.append(ad.getAdURL());
+            ad.setAdURL(sb.toString());
+        }
+        return list;
     }
 
 }
