@@ -1,8 +1,6 @@
 package com.runmit.clotho.management.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.runmit.clotho.management.service.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.runmit.clotho.management.service.UploadService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zhipeng.tian
@@ -22,9 +21,7 @@ import com.runmit.clotho.management.service.UploadService;
 @Controller
 @RequestMapping(value = "/upload")
 public class UploadController {
-	
-	private static final Logger LOGGER = LoggerFactory
-            .getLogger(UploadController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
 	
 	@Autowired
 	private UploadService uploadService;
