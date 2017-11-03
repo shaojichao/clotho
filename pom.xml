@@ -632,6 +632,13 @@
 			    <artifactId>fastjson</artifactId>
 			    <version>${fastjson.version}</version>
 			</dependency>
+			<!--腾讯云-->
+			<dependency>
+				<groupId>com.qcloud</groupId>
+				<artifactId>cos_api</artifactId>
+				<version>4.2</version>
+			</dependency>
+
         </dependencies>
     </dependencyManagement>
     
