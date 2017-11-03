@@ -5,10 +5,13 @@ import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.mapper.VersionMapper;
+import com.runmit.clotho.core.util.COSConstants;
 import com.runmit.clotho.core.util.DateUtils;
+import com.runmit.clotho.core.util.URLAvailability;
 import com.runmit.clotho.log.domain.OpLog.OpType;
 import com.runmit.clotho.log.service.OpLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,10 @@ import java.util.List;
 @Component
 public class VersionService {
 
+	@Value("${cos.download.path}")
+	private String cosPath;
+	@Value("${file.download.url}")
+	private String filePath;
 	@Autowired
 	private VersionMapper versionMapper;
 	// @Autowired
@@ -79,7 +86,18 @@ public class VersionService {
 
 	@Transactional(readOnly = true)
 	public List<Version> getList(int start, int limit, int clientid) {
-		return versionMapper.getList(start, limit, clientid);
+		List<Version> list = versionMapper.getList(start, limit, clientid);
+		for (Version v: list) {
+			boolean connect = URLAvailability.isConnect(v.getPkgurl());
+			String pkgurl = v.getPkgurl();
+			if(connect){
+				v.setPkgurl(pkgurl);
+			}else {
+				String newUrl = filePath + pkgurl.substring((cosPath+ COSConstants.PACKAGE_PATH_PREFIX).length()+2,pkgurl.length());
+				v.setPkgurl(newUrl);
+			}
+		}
+		return list;
 	}
 
 	@Transactional(readOnly = true)

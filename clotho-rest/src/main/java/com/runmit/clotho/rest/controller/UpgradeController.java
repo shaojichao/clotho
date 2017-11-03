@@ -4,6 +4,8 @@ import com.runmit.clotho.core.domain.upgrade.UpgradePlan;
 import com.runmit.clotho.core.domain.upgrade.UpgradePlanMemo;
 import com.runmit.clotho.core.domain.upgrade.Version;
 import com.runmit.clotho.core.service.VersionService;
+import com.runmit.clotho.core.util.COSConstants;
+import com.runmit.clotho.core.util.URLAvailability;
 import com.runmit.clotho.rest.common.RestConst;
 import com.runmit.clotho.rest.domain.Upgrade;
 import com.runmit.clotho.rest.domain.UpgradeResp;
@@ -13,6 +15,7 @@ import com.wordnik.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,10 @@ public class UpgradeController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(UpgradeController.class);
 
+	@Value("${cos.download.path}")
+	private String cosPath;
+	@Value("${file.download.url}")
+	private String filePath;
 	@Autowired
 	private VersionService versionService;
 
@@ -89,12 +96,19 @@ public class UpgradeController {
 			if (null == memo && !"en".equalsIgnoreCase(lang)) {
 				memo = this.versionService.getUpgradePlanMemo(upgradePlan.getId(), "en");
 			}
+			boolean connect = URLAvailability.isConnect(lastestVersion.getPkgurl());
+			String pkgurl = lastestVersion.getPkgurl();
+			if(connect){
+				ur.setUpgrade_url(pkgurl);
+			}else {
+				String newUrl = filePath + pkgurl.substring((cosPath+ COSConstants.PACKAGE_PATH_PREFIX).length(),pkgurl.length());
+				ur.setUpgrade_url(newUrl);
+			}
 			ur.setIntroduction(memo == null ? "" : memo.getMemo());
 			ur.setRtn(RestConst.RTN_OK);
 			ur.setShow_type(String.valueOf(upgradePlan.getShowtype()));
 			ur.setUpgrade_type(String.valueOf(upgradePlan.getUpgradetype()));
 			ur.setNew_version(lastestVersion.getVersion());
-			ur.setUpgrade_url(lastestVersion.getPkgurl());
 			ur.setFilesize(lastestVersion.getFilesize());
 			ur.setMd5(lastestVersion.getMd5());
 			return new ResponseEntity<>(ur, HttpStatus.OK);

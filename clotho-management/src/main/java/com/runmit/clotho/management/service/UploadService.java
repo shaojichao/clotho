@@ -33,7 +33,7 @@ public class UploadService {
 	
 	@Value("${file.download.url}")
 	private String downloadUrl;
-	
+
 	public void uploadFile(MultipartFile file,HttpServletResponse response){
 		try{
 			String result = null;

@@ -100,26 +100,26 @@ public class UpgradeController {
 			//file dispatch
 			LOGGER.info("size:{},md5:{}",size,md5);
 			if(size!=null&&size!=0&&!StringUtils.isEmpty(md5)){
-				int res = -1;
+				/*int res = -1;
 				int tryTime = 2;
 				for(int i=0;i<tryTime;i++){
 					res = this.cdnService.dispatchApp(version, md5, size);
 					if(res==0){
 						Thread t = new Thread() {
-							public void run() {
+							public void run() {*/
 								Version versionT = versionService.getbyid(vId);
 								if (versionT.getDistributestatus() == 0) {
 									// cdn dispatch distributing
-									versionT.setDistributestatus(1);
+									versionT.setDistributestatus(3);
 									versionService.saveVersion(versionT);
 								}
-							}
+							/*}
 						};
 						t.start();
 						break;
-					}
+					}*/
 				}
-				if(res!=0){
+				/*if(res!=0){
 					// cdn dispatch failed
 					version.setDistributestatus(2);
 					this.versionService.saveVersion(version);
@@ -127,7 +127,7 @@ public class UpgradeController {
 					entity.setSuccess(false);
 					return entity;
 				}
-			}
+			}*/
 			
 			entity.setMsg("succeed");
 			entity.setSuccess(true);
@@ -360,32 +360,32 @@ public class UpgradeController {
             if(size!=null && size!=0 && !StringUtils.isEmpty(md5)){
                 int res = -1;
                 int tryTime = 2;
-                for(int i=0;i<tryTime;i++){
-                    res = this.cdnService.dispatchApp(version, md5, size);
-                    if(res==0){
-						Thread t = new Thread() {
-							public void run() {
-								Version version = versionService.getbyid(vId);
-								if (version.getDistributestatus() == 0) {
+//                for(int i=0;i<tryTime;i++){
+//                    res = this.cdnService.dispatchApp(version, md5, size);
+//                    if(res==0){
+//						Thread t = new Thread() {
+//							public void run() {
+								Version versionT = versionService.getbyid(vId);
+								if (versionT.getDistributestatus() == 0) {
 									// cdn dispatch distributing
-									version.setDistributestatus(1);
-									versionService.saveVersion(version);
+									versionT.setDistributestatus(3);
+									versionService.saveVersion(versionT);
 								}
-							}
-						};
-						t.start();
-						break;
-					}
+//							}
+//						};
+//						t.start();
+//						break;
+//					}
                 }
-                if(res!=0){
-                    // cdn dispatch failed
-                    version.setDistributestatus(2);
-                    this.versionService.saveVersion(version);
-                    entity.setMsg("cdn分发失败");
-                    entity.setSuccess(false);
-                    return entity;
-                }
-            }
+//                if(res!=0){
+//                    // cdn dispatch failed
+//                    version.setDistributestatus(2);
+//                    this.versionService.saveVersion(version);
+//                    entity.setMsg("cdn分发失败");
+//                    entity.setSuccess(false);
+//                    return entity;
+//                }
+//            }
         }catch(Exception ex){
             LOGGER.error("distribute Upgrade error",ex);
             // cdn dispatch failed
