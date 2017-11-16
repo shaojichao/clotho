@@ -32,7 +32,7 @@ public class UploadController {
 
 
 	@RequestMapping(value = "/upload.do", method = RequestMethod.POST)
-	public void uploadIcon(@RequestParam(value = "pkg") MultipartFile file, HttpServletResponse response, HttpServletRequest request) throws Exception {
+	public void uploadFile(@RequestParam(value = "pkg") MultipartFile file, HttpServletResponse response, HttpServletRequest request) throws Exception {
 //		ExtStatusEntity entity = new ExtStatusEntity();
 
 		cosService.uploadFile(file,response,request);
@@ -62,9 +62,9 @@ public class UploadController {
 	 * @param request
 	 * @throws Exception
 	 */
-	/*@RequestMapping(value = "/uploadIcon.do")
+	@RequestMapping(value = "/uploadIcon.do")
 	public void uploadIcon(@RequestParam(value = "pkg") MultipartFile file,HttpServletResponse response, HttpServletRequest request) throws Exception {
 		this.uploadService.uploadIcon(file,response);
-	}*/
+	}
 
 }
